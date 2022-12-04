@@ -12,7 +12,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     public ViewHoaDon() {
         initComponents();
-        loadTable();
     }
 //    private HoaDon getData() {
 //        String ma = txt_ma.getText().trim();
@@ -38,10 +37,10 @@ public class ViewHoaDon extends javax.swing.JPanel {
 //        return hoaDon;
 //    }
 
-    public void loadTable() {
+    public void loatTable() {
         defaultTableModel = (DefaultTableModel) this.tb_hoadon.getModel();
         defaultTableModel.setRowCount(0);
-        for (HoaDonVM hdvm : hdsvvm.getByID()) {
+        for (HoaDonVM hdvm : hdsvvm.getlist()) {
             Object[] rowdata = {
                 hdvm.getMahd(),
                 hdvm.getNgayTao(),
@@ -54,6 +53,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             };
             defaultTableModel.addRow(rowdata);
+
         }
     }
 
@@ -76,7 +76,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaHD", "NgayTao", "NguoiTao", "TenKH", "DiaChi", "TongTien", "SDTNguoiNhan", "PhanTramgg", "TrangThai"
+                "MaHD", "NgayTao", "NguoiTao", "TenKH", "DiaChi", "TongTien", "SDTNguoiNhan", "TrangThai"
             }
         ));
         jScrollPane2.setViewportView(tb_hoadon);
@@ -125,6 +125,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     private void btn_thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thongkeActionPerformed
         // TODO add your handling code here:
+        loatTable();
     }//GEN-LAST:event_btn_thongkeActionPerformed
 
 

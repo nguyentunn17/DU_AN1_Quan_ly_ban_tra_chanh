@@ -6,14 +6,7 @@ import viewmodels.HoaDonVM;
 
 public interface IHoaDonRepository {
 
-    ArrayList<HoaDonVM> getByID();
+    ArrayList<HoaDonVM> getAll();
 
-    ArrayList<HoaDon> getAll();
-
-    public void insert(HoaDon hoaDon);
-
-    public void update(String id, HoaDon hoaDon);
-
-    public void delete(String id);
-
+    
 }

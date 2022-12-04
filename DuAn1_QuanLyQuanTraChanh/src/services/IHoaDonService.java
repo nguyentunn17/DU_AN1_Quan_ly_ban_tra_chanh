@@ -14,14 +14,7 @@ import viewmodels.HoaDonVM;
  */
 public interface IHoaDonService {
 
-    ArrayList<HoaDonVM> getByID();
+    ArrayList<HoaDonVM> getlist();
 
-    ArrayList<HoaDon> getAll();
-
-    public void insert(HoaDon hoaDon);
-
-    public void update(String id, HoaDon hoaDon);
-
-    public void delete(String id);
-
+    
 }
