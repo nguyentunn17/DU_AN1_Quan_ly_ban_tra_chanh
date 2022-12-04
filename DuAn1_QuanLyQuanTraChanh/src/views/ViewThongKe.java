@@ -3,24 +3,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package views;
+
 import domainmodels.QuanLyThongKe;
 import domainmodels.ThongKe;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.impl.ThongKeService;
 import services.IThongKeService;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author ASUS
  */
 public class ViewThongKe extends javax.swing.JPanel {
 
+    private IThongKeService csv = new ThongKeService();
+
     /**
      * Creates new form ViewThongKe
      */
     public ViewThongKe() {
         initComponents();
-         //loadTable();
+        //loadTable();
     }
     //    public void loadTable(){
 //        defaultTableModel=(DefaultTableModel) this.tbl_thongke.getModel();
@@ -63,6 +76,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         btn_chon = new javax.swing.JButton();
         chiu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnIn = new javax.swing.JButton();
 
         btn_tim.setText("Tim");
         btn_tim.addActionListener(new java.awt.event.ActionListener() {
@@ -93,37 +107,46 @@ public class ViewThongKe extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(204, 102, 0));
         jLabel1.setText("Chon Ngay");
 
+        btnIn.setText("In Excel");
+        btnIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(dc_ngaychon, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(btn_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(btn_chon, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(chiu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(chiu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(dc_ngaychon, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_chon, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnIn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dc_ngaychon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_chon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addComponent(btn_chon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnIn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(chiu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -132,19 +155,67 @@ public class ViewThongKe extends javax.swing.JPanel {
     private void btn_timActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timActionPerformed
         // TODO add your handling code here:
         Date ngay = dc_ngaychon.getDate();
-        QuanLyThongKe ke=new QuanLyThongKe();
+        QuanLyThongKe ke = new QuanLyThongKe();
         ke.setDateTo(ngay, chiu);
 
     }//GEN-LAST:event_btn_timActionPerformed
 
     private void btn_chonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonActionPerformed
         // TODO add your handling code here:
-        QuanLyThongKe lyThongKe=new QuanLyThongKe();
+        QuanLyThongKe lyThongKe = new QuanLyThongKe();
         lyThongKe.setDateToChartl(chiu);
     }//GEN-LAST:event_btn_chonActionPerformed
 
+    private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
+        // TODO add your handling code here:
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(); // lay wordbook ra
+            XSSFSheet sheet = workbook.createSheet("danhSach"); // tao sheet va dat ten
+            XSSFRow row = null; //tao cot
+            Cell cell = null;
+            row = sheet.createRow(3);// xuoong 3 dong
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Id");
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Tổng Tiền");
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Ngày thanh toán");
+
+            for (int i = 0; i < csv.getList().size(); i++) {
+                row = sheet.createRow(4 + i);
+
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue(i + 1);
+
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(csv.getList().get(i).getTongtien());
+
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(csv.getList().get(i).getNgayThanhToan());
+
+            }
+            File f = new File("E://thongKe.xlsx");
+            try {
+                FileOutputStream fis = new FileOutputStream(f);
+                workbook.write(fis);
+                fis.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+        } catch (Exception e) {
+        }
+        JOptionPane.showMessageDialog(this, "In thành công");
+    }//GEN-LAST:event_btnInActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIn;
     private javax.swing.JButton btn_chon;
     private javax.swing.JButton btn_tim;
     private javax.swing.JPanel chiu;
