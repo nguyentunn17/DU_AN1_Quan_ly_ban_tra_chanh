@@ -60,7 +60,7 @@ public class NhanVienRepository {
             ps.setString(1, nv.getMa());
             ps.setString(2, nv.getHoTen());
             ps.setString(3, nv.getGioiTinh());
-            ps.setObject(4, nv.getNgaySinh()); 
+            ps.setObject(4, nv.getNgaySinh());
             ps.setString(5, nv.getDiaChi());
             ps.setString(6, nv.getSdt());
             ps.setString(7, nv.getMatKhau());
@@ -138,7 +138,9 @@ public class NhanVienRepository {
         ArrayList<NhanVienVMD> listSearch = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "select * from nhanvien where ma like ?";
+            String sql = "SELECT dbo.NHANVIEN.Ma, dbo.NHANVIEN.Ten, dbo.NHANVIEN.NgaySinh, dbo.NHANVIEN.GioiTinh, dbo.NHANVIEN.Sdt, dbo.CHUCVU.TenCV, dbo.NHANVIEN.MatKhau, dbo.NHANVIEN.TrangThai, dbo.NHANVIEN.DiaChi, dbo.NHANVIEN.Anh\n"
+                    + "FROM   dbo.CHUCVU INNER JOIN\n"
+                    + "dbo.NHANVIEN ON dbo.CHUCVU.Id = dbo.NHANVIEN.IdCV where ma like ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ma);
             ps.executeQuery();
@@ -154,7 +156,7 @@ public class NhanVienRepository {
                 int trangThai = rs.getInt("trangThai");
                 String anh = rs.getString("anh");
                 String chucVu = rs.getString("tencv");
-                NhanVienVMD nv = new NhanVienVMD(ma1, ten, gioiTinh, ngaySinh, diaChi, sdt, matKhau, trangThai, anh, chucVu); 
+                NhanVienVMD nv = new NhanVienVMD(ma1, ten, gioiTinh, ngaySinh, diaChi, sdt, matKhau, trangThai, anh, chucVu);
                 listSearch.add(nv);
             }
         } catch (Exception ex) {
