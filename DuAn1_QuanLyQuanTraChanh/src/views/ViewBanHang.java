@@ -6,16 +6,25 @@ package views;
 
 import com.raven.swing.MenuButton;
 import domainmodels.Ban;
+import domainmodels.HoaDon;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.IBanService;
+import services.IHoaDonService;
+import services.INhanVienService;
 import services.ISanPhamService;
 import services.impl.BanService;
+import services.impl.HoaDonService;
+import services.impl.NhanVienService;
 import services.impl.SanPhamService;
+import viewmodels.HoaDonVM;
 import viewmodels.SanPhamViewModel;
 
 /**
@@ -25,6 +34,9 @@ import viewmodels.SanPhamViewModel;
 public class ViewBanHang extends javax.swing.JPanel {
 
     private IBanService csv = new BanService();
+    private DefaultTableModel dtm = new DefaultTableModel();
+    private IHoaDonService hoaDonService = new HoaDonService();
+    private INhanVienService nhanVienService = new NhanVienService();
 
     /**
      * Creates new form viewBanHang
@@ -47,6 +59,19 @@ public class ViewBanHang extends javax.swing.JPanel {
 
     }
 
+    public void loadTableHoaDon() {
+        dtm = (DefaultTableModel) tbHoaDon.getModel();
+        dtm.setRowCount(0);
+        int i = 1;
+        for (HoaDonVM hd : hoaDonService.listH()) {
+            Object[] row = {
+                i, hd.getMahd(), hd.getNgayTao(), "Administrator", hd.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
+            };
+            dtm.addRow(row);
+            i++;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,11 +86,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new com.raven.swing.table.Table();
+        tbHoaDon = new com.raven.swing.table.Table();
         jScrollPane2 = new javax.swing.JScrollPane();
-        table2 = new com.raven.swing.table.Table();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tbGioHang = new com.raven.swing.table.Table();
+        btnTaoHoaDon = new javax.swing.JButton();
+        btnClearGioHang = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -74,7 +99,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnThanhToan = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -133,7 +158,7 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Menu", jPanel3);
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -144,9 +169,9 @@ public class ViewBanHang extends javax.swing.JPanel {
                 "STT", "Mã hóa đơn", "Ngày tạo", "Người tạo", "Trạng thái"
             }
         ));
-        jScrollPane1.setViewportView(table1);
+        jScrollPane1.setViewportView(tbHoaDon);
 
-        table2.setModel(new javax.swing.table.DefaultTableModel(
+        tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -157,13 +182,23 @@ public class ViewBanHang extends javax.swing.JPanel {
                 "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Thành tiền"
             }
         ));
-        jScrollPane2.setViewportView(table2);
+        jScrollPane2.setViewportView(tbGioHang);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton1.setText("Tạo hóa đơn");
+        btnTaoHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnTaoHoaDon.setText("Tạo hóa đơn");
+        btnTaoHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoHoaDonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton2.setText("Làm mới giỏ hàng");
+        btnClearGioHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnClearGioHang.setText("Làm mới giỏ hàng");
+        btnClearGioHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearGioHangActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Mã hóa đơn");
@@ -189,8 +224,13 @@ public class ViewBanHang extends javax.swing.JPanel {
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton5.setText("In hóa đơn");
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton6.setText("Thanh toán");
+        btnThanhToan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnThanhToan.setText("Thanh toán");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Ngày tạo");
@@ -256,27 +296,24 @@ public class ViewBanHang extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel2)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel3)
-                                                    .addComponent(jLabel4))
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                        .addGap(57, 57, 57)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel13))))
                                 .addGap(16, 16, 16))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(jButton1)
+                        .addComponent(btnTaoHoaDon)
                         .addGap(75, 75, 75)
-                        .addComponent(jButton2)
+                        .addComponent(btnClearGioHang)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(jButton5)
                         .addGap(102, 102, 102)
-                        .addComponent(jButton6)
+                        .addComponent(btnThanhToan)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,8 +329,8 @@ public class ViewBanHang extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnTaoHoaDon)
+                    .addComponent(btnClearGioHang))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -329,19 +366,50 @@ public class ViewBanHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
-                    .addComponent(jButton6)
+                    .addComponent(btnThanhToan)
                     .addComponent(jButton7))
                 .addGap(14, 14, 14))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
+        // TODO add your handling code here:
+        Random rd = new Random();
+        HoaDon hd = new HoaDon();
+        hd.setMa("HD" + rd.nextInt(99999999));
+        hd.setNgaytao(new Date());
+        hd.setTrangthai(1);
+        hoaDonService.insert(hd);
+        loadTableHoaDon();
+    }//GEN-LAST:event_btnTaoHoaDonActionPerformed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        // TODO add your handling code here:
+        int row = tbHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn thanh toán");
+            return;
+        }
+        HoaDon hd = new HoaDon();
+        String ma = tbHoaDon.getValueAt(row, 1).toString();
+        hoaDonService.update(ma, hd);
+        loadTableHoaDon();
+        JOptionPane.showMessageDialog(this, "Thanh toán thành công");
+    }//GEN-LAST:event_btnThanhToanActionPerformed
+
+    private void btnClearGioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearGioHangActionPerformed
+        // TODO add your handling code here:
+        dtm = (DefaultTableModel) tbGioHang.getModel();
+        dtm.setRowCount(0);
+    }//GEN-LAST:event_btnClearGioHangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JP_Ban;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnClearGioHang;
+    private javax.swing.JButton btnTaoHoaDon;
+    private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -364,8 +432,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private com.raven.swing.table.Table table1;
-    private com.raven.swing.table.Table table2;
+    private com.raven.swing.table.Table tbGioHang;
+    private com.raven.swing.table.Table tbHoaDon;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -16,5 +16,12 @@ public interface IHoaDonService {
 
     ArrayList<HoaDonVM> getlist();
 
-    
+    void insert(HoaDon hd);
+
+    void update(String ma, HoaDon hd);
+
+    ArrayList<HoaDonVM> getHoaDon();
+
+    ArrayList<HoaDonVM> listH();
+
 }

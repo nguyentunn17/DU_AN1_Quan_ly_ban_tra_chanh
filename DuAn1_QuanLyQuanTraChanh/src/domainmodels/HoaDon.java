@@ -4,48 +4,36 @@
  */
 package domainmodels;
 
+import java.util.Date;
+
 /**
  *
  * @author Inspiron
  */
 public class HoaDon {
     private String id;
+    private String idnv;
+    private String idkh;
+    private String idban;
     private String ma;
-    private String ngaytao;
-    private String ngaythanhtoan;
-    private String ngayship;
-    private String ngaynhap;
+    private Date ngaytao;
+    private Date ngaythanhtoan;
     private int trangthai;
-    private String ten;
-    private String diachi;
-    private String sdt;
-
-    public HoaDon(String ma, String ngaytao, String ngaythanhtoan, String ngayship, String ngaynhap, int trangthai, String ten, String diachi, String sdt) {
-        this.ma = ma;
-        this.ngaytao = ngaytao;
-        this.ngaythanhtoan = ngaythanhtoan;
-        this.ngayship = ngayship;
-        this.ngaynhap = ngaynhap;
-        this.trangthai = trangthai;
-        this.ten = ten;
-        this.diachi = diachi;
-        this.sdt = sdt;
-    }
-
-    public HoaDon(String id, String ma, String ngaytao, String ngaythanhtoan, String ngayship, String ngaynhap, int trangthai, String ten, String diachi, String sdt) {
-        this.id = id;
-        this.ma = ma;
-        this.ngaytao = ngaytao;
-        this.ngaythanhtoan = ngaythanhtoan;
-        this.ngayship = ngayship;
-        this.ngaynhap = ngaynhap;
-        this.trangthai = trangthai;
-        this.ten = ten;
-        this.diachi = diachi;
-        this.sdt = sdt;
-    }
+    private float tongTien;
 
     public HoaDon() {
+    }
+
+    public HoaDon(String id, String idnv, String idkh, String idban, String ma, Date ngaytao, Date ngaythanhtoan, int trangthai, float tongTien) {
+        this.id = id;
+        this.idnv = idnv;
+        this.idkh = idkh;
+        this.idban = idban;
+        this.ma = ma;
+        this.ngaytao = ngaytao;
+        this.ngaythanhtoan = ngaythanhtoan;
+        this.trangthai = trangthai;
+        this.tongTien = tongTien;
     }
 
     public String getId() {
@@ -56,6 +44,30 @@ public class HoaDon {
         this.id = id;
     }
 
+    public String getIdnv() {
+        return idnv;
+    }
+
+    public void setIdnv(String idnv) {
+        this.idnv = idnv;
+    }
+
+    public String getIdkh() {
+        return idkh;
+    }
+
+    public void setIdkh(String idkh) {
+        this.idkh = idkh;
+    }
+
+    public String getIdban() {
+        return idban;
+    }
+
+    public void setIdban(String idban) {
+        this.idban = idban;
+    }
+
     public String getMa() {
         return ma;
     }
@@ -64,36 +76,20 @@ public class HoaDon {
         this.ma = ma;
     }
 
-    public String getNgaytao() {
+    public Date getNgaytao() {
         return ngaytao;
     }
 
-    public void setNgaytao(String ngaytao) {
+    public void setNgaytao(Date ngaytao) {
         this.ngaytao = ngaytao;
     }
 
-    public String getNgaythanhtoan() {
+    public Date getNgaythanhtoan() {
         return ngaythanhtoan;
     }
 
-    public void setNgaythanhtoan(String ngaythanhtoan) {
+    public void setNgaythanhtoan(Date ngaythanhtoan) {
         this.ngaythanhtoan = ngaythanhtoan;
-    }
-
-    public String getNgayship() {
-        return ngayship;
-    }
-
-    public void setNgayship(String ngayship) {
-        this.ngayship = ngayship;
-    }
-
-    public String getNgaynhap() {
-        return ngaynhap;
-    }
-
-    public void setNgaynhap(String ngaynhap) {
-        this.ngaynhap = ngaynhap;
     }
 
     public int getTrangthai() {
@@ -104,31 +100,13 @@ public class HoaDon {
         this.trangthai = trangthai;
     }
 
-    public String getTen() {
-        return ten;
+    public float getTongTien() {
+        return tongTien;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
-
-    public String getDiachi() {
-        return diachi;
-    }
-
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
-
-    public String getSdt() {
-        return sdt;
-    }
-
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
+    public void setTongTien(float tongTien) {
+        this.tongTien = tongTien;
     }
 
    
-    
-    
 }

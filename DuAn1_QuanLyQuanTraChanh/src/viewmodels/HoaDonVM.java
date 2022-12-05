@@ -4,31 +4,28 @@
  */
 package viewmodels;
 
+import java.util.Date;
+
 /**
  *
  * @author Phuong
  */
 public class HoaDonVM {
+
     private String mahd;
-    private String ngayTao;
+    private Date ngayTao;
     private String nguoitao;
-    private String tenkh;
-    private String diachi;
-    private String tongtien;
-    private String sdtnguoinhan;
+    private double tongtien;
     private int trangthai;
 
     public HoaDonVM() {
     }
 
-    public HoaDonVM(String mahd, String ngayTao, String nguoitao, String tenkh, String diachi, String tongtien, String sdtnguoinhan, int trangthai) {
+    public HoaDonVM(String mahd, Date ngayTao, String nguoitao, double tongtien, int trangthai) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
         this.nguoitao = nguoitao;
-        this.tenkh = tenkh;
-        this.diachi = diachi;
         this.tongtien = tongtien;
-        this.sdtnguoinhan = sdtnguoinhan;
         this.trangthai = trangthai;
     }
 
@@ -40,11 +37,11 @@ public class HoaDonVM {
         this.mahd = mahd;
     }
 
-    public String getNgayTao() {
+    public Date getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(String ngayTao) {
+    public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
 
@@ -56,38 +53,13 @@ public class HoaDonVM {
         this.nguoitao = nguoitao;
     }
 
-    public String getTenkh() {
-        return tenkh;
-    }
-
-    public void setTenkh(String tenkh) {
-        this.tenkh = tenkh;
-    }
-
-    public String getDiachi() {
-        return diachi;
-    }
-
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
-
-    public String getTongtien() {
+    public double getTongtien() {
         return tongtien;
     }
 
-    public void setTongtien(String tongtien) {
+    public void setTongtien(double tongtien) {
         this.tongtien = tongtien;
     }
-
-    public String getSdtnguoinhan() {
-        return sdtnguoinhan;
-    }
-
-    public void setSdtnguoinhan(String sdtnguoinhan) {
-        this.sdtnguoinhan = sdtnguoinhan;
-    }
-
 
     public int getTrangthai() {
         return trangthai;
@@ -97,7 +69,4 @@ public class HoaDonVM {
         this.trangthai = trangthai;
     }
 
-    
-    
-    
 }

@@ -12,17 +12,32 @@ import viewmodels.HoaDonVM;
 import services.IHoaDonService;
 
 public class HoaDonService implements IHoaDonService {
-private IHoaDonRepository rhdvm=new HoaDonRepository();
+
+    private IHoaDonRepository rhdvm = new HoaDonRepository();
+    private HoaDonRepository hdrp = new HoaDonRepository();
+
     @Override
     public ArrayList<HoaDonVM> getlist() {
         return rhdvm.getAll();
     }
 
-    
+    @Override
+    public void insert(HoaDon hd) {
+        hdrp.insert(hd);
     }
 
-    
+    @Override
+    public void update(String ma, HoaDon hd) {
+        hdrp.update(ma, hd);
+    }
 
-    
+    @Override
+    public ArrayList<HoaDonVM> getHoaDon() {
+        return hdrp.getHoaDon();
+    }
 
-
+    @Override
+    public ArrayList<HoaDonVM> listH() {
+        return hdrp.listHoaDon();
+    }
+}

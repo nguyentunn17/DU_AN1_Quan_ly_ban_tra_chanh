@@ -54,10 +54,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 hdvm.getMahd(),
                 hdvm.getNgayTao(),
                 hdvm.getNguoitao(),
-                hdvm.getTenkh(),
-                hdvm.getDiachi(),
                 hdvm.getTongtien(),
-                hdvm.getSdtnguoinhan(),
                 hdvm.getTrangthai()
 
             };
