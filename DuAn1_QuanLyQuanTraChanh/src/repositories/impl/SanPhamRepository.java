@@ -107,10 +107,12 @@ public class SanPhamRepository implements ISanPhamRepository {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
             String query = """
-                           SELECT MaSP,TenSP,TenTL,TenKT,GiaNhap,GiaBan,SoLuongTon,SANPHAM.TrangThai,MoTa,DuongDan FROM SANPHAM 
-                           INNER JOIN KICHTHUOC ON SANPHAM.IdKT=KICHTHUOC.Id
-                           INNER JOIN DANHMUC ON SANPHAM.IdDM=DANHMUC.ID 
-                           INNER JOIN HINHANH ON HINHANH.IdSanPham=SANPHAM.Id""";
+                          SELECT dbo.SANPHAM.MaSP, dbo.SANPHAM.TenSP, dbo.KICHTHUOC.TenKT, dbo.DANHMUC.TenTL, dbo.SANPHAM.GiaNhap, dbo.SANPHAM.GiaBan, dbo.SANPHAM.SoLuongTon, dbo.SANPHAM.MoTa, dbo.SANPHAM.TrangThai, 
+                                             dbo.HINHANH.DuongDan
+                           FROM     dbo.SANPHAM INNER JOIN
+                                             dbo.KICHTHUOC ON dbo.SANPHAM.IdKT = dbo.KICHTHUOC.Id INNER JOIN
+                                             dbo.DANHMUC ON dbo.SANPHAM.IdDM = dbo.DANHMUC.Id INNER JOIN
+                                             dbo.HINHANH ON dbo.SANPHAM.Id = dbo.HINHANH.IdSanPham""";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
             ResultSet rs = ps.getResultSet();

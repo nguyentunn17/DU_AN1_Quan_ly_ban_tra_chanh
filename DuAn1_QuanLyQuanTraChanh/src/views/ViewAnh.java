@@ -89,13 +89,13 @@ public class ViewAnh extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lbl_anh = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_them = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_anh = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btn_sua = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txt_ma = new javax.swing.JTextField();
         cbb_sanpham = new javax.swing.JComboBox<>();
@@ -112,10 +112,10 @@ public class ViewAnh extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Thêm ảnh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_them.setText("Thêm ảnh");
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_themActionPerformed(evt);
             }
         });
 
@@ -143,9 +143,9 @@ public class ViewAnh extends javax.swing.JFrame {
 
         jLabel4.setText("Tên sản phẩm");
 
-        jButton2.setText("Sửa ảnh");
+        btn_sua.setText("Sửa ảnh");
 
-        jButton3.setText("Xóa ảnh");
+        jButton3.setText("Back");
 
         cbb_sanpham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -165,9 +165,9 @@ public class ViewAnh extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jButton1)
+                        .addComponent(btn_them)
                         .addGap(58, 58, 58)
-                        .addComponent(jButton2)
+                        .addComponent(btn_sua)
                         .addGap(69, 69, 69)
                         .addComponent(jButton3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -210,8 +210,8 @@ public class ViewAnh extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btn_them)
+                    .addComponent(btn_sua)
                     .addComponent(jButton3))
                 .addGap(24, 24, 24))
         );
@@ -238,7 +238,7 @@ public class ViewAnh extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbl_anhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_anhMouseClicked
-        JFileChooser FileChooser = new JFileChooser("D:\\FPT_Polytechnic\\duan1quanli\\DuAn1_QuanLyQuanTraChanh\\src\\image");
+        JFileChooser FileChooser = new JFileChooser("D:\\FPT_Polytechnic\\DuAn1\\DuAn1_QuanLyQuanTraChanh\\src\\image");
         int result = FileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser.getSelectedFile();
@@ -266,11 +266,11 @@ public class ViewAnh extends javax.swing.JFrame {
         cbb_hoatdong.setSelectedItem(trangThai);
     }//GEN-LAST:event_tb_anhMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         AnhSanPham asp = this.getForm();
         this.anhService.create(asp);
         this.loadTable();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_themActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,10 +311,10 @@ public class ViewAnh extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_sua;
+    private javax.swing.JButton btn_them;
     private javax.swing.JComboBox<String> cbb_hoatdong;
     private javax.swing.JComboBox<String> cbb_sanpham;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
