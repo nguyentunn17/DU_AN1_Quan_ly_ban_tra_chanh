@@ -8,6 +8,8 @@ import com.raven.swing.MenuButton;
 import domainmodels.Ban;
 import domainmodels.HoaDon;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -27,7 +29,7 @@ import services.impl.SanPhamService;
 import viewmodels.HoaDonVM;
 import viewmodels.SanPhamViewModel;
 
-public class ViewBanHang extends javax.swing.JPanel {
+public class ViewBanHang extends javax.swing.JPanel implements ActionListener{
 
     private IBanService csv = new BanService();
     private DefaultTableModel dtm = new DefaultTableModel();
@@ -42,12 +44,11 @@ public class ViewBanHang extends javax.swing.JPanel {
     void Ban() {
         GridLayout gr = new GridLayout(4, 3);
         this.JP_Ban.setLayout(gr);
-        JButton btn1 = new JButton("Bàn mang về");
-        this.JP_Ban.add(btn1);
-
         for (Ban b : csv.getlist()) {
             JButton btn = new JButton(b.getTenBan());
             this.JP_Ban.add(btn);
+            btn.setActionCommand("OK");
+            btn.addActionListener(this);
         }
 
     }
@@ -428,5 +429,15 @@ public class ViewBanHang extends javax.swing.JPanel {
     private com.raven.swing.table.Table tbGioHang;
     private com.raven.swing.table.Table tbHoaDon;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if("OK".equals(e.getActionCommand())){
+            jTabbedPane1.setSelectedComponent(jPanel3);
+        for (Ban b : csv.getlist()) {
+            this.jLabel10.setText(b.getTenBan());
+        }
+       }
+    }
 
 }
