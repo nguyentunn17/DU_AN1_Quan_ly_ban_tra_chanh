@@ -26,14 +26,14 @@ public class HoaDonRepository implements IHoaDonRepository {
     @Override
     public ArrayList<HoaDonVM> getAll() {
         ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
+
+        Connection conn;
         try {
-            Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT dbo.HOADON.MaHD,dbo.HINHTHUCTHANHTOAN.NgayTao,dbo.NHANVIEN.Ten,dbo.KHACHHANG.Ten,\n"
-                    + "dbo.KHACHHANG.DiaChi,dbo.HOADONCHITIET.ThanhTien,dbo.KHACHHANG.Sdt,dbo.HINHTHUCTHANHTOAN.TrangThai\n"
+            conn = jdbcUtil.getConnection();
+            String sql = "SELECT dbo.HOADON.MaHD,dbo.HINHTHUCTHANHTOAN.NgayTao,dbo.NHANVIEN.Ten,dbo.HOADONCHITIET.ThanhTien,dbo.HINHTHUCTHANHTOAN.TrangThai\n"
                     + "FROM   dbo.HINHTHUCTHANHTOAN INNER JOIN\n"
                     + "             dbo.HOADON ON dbo.HINHTHUCTHANHTOAN.IdHD = dbo.HOADON.Id INNER JOIN\n"
                     + "             dbo.HOADONCHITIET ON dbo.HOADON.Id = dbo.HOADONCHITIET.IdHD INNER JOIN\n"
-                    + "             dbo.KHACHHANG ON dbo.HOADON.IdKH = dbo.KHACHHANG.Id INNER JOIN\n"
                     + "             dbo.NHANVIEN ON dbo.HINHTHUCTHANHTOAN.IdNV = dbo.NHANVIEN.Id AND dbo.HOADON.IdNV = dbo.NHANVIEN.Id";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
@@ -42,14 +42,12 @@ public class HoaDonRepository implements IHoaDonRepository {
                 String mahd = rs.getString("MaHD");
                 Date ngaytao = rs.getDate("NgayTao");
                 String nguoitao = rs.getString("NguoiTao");
-                double tongtien = rs.getDouble("Tongtien");
-                int trangthai = rs.getInt("TrangThai");
-                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoitao, tongtien, trangthai);
-                listhdvm.add(hdvm);
 
+                String tongtien = rs.getString("Tongtien");
+                int trangthai = rs.getInt("TrangThai");
+                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoitao, trangthai, trangthai);
+                listhdvm.add(hdvm);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

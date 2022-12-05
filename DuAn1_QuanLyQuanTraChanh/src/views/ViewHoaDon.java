@@ -83,7 +83,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaHD", "NgayTao", "NguoiTao", "TenKH", "DiaChi", "TongTien", "SDTNguoiNhan", "TrangThai"
+                "MaHD", "NgayTao", "NguoiTao", "TongTien", "TrangThai"
             }
         ));
         jScrollPane2.setViewportView(tb_hoadon);
