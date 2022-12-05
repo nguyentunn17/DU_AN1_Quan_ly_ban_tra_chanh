@@ -24,6 +24,13 @@ public class SanPham {
     private String moTa;
     private Integer trangThai;
 
+    public SanPham(String maSP, String TenSP, Double giaBan, Integer soLuongTon) {
+        this.maSP = maSP;
+        this.TenSP = TenSP;
+        this.giaBan = giaBan;
+        this.soLuongTon = soLuongTon;
+    }
+
     public SanPham() {
     }
 

@@ -30,11 +30,12 @@ public class HoaDonRepository implements IHoaDonRepository {
         Connection conn;
         try {
             conn = jdbcUtil.getConnection();
-            String sql = "SELECT dbo.HOADON.MaHD,dbo.HINHTHUCTHANHTOAN.NgayTao,dbo.NHANVIEN.Ten,dbo.HOADONCHITIET.ThanhTien,dbo.HINHTHUCTHANHTOAN.TrangThai\n"
-                    + "FROM   dbo.HINHTHUCTHANHTOAN INNER JOIN\n"
-                    + "             dbo.HOADON ON dbo.HINHTHUCTHANHTOAN.IdHD = dbo.HOADON.Id INNER JOIN\n"
-                    + "             dbo.HOADONCHITIET ON dbo.HOADON.Id = dbo.HOADONCHITIET.IdHD INNER JOIN\n"
-                    + "             dbo.NHANVIEN ON dbo.HINHTHUCTHANHTOAN.IdNV = dbo.NHANVIEN.Id AND dbo.HOADON.IdNV = dbo.NHANVIEN.Id";
+            String sql = """
+                         SELECT dbo.HOADON.MaHD,dbo.HINHTHUCTHANHTOAN.NgayTao,dbo.NHANVIEN.Ten,dbo.HOADONCHITIET.ThanhTien,dbo.HINHTHUCTHANHTOAN.TrangThai
+                         FROM   dbo.HINHTHUCTHANHTOAN INNER JOIN
+                                      dbo.HOADON ON dbo.HINHTHUCTHANHTOAN.IdHD = dbo.HOADON.Id INNER JOIN
+                                      dbo.HOADONCHITIET ON dbo.HOADON.Id = dbo.HOADONCHITIET.IdHD INNER JOIN
+                                      dbo.NHANVIEN ON dbo.HINHTHUCTHANHTOAN.IdNV = dbo.NHANVIEN.Id AND dbo.HOADON.IdNV = dbo.NHANVIEN.Id""";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();
@@ -42,8 +43,6 @@ public class HoaDonRepository implements IHoaDonRepository {
                 String mahd = rs.getString("MaHD");
                 Date ngaytao = rs.getDate("NgayTao");
                 String nguoitao = rs.getString("NguoiTao");
-
-                String tongtien = rs.getString("Tongtien");
                 int trangthai = rs.getInt("TrangThai");
                 HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoitao, trangthai, trangthai);
                 listhdvm.add(hdvm);
@@ -57,17 +56,18 @@ public class HoaDonRepository implements IHoaDonRepository {
     public void insert(HoaDon hd) {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "INSERT INTO [dbo].[HOADON]\n"
-                    + "           ([IdNV]\n"
-                    + "           ,[IdKH]\n"
-                    + "           ,[IdBAN]\n"
-                    + "           ,[MaHD]\n"
-                    + "           ,[NgayTao]\n"
-                    + "           ,[NgayThanhToan]\n"
-                    + "           ,[TongTien]\n"
-                    + "           ,[TrangThai])\n"
-                    + "     VALUES\n"
-                    + "           (?,?,?,?,?,?,?,?)";
+            String sql = """
+                         INSERT INTO [dbo].[HOADON]
+                                    ([IdNV]
+                                    ,[IdKH]
+                                    ,[IdBAN]
+                                    ,[MaHD]
+                                    ,[NgayTao]
+                                    ,[NgayThanhToan]
+                                    ,[TongTien]
+                                    ,[TrangThai])
+                              VALUES
+                                    (?,?,?,?,?,?,?,?)""";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setObject(1, hd.getIdnv());
             ps.setObject(2, hd.getIdkh());
@@ -86,9 +86,10 @@ public class HoaDonRepository implements IHoaDonRepository {
     public void update(String ma, HoaDon hd) {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "UPDATE [dbo].[HOADON]\n"
-                    + "   SET [TrangThai] = 0 \n"
-                    + "   WHERE mahd like ?";
+            String sql = """
+                         UPDATE [dbo].[HOADON]
+                            SET [TrangThai] = 0 
+                            WHERE mahd like ?""";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setObject(1, ma);
             ps.execute();
@@ -101,10 +102,11 @@ public class HoaDonRepository implements IHoaDonRepository {
         ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT dbo.HOADON.MaHD, dbo.HOADON.NgayTao, dbo.NHANVIEN.Ten, dbo.HOADON.TrangThai\n"
-                    + "FROM   dbo.BAN INNER JOIN\n"
-                    + "             dbo.HOADON ON dbo.BAN.Id = dbo.HOADON.IdBAN INNER JOIN\n"
-                    + "             dbo.NHANVIEN ON dbo.HOADON.IdNV = dbo.NHANVIEN.Id";
+            String sql = """
+                         SELECT dbo.HOADON.MaHD, dbo.HOADON.NgayTao, dbo.NHANVIEN.Ten, dbo.HOADON.TrangThai
+                         FROM   dbo.BAN INNER JOIN
+                                      dbo.HOADON ON dbo.BAN.Id = dbo.HOADON.IdBAN INNER JOIN
+                                      dbo.NHANVIEN ON dbo.HOADON.IdNV = dbo.NHANVIEN.Id""";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();

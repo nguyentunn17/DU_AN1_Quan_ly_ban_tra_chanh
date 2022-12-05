@@ -1,10 +1,10 @@
 package services;
 
 import java.util.ArrayList;
-import viewmodels.SanPhamViewModel;
+import viewmodels.HoaDonChiTietViewModel;
 
 public interface IBanHangService {
 
-    ArrayList<SanPhamViewModel> loadSp(String mahd);
+    ArrayList<HoaDonChiTietViewModel> loadSp(String mahd);
 
 }

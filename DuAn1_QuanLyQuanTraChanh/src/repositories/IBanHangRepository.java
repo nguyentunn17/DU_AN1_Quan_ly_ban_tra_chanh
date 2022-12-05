@@ -1,9 +1,10 @@
 package repositories;
 
+import domainmodels.HoaDonChiTiet;
 import java.util.ArrayList;
-import viewmodels.SanPhamViewModel;
+import viewmodels.HoaDonChiTietViewModel;
 
 public interface IBanHangRepository {
 
-    ArrayList<SanPhamViewModel> loadSp(String mahd);
+    ArrayList<HoaDonChiTietViewModel> loadSp(String mahd);
 }

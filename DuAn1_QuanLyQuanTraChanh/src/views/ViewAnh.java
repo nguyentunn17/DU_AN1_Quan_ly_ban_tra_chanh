@@ -146,6 +146,11 @@ public class ViewAnh extends javax.swing.JFrame {
         btn_sua.setText("Sửa ảnh");
 
         jButton3.setText("Back");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         cbb_sanpham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -271,6 +276,11 @@ public class ViewAnh extends javax.swing.JFrame {
         this.anhService.create(asp);
         this.loadTable();
     }//GEN-LAST:event_btn_themActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         new ViewSanPham().setVisible(true);
+         dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
