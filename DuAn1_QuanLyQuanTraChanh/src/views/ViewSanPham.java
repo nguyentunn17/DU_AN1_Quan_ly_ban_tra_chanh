@@ -1,20 +1,32 @@
 package views;
 
+import domainmodels.KichThuoc;
+import domainmodels.SanPham;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import services.IDanhMucService;
+import services.IKichThuocService;
 import services.ISanPhamService;
+import services.impl.DanhMucService;
+import services.impl.KichThuocService;
 import services.impl.SanPhamService;
 import viewmodels.SanPhamViewModel;
 
 public class ViewSanPham extends javax.swing.JPanel {
 
     private final ISanPhamService sanPhamService;
+    private final IKichThuocService kichThuocService;
+    private final IDanhMucService danhMucService;
     DefaultTableModel dtm;
 
     public ViewSanPham() {
-        initComponents();
         this.sanPhamService = new SanPhamService();
+        this.kichThuocService = new KichThuocService();
+        this.danhMucService = new DanhMucService();
         this.loadTableSP(this.sanPhamService.getByID());
+        this.loadCBSize();
     }
 
     private void loadTableSP(ArrayList<SanPhamViewModel> list) {
@@ -31,12 +43,56 @@ public class ViewSanPham extends javax.swing.JPanel {
                 spmd.getGiaNhap(),
                 spmd.getGiaBan(),
                 spmd.getSoLuong(),
-                spmd.getTrangThai()==0?"Đang bán":"Ngừng bán",
+                spmd.getTrangThai() == 0 ? "Đang bán" : "Ngừng bán",
                 spmd.getMoTa(),
                 spmd.getAnh()
             };
             dtm.addRow(rowdata);
         }
+    }
+
+    private void loadCBSize() {
+        cbb_size.removeAllItems();
+        for (KichThuoc kichThuoc : this.kichThuocService.getList()) {
+            cbb_size.addItem(kichThuoc.getTenkt());
+        }
+
+    }
+
+    private void loadCBDanhMuc() {
+
+    }
+
+    private SanPham getForm() {
+        String ma = txt_ma.getText().trim();
+        String ten = txt_ma.getText().trim();
+        String giaBanStr = txt_ma.getText().trim();
+        String giaNhapStr = txt_ma.getText().trim();
+        String soLuongTonStr = txt_ma.getText().trim();
+        String moTa = txt_ma.getText().trim();
+        String loai = cbb_loaisanpham.getSelectedItem().toString();
+        String size = cbb_size.getSelectedItem().toString();
+        String trangThai = cbb_trangThai.getSelectedItem().toString();
+
+        BigDecimal giaBan = new BigDecimal(giaBanStr);
+        BigDecimal giaNhap = new BigDecimal(giaNhapStr);
+        Integer soLuongTon = Integer.parseInt(soLuongTonStr);
+        SanPham sp = new SanPham(size, loai, ma, ten, giaNhap, giaBan, soLuongTon, moTa, WIDTH);
+        if (trangThai.equalsIgnoreCase("Đang bán")) {
+            sp.setTrangThai(0);
+        } else {
+            sp.setTrangThai(1);
+        }
+        return sp;
+    }
+
+    private String getidSp(String ma) {
+        for (SanPham sanPham : this.sanPhamService.read()) {
+            if (sanPham.getMaSP().equalsIgnoreCase(ma)) {
+                return sanPham.getId();
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")

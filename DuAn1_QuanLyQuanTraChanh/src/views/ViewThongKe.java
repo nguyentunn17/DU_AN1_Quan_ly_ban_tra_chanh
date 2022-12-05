@@ -199,7 +199,7 @@ public class ViewThongKe extends javax.swing.JPanel {
                 cell.setCellValue(csv.getList().get(i).getNgayThanhToan());
 
             }
-            File f = new File("E://thongKe.xlsx");
+            File f = new File("D://thongKe.xlsx");
             try {
                 FileOutputStream fis = new FileOutputStream(f);
                 workbook.write(fis);

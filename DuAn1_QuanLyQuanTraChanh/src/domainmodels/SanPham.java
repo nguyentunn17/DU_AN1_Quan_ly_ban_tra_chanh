@@ -41,6 +41,18 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
+    public SanPham(String idKT, String idDM, String maSP, String TenSP, BigDecimal giaNhap, BigDecimal giaBan, Integer soLuongTon, String moTa, Integer trangThai) {
+        this.idKT = idKT;
+        this.idDM = idDM;
+        this.maSP = maSP;
+        this.TenSP = TenSP;
+        this.giaNhap = giaNhap;
+        this.giaBan = giaBan;
+        this.soLuongTon = soLuongTon;
+        this.moTa = moTa;
+        this.trangThai = trangThai;
+    }
+
     public String getId() {
         return id;
     }
