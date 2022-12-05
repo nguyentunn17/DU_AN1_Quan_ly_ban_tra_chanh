@@ -1,6 +1,5 @@
 package domainmodels;
 
-import java.math.BigDecimal;
 
 public class SanPham {
 //Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -19,8 +18,8 @@ public class SanPham {
     private String idDM;
     private String maSP;
     private String TenSP;
-    private BigDecimal giaNhap;
-    private BigDecimal giaBan;
+    private Double giaNhap;
+    private Double giaBan;
     private Integer soLuongTon;
     private String moTa;
     private Integer trangThai;
@@ -28,7 +27,7 @@ public class SanPham {
     public SanPham() {
     }
 
-    public SanPham(String id, String idKT, String idDM, String maSP, String TenSP, BigDecimal giaNhap, BigDecimal giaBan, Integer soLuongTon, String moTa, Integer trangThai) {
+    public SanPham(String id, String idKT, String idDM, String maSP, String TenSP, Double giaNhap, Double giaBan, Integer soLuongTon, String moTa, Integer trangThai) {
         this.id = id;
         this.idKT = idKT;
         this.idDM = idDM;
@@ -41,7 +40,7 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
-    public SanPham(String idKT, String idDM, String maSP, String TenSP, BigDecimal giaNhap, BigDecimal giaBan, Integer soLuongTon, String moTa, Integer trangThai) {
+    public SanPham(String idKT, String idDM, String maSP, String TenSP, Double giaNhap, Double giaBan, Integer soLuongTon, String moTa, Integer trangThai) {
         this.idKT = idKT;
         this.idDM = idDM;
         this.maSP = maSP;
@@ -93,19 +92,19 @@ public class SanPham {
         this.TenSP = TenSP;
     }
 
-    public BigDecimal getGiaNhap() {
+    public Double getGiaNhap() {
         return giaNhap;
     }
 
-    public void setGiaNhap(BigDecimal giaNhap) {
+    public void setGiaNhap(Double giaNhap) {
         this.giaNhap = giaNhap;
     }
 
-    public BigDecimal getGiaBan() {
+    public Double getGiaBan() {
         return giaBan;
     }
 
-    public void setGiaBan(BigDecimal giaBan) {
+    public void setGiaBan(Double giaBan) {
         this.giaBan = giaBan;
     }
 
