@@ -10,12 +10,42 @@ public class SanPhamViewModel {
     private String size;
     private BigDecimal giaNhap;
     private BigDecimal giaBan;
+    private Double thanhTien;
     private Integer soLuong;
     private Integer trangThai;
     private String moTa;
     private String anh;
 
     public SanPhamViewModel() {
+    }
+
+    public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, BigDecimal giaNhap, BigDecimal giaBan, Double thanhTien, Integer soLuong, Integer trangThai, String moTa, String anh) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.loaiSP = loaiSP;
+        this.size = size;
+        this.giaNhap = giaNhap;
+        this.giaBan = giaBan;
+        this.thanhTien = thanhTien;
+        this.soLuong = soLuong;
+        this.trangThai = trangThai;
+        this.moTa = moTa;
+        this.anh = anh;
+    }
+
+    public SanPhamViewModel(String masp, String tensp, BigDecimal giaBan, Integer soLuong) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.giaBan = giaBan;
+        this.soLuong = soLuong;
+    }
+
+    public SanPhamViewModel(String masp, String tensp, BigDecimal giaBan, Double thanhTien, Integer soLuong) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.giaBan = giaBan;
+        this.thanhTien = thanhTien;
+        this.soLuong = soLuong;
     }
 
     public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, BigDecimal giaNhap, BigDecimal giaBan, Integer soLuong, Integer trangThai, String moTa, String anh) {
@@ -109,6 +139,14 @@ public class SanPhamViewModel {
 
     public void setAnh(String anh) {
         this.anh = anh;
+    }
+
+    public Double getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(Double thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     @Override

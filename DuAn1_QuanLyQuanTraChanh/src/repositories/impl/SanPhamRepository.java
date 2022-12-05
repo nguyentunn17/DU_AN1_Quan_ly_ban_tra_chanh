@@ -29,13 +29,11 @@ public class SanPhamRepository implements ISanPhamRepository {
                 String ma = rs.getString("masp");
                 String ten = rs.getString("tensp");
                 Double giaNhap = rs.getDouble("giaNhap");
-                BigDecimal giaNhapBigDecimal = new BigDecimal(giaNhap);
                 Double giaBan = rs.getDouble("giaBan");
-                BigDecimal giaBanBigDecimal = new BigDecimal(giaBan);
                 Integer soLuongTon = rs.getInt("soLuongTon");
                 String moTa = rs.getString("mota");
                 Integer trangThai = rs.getInt("trangThai");
-                SanPham sp = new SanPham(id, idKT, idDM, ma, ten, giaNhapBigDecimal, giaBanBigDecimal, soLuongTon, moTa, trangThai);
+                SanPham sp = new SanPham(id, idKT, idDM, ma, ten, giaNhap, giaBan, soLuongTon, moTa, trangThai);
                 listsp.add(sp);
             }
         } catch (Exception ex) {

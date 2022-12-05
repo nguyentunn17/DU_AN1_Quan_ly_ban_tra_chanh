@@ -27,10 +27,6 @@ import services.impl.SanPhamService;
 import viewmodels.HoaDonVM;
 import viewmodels.SanPhamViewModel;
 
-/**
- *
- * @author Hung
- */
 public class ViewBanHang extends javax.swing.JPanel {
 
     private IBanService csv = new BanService();
@@ -38,9 +34,6 @@ public class ViewBanHang extends javax.swing.JPanel {
     private IHoaDonService hoaDonService = new HoaDonService();
     private INhanVienService nhanVienService = new NhanVienService();
 
-    /**
-     * Creates new form viewBanHang
-     */
     public ViewBanHang() {
         initComponents();
         this.Ban();
