@@ -31,6 +31,7 @@ public class ViewBanHang extends javax.swing.JPanel {
      */
     public ViewBanHang() {
         initComponents();
+        this.Ban();
     }
 
     void Ban() {

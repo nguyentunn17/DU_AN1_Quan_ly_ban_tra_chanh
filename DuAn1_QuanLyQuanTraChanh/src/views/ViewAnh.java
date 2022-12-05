@@ -23,14 +23,14 @@ import viewmodels.AnhViewModel;
  *
  * @author Hung
  */
-public class ViewImage extends javax.swing.JFrame {
+public class ViewAnh extends javax.swing.JFrame {
 
     private final IAnhService anhService;
     private final ISanPhamService sanPhamService;
     DefaultTableModel dtm;
     private String hinhAnh = null;
 
-    public ViewImage() {
+    public ViewAnh() {
         initComponents();
         this.anhService = new AnhService();
         this.sanPhamService = new SanPhamService();
@@ -289,21 +289,23 @@ public class ViewImage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewImage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewImage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewImage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewImage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewImage().setVisible(true);
+                new ViewAnh().setVisible(true);
             }
         });
     }
