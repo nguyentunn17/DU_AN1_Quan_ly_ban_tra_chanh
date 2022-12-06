@@ -36,6 +36,11 @@ public class HoaDon {
         this.tongTien = tongTien;
     }
 
+    public HoaDon(String id, String ma) {
+        this.id = id;
+        this.ma = ma;
+    }
+
     public String getId() {
         return id;
     }

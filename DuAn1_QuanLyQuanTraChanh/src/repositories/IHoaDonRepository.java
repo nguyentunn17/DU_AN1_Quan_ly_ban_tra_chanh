@@ -8,5 +8,6 @@ public interface IHoaDonRepository {
 
     ArrayList<HoaDonVM> getAll();
 
-    
+    ArrayList<HoaDon> getAll1();
+
 }

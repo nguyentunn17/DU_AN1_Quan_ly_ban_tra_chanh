@@ -14,7 +14,9 @@ import viewmodels.HoaDonVM;
  */
 public interface IHoaDonService {
 
-    ArrayList<HoaDonVM> getlist();
+    ArrayList<HoaDonVM> getAll();
+
+    ArrayList<HoaDon> getAll1();
 
     void insert(HoaDon hd);
 

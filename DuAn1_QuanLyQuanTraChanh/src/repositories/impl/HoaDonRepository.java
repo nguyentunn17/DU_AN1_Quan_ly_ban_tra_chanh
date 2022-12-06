@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package repositories.impl;
 
 import domainmodels.HoaDon;
@@ -11,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import repositories.IHoaDonRepository;
 import utilities.jdbcUtil;
 import viewmodels.HoaDonVM;
@@ -31,21 +26,24 @@ public class HoaDonRepository implements IHoaDonRepository {
         try {
             conn = jdbcUtil.getConnection();
             String sql = """
-                         SELECT dbo.HOADON.MaHD,dbo.HINHTHUCTHANHTOAN.NgayTao,dbo.NHANVIEN.Ten,dbo.HOADONCHITIET.ThanhTien,dbo.HINHTHUCTHANHTOAN.TrangThai
-                         FROM   dbo.HINHTHUCTHANHTOAN INNER JOIN
-                                      dbo.HOADON ON dbo.HINHTHUCTHANHTOAN.IdHD = dbo.HOADON.Id INNER JOIN
-                                      dbo.HOADONCHITIET ON dbo.HOADON.Id = dbo.HOADONCHITIET.IdHD INNER JOIN
-                                      dbo.NHANVIEN ON dbo.HINHTHUCTHANHTOAN.IdNV = dbo.NHANVIEN.Id AND dbo.HOADON.IdNV = dbo.NHANVIEN.Id""";
+                          SELECT MaHD,HOADON.NgayTao,HOADON.NgayTao,MaSP,TenSP,ThanhTien,hoadon.TrangThai FROM SANPHAM 
+                                                               INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
+                                                               INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id						
+                                                               """;
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();
             while (rs.next()) {
                 String mahd = rs.getString("MaHD");
                 Date ngaytao = rs.getDate("NgayTao");
-                String nguoitao = rs.getString("NguoiTao");
+                Date ngayThanhToan = rs.getDate("NgayTao");
+                String masp = rs.getString("MaSP");
+                String tensp = rs.getString("TenSP");
+                Double thanhtien = rs.getDouble("ThanhTien");
+
                 int trangthai = rs.getInt("TrangThai");
-                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoitao, trangthai, trangthai);
-                listhdvm.add(hdvm);
+                HoaDonVM hoaDonVM=new HoaDonVM(mahd, ngaytao, ngayThanhToan, masp, tensp, thanhtien, trangthai);
+                listhdvm.add(hoaDonVM);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -132,12 +130,13 @@ public class HoaDonRepository implements IHoaDonRepository {
         ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT [MaHD]\n"
-                    + "      ,[NgayTao]\n"
-                    + "      ,[NgayThanhToan]\n"
-                    + "      ,[TongTien]\n"
-                    + "      ,[TrangThai]\n"
-                    + "  FROM [dbo].[HOADON]";
+            String sql = """
+                         SELECT [MaHD]
+                               ,[NgayTao]
+                               ,[NgayThanhToan]
+                               ,[TongTien]
+                               ,[TrangThai]
+                           FROM [dbo].[HOADON]""";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();
@@ -154,6 +153,47 @@ public class HoaDonRepository implements IHoaDonRepository {
             ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        return listhdvm;
+    }
+
+    @Override
+    public ArrayList<HoaDon> getAll1() {
+        ArrayList<HoaDon> listhdvm = new ArrayList<>();
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = """
+                         SELECT  [Id]
+                                 ,[IdNV]
+                                 ,[IdKH]
+                                 ,[IdBAN]
+                                 ,[MaHD]
+                                 ,[NgayTao]
+                                 ,[NgayThanhToan]
+                                 ,[NgayShip]
+                                 ,[TienShip]
+                                 ,[TienCoc]
+                                 ,[NgayNhan]
+                                 ,[TenNguoiNhan]
+                                 ,[DiaChi]
+                                 ,[TongTien]
+                                 ,[SDTNguoiNhan]
+                                 ,[SDTNguoiShip]
+                                 ,[TenNguoiShip]
+                                 ,[PhanTramGiamGia]
+                                 ,[TrangThai]
+                             FROM [QuanLyCuaHangTraChanh].[dbo].[HOADON]""";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.execute();
+            ResultSet rs = pre.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String mahd = rs.getString("MaHD");
+                HoaDon hd = new HoaDon(id, mahd);
+                listhdvm.add(hd);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
         }
         return listhdvm;
     }

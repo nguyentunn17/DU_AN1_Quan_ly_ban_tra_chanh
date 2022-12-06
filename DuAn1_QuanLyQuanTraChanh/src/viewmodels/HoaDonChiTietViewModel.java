@@ -4,8 +4,11 @@ public class HoaDonChiTietViewModel {
 
     private String masp;
     private String tensp;
-    private Double giaBan;
     private Integer soLuong;
+    private String mucDuong;
+    private String mucDa;
+
+    private Double giaBan;
     private Double thanhTien;
 
     public HoaDonChiTietViewModel() {

@@ -17,7 +17,7 @@ public class HoaDonService implements IHoaDonService {
     private HoaDonRepository hdrp = new HoaDonRepository();
 
     @Override
-    public ArrayList<HoaDonVM> getlist() {
+    public ArrayList<HoaDonVM> getAll() {
         return rhdvm.getAll();
     }
 
@@ -39,5 +39,10 @@ public class HoaDonService implements IHoaDonService {
     @Override
     public ArrayList<HoaDonVM> listH() {
         return hdrp.listHoaDon();
+    }
+
+    @Override
+    public ArrayList<HoaDon> getAll1() {
+        return this.hdrp.getAll1();
     }
 }

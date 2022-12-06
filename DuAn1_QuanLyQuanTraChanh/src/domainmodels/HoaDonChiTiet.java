@@ -42,6 +42,14 @@ public class HoaDonChiTiet {
         this.trangThai = trangThai;
     }
 
+    public HoaDonChiTiet(String idHD, String idSP, Integer soLuong, Double donGia, Double thanhTien) {
+        this.idHD = idHD;
+        this.idSP = idSP;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+        this.thanhTien = thanhTien;
+    }
+
     public String getId() {
         return id;
     }

@@ -14,18 +14,31 @@ public class HoaDonVM {
 
     private String mahd;
     private Date ngayTao;
-    private String nguoitao;
-    private double tongtien;
+    private Date ngayThanhToan;
+    private String nguoiTao;
+    private String masp;
+    private String tensp;
+    private double thanhTien;
     private int trangthai;
 
     public HoaDonVM() {
     }
 
-    public HoaDonVM(String mahd, Date ngayTao, String nguoitao, double tongtien, int trangthai) {
+    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, double thanhTien, int trangthai) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
-        this.nguoitao = nguoitao;
-        this.tongtien = tongtien;
+        this.nguoiTao = nguoiTao;
+        this.thanhTien = thanhTien;
+        this.trangthai = trangthai;
+    }
+
+    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan, String masp, String tensp, double thanhTien, int trangthai) {
+        this.mahd = mahd;
+        this.ngayTao = ngayTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.masp = masp;
+        this.tensp = tensp;
+        this.thanhTien = thanhTien;
         this.trangthai = trangthai;
     }
 
@@ -45,20 +58,36 @@ public class HoaDonVM {
         this.ngayTao = ngayTao;
     }
 
-    public String getNguoitao() {
-        return nguoitao;
+    public Date getNgayThanhToan() {
+        return ngayThanhToan;
     }
 
-    public void setNguoitao(String nguoitao) {
-        this.nguoitao = nguoitao;
+    public void setNgayThanhToan(Date ngayThanhToan) {
+        this.ngayThanhToan = ngayThanhToan;
     }
 
-    public double getTongtien() {
-        return tongtien;
+    public String getMasp() {
+        return masp;
     }
 
-    public void setTongtien(double tongtien) {
-        this.tongtien = tongtien;
+    public void setMasp(String masp) {
+        this.masp = masp;
+    }
+
+    public String getTensp() {
+        return tensp;
+    }
+
+    public void setTensp(String tensp) {
+        this.tensp = tensp;
+    }
+
+    public double getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     public int getTrangthai() {
