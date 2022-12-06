@@ -683,7 +683,18 @@ public class ViewNhanVien extends javax.swing.JPanel {
                 rdDaNghi.setSelected(true);
             }
             txtDiaChi.setText(tbNhanVien.getValueAt(row, 8).toString());
-            lblImage.setText(tbNhanVien.getValueAt(row, 9).toString());
+            String hinh = tbNhanVien.getValueAt(row, 9).toString();
+            if (hinh.equalsIgnoreCase("No Avatar")) {
+                lblImage.setText("No Avatar");
+                lblImage.setIcon(null);
+            } else {
+                this.lblImage.setText("");
+                ImageIcon imgIcon = new ImageIcon(getClass().getResource("/image/" + hinh));
+                Image img = imgIcon.getImage();
+                Image newing = img.getScaledInstance(146, 165, java.awt.Image.SCALE_SMOOTH);
+                imgIcon = new ImageIcon(newing);
+                lblImage.setIcon(imgIcon);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(ViewNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
