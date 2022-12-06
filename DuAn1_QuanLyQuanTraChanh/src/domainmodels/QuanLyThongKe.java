@@ -13,15 +13,15 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
-import services.impl.ThongKeService;
 import services.IThongKeService;
+import services.impl.ThongKeService;
 
 /**
  *
  * @author Inspiron
  */
 public class QuanLyThongKe {
-    private IThongKeService thongKe_sv=null;
+    private ThongKeService thongKe_sv=null;
 
     public QuanLyThongKe() {
         thongKe_sv=new ThongKeService();
@@ -53,8 +53,8 @@ public class QuanLyThongKe {
     
     
     }
-    public void setDateTo(Date ngay, JPanel jPanel){
-        ArrayList<ThongKe> thongke= thongKe_sv.timkiem(ngay);
+     public void setDateToo(Date ngaya ,Date ngayb, JPanel jPanel){
+        ArrayList<ThongKe> thongke= thongKe_sv.timkiem(ngaya, ngayb);
         if(thongke!=null){
             DefaultCategoryDataset categoryDataset=new DefaultCategoryDataset();
             for(ThongKe ke: thongke){
@@ -80,6 +80,29 @@ public class QuanLyThongKe {
     
     
     }
+     public void setDate(Date ngay , JPanel jPanel){
+        ArrayList<ThongKe> thongke= thongKe_sv.timkiem(ngay);
+        if(thongke!=null){
+            DefaultCategoryDataset categoryDataset=new DefaultCategoryDataset();
+            for(ThongKe ke: thongke){
+                categoryDataset.addValue(ke.getTongtien(), "Tong Tien", ke.getNgayThanhToan());
+            
+            
+            }
+            JFreeChart chart= ChartFactory.createBarChart("DOANH THU (VND)", "Ngay Thanh Toan","Gia Tien", categoryDataset);
+            ChartPanel chartPanel=new ChartPanel(chart);
+            chartPanel.setPreferredSize(new Dimension(jPanel.getWidth(),500));
+            jPanel.removeAll();
+            jPanel.setLayout(new CardLayout());
+            jPanel.add(chartPanel);
+            jPanel.validate();
+            jPanel.repaint();
+            
+        
+        
+        
+        }
+     }
             
     
 }

@@ -30,10 +30,16 @@ public class ThongKeService implements IThongKeService{
     }
 
     @Override
-    public ArrayList<ThongKe> timkiem(Date ngayThanhToan) {
-        return this.thong_Ke_rep.timkiem(ngayThanhToan);
-       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ArrayList<ThongKe> timkiem(Date ngaya, Date ngayb) {
+       return thong_Ke_rep.timkiemm(ngaya, ngayb);// throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public ArrayList<ThongKe> timkiem(Date ngay) {
+        return thong_Ke_rep.timkiemtheongay(ngay);//throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+   
 
    
 }

@@ -4,26 +4,22 @@
  */
 package repositories.impl;
 
-import domainmodels.HoaDon;
 import domainmodels.ThongKe;
-import java.util.ArrayList;
-import utilities.jdbcUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import services.IThongKeService;
+import utilities.jdbcUtil;
 
 /**
  *
  * @author Inspiron
  */
-public class ThongKeRepository implements IThongKeService{
-
-    @Override
+public class ThongKeRepository {
     public ArrayList<ThongKe> getList() {
         try {
             Connection conn= jdbcUtil.getConnection();
@@ -49,17 +45,40 @@ public class ThongKeRepository implements IThongKeService{
         }
         return null;
     }
-
-    @Override
-    public ArrayList<ThongKe> timkiem(Date ngayThanhToan) {
+    public ArrayList<ThongKe> timkiemm(Date ngaya,Date ngayb) {
         ArrayList<ThongKe>thongKes=new ArrayList<>();
         try {
             Connection conn=jdbcUtil.getConnection();
-            String sql="SELECT ngayThanhToan , sum(tongtien) as tongtien FROM HOADON  where NgayThanhToan = ? GROUP BY NGAYTHANHTOAN";
-            PreparedStatement ps=conn.prepareStatement(sql);
-            ps.setObject(1, ngayThanhToan);
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
+            String sql="SELECT NgayThanhToan , sum(tongtien) as tongtien FROM HOADON  where NgayThanhToan between ? And ?  GROUP BY NgayThanhToan";
+            PreparedStatement ps=conn.prepareCall(sql);
+            ps.setObject(1, ngaya);
+            ps.setObject(2, ngayb);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                ThongKe ke=new ThongKe();
+                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
+                ke.setTongtien(rs.getDouble("TongTien"));
+                thongKes.add(ke);
+                
+                
+            }
+            // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return thongKes;
+    }
+      public ArrayList<ThongKe> timkiemtheongay(Date ngay ) {
+        ArrayList<ThongKe>thongKes=new ArrayList<>();
+        try {
+            Connection conn=jdbcUtil.getConnection();
+            String sql="SELECT NgayThanhToan , sum(tongtien) as tongtien FROM HOADON  where NgayThanhToan =? GROUP BY NgayThanhToan";
+            PreparedStatement ps=conn.prepareCall(sql);
+            ps.setObject(1, ngay);
+            
+            ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 ThongKe ke=new ThongKe();
                 ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
@@ -77,6 +96,4 @@ public class ThongKeRepository implements IThongKeService{
         return thongKes;
     }
 
-    
-    
 }
