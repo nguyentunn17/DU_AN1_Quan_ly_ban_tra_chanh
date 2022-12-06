@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package views;
 
 import domainmodels.QuanLyThongKe;
@@ -20,37 +16,30 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author ASUS
- */
 public class ViewThongKe extends javax.swing.JPanel {
 
-    private IThongKeService thongKe_sv = new ThongKeService();
+    private final IThongKeService thongKe_sv = new ThongKeService();
     private DefaultTableModel defaultTableModel;
 
-    /**
-     * Creates new form ViewThongKe
-     */
     public ViewThongKe() {
         initComponents();
         loadTable();
         QuanLyThongKe ke = new QuanLyThongKe();
         ke.setDateToChartl(chiu1);
     }
-      public void loadTable(){
-        defaultTableModel=(DefaultTableModel) this.tbl_ngaythanhtoan.getModel();
+
+    private void loadTable() {
+        defaultTableModel = (DefaultTableModel) this.tbl_ngaythanhtoan.getModel();
         defaultTableModel.setRowCount(0);
-        for(ThongKe ke:this.thongKe_sv.getList()){
-            Object [] rowdata={ke.getNgayThanhToan(),ke.getTongtien()};
+        for (ThongKe ke : this.thongKe_sv.getList()) {
+            Object[] rowdata = {
+                ke.getNgayThanhToan(),
+                ke.getTongtien()
+            };
             defaultTableModel.addRow(rowdata);
-        
-        
         }
-    
-    
-    
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -105,12 +94,18 @@ public class ViewThongKe extends javax.swing.JPanel {
             }
         });
 
+        dc_ngay.setDateFormatString("yyyy-MM-dd");
+
         btn_timkhoang.setText("Tìm khoảng ngày");
         btn_timkhoang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_timkhoangActionPerformed(evt);
             }
         });
+
+        dc_ngaya.setDateFormatString("yyyy-MM-dd");
+
+        dc_ngayb.setDateFormatString("yyyy-MM-dd");
 
         jButton1.setText("Resert");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -197,13 +192,14 @@ public class ViewThongKe extends javax.swing.JPanel {
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
         // TODO add your handling code here:
-        Date ngay =dc_ngaya.getDate();
+        Date ngay = dc_ngaya.getDate();
         DefaultTableModel dtm = (DefaultTableModel) tbl_ngaythanhtoan.getModel();
         dtm.setRowCount(0);
         ThongKe thongKe = new ThongKe();
         for (ThongKe data : thongKe_sv.timkiem(ngay)) {
-            Object[] row = {data.getNgayThanhToan(),data.getTongtien()
-
+            Object[] row = {
+                data.getNgayThanhToan(), 
+                data.getTongtien()
             };
             dtm.addRow(row);
 
@@ -215,13 +211,13 @@ public class ViewThongKe extends javax.swing.JPanel {
 
     private void btn_timkhoangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkhoangActionPerformed
         // TODO add your handling code here:
-        Date ngay =dc_ngaya.getDate();
-        Date ngayy=dc_ngayb.getDate();
+        Date ngay = dc_ngaya.getDate();
+        Date ngayy = dc_ngayb.getDate();
         DefaultTableModel dtm = (DefaultTableModel) tbl_ngaythanhtoan.getModel();
         dtm.setRowCount(0);
         ThongKe thongKe = new ThongKe();
         for (ThongKe data : thongKe_sv.timkiem(ngay, ngayy)) {
-            Object[] row = {data.getNgayThanhToan(),data.getTongtien()
+            Object[] row = {data.getNgayThanhToan(), data.getTongtien()
 
             };
             dtm.addRow(row);
@@ -240,7 +236,7 @@ public class ViewThongKe extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-           try {
+        try {
             XSSFWorkbook workbook = new XSSFWorkbook(); // lay wordbook ra
             XSSFSheet sheet = workbook.createSheet("danhSach"); // tao sheet va dat ten
             XSSFRow row = null; //tao cot
@@ -283,7 +279,7 @@ public class ViewThongKe extends javax.swing.JPanel {
         } catch (Exception e) {
         }
         JOptionPane.showMessageDialog(this, "In thành công");
-    
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

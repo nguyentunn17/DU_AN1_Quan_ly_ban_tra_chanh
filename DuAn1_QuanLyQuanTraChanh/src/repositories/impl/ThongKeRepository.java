@@ -20,23 +20,25 @@ import utilities.jdbcUtil;
  * @author Inspiron
  */
 public class ThongKeRepository {
+
     public ArrayList<ThongKe> getList() {
         try {
-            Connection conn= jdbcUtil.getConnection();
-            String sql="select NgayThanhToan , SUM(Tongtien) AS TONGTIEN FROM HOADON GROUP BY NGAYTHANHTOAN";
-            ArrayList<ThongKe> tks=new ArrayList<>();
-            PreparedStatement ps=conn.prepareCall(sql);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                ThongKe ke=new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
-                ke.setTongtien(rs.getDouble("Tongtien"));
+            Connection conn = jdbcUtil.getConnection();
+            String sql = """
+                         SELECT NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
+                         group by NgayTao
+                         """;
+            ArrayList<ThongKe> tks = new ArrayList<>();
+            PreparedStatement ps = conn.prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe ke = new ThongKe();
+                ke.setNgayThanhToan(rs.getDate("ngaytao"));
+                ke.setTongtien(rs.getDouble("tongtien"));
                 tks.add(ke);
-                
-                
+
             }
-            
-            
+
             return tks;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -45,24 +47,25 @@ public class ThongKeRepository {
         }
         return null;
     }
-    public ArrayList<ThongKe> timkiemm(Date ngaya,Date ngayb) {
-        ArrayList<ThongKe>thongKes=new ArrayList<>();
+
+    public ArrayList<ThongKe> timkiemm(Date ngaya, Date ngayb) {
+        ArrayList<ThongKe> thongKes = new ArrayList<>();
         try {
-            Connection conn=jdbcUtil.getConnection();
-            String sql="SELECT NgayThanhToan , sum(tongtien) as tongtien FROM HOADON  where NgayThanhToan between ? And ?  GROUP BY NgayThanhToan";
-            PreparedStatement ps=conn.prepareCall(sql);
+            Connection conn = jdbcUtil.getConnection();
+            String sql = """
+                         SELECT  NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
+                                       where NgayThanhToan between ? And ?  GROUP BY ngaytao""";
+            PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngaya);
             ps.setObject(2, ngayb);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                ThongKe ke=new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
-                ke.setTongtien(rs.getDouble("TongTien"));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe ke = new ThongKe();
+                ke.setNgayThanhToan(rs.getDate("ngaytao"));
+                ke.setTongtien(rs.getDouble("tongtien"));
                 thongKes.add(ke);
-                
-                
+
             }
-            // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (Exception ex) {
@@ -70,22 +73,24 @@ public class ThongKeRepository {
         }
         return thongKes;
     }
-      public ArrayList<ThongKe> timkiemtheongay(Date ngay ) {
-        ArrayList<ThongKe>thongKes=new ArrayList<>();
+
+    public ArrayList<ThongKe> timkiemtheongay(Date ngay) {
+        ArrayList<ThongKe> thongKes = new ArrayList<>();
         try {
-            Connection conn=jdbcUtil.getConnection();
-            String sql="SELECT NgayThanhToan , sum(tongtien) as tongtien FROM HOADON  where NgayThanhToan =? GROUP BY NgayThanhToan";
-            PreparedStatement ps=conn.prepareCall(sql);
+            Connection conn = jdbcUtil.getConnection();
+            String sql = """
+                         SELECT  NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
+                                                    where NgayTao =? GROUP BY ngaytao""";
+            PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngay);
-            
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                ThongKe ke=new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
-                ke.setTongtien(rs.getDouble("TongTien"));
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe ke = new ThongKe();
+                ke.setNgayThanhToan(rs.getDate("ngaytao"));
+                ke.setTongtien(rs.getDouble("tongtien"));
                 thongKes.add(ke);
-                
-                
+
             }
             // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         } catch (SQLException ex) {
