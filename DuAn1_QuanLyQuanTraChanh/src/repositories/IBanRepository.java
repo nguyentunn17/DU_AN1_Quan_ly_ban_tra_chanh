@@ -20,4 +20,6 @@ public interface IBanRepository {
     boolean Update(String id, Ban b);
 
     boolean delete(String id);
+    
+    ArrayList<Ban> getTenBan(String ten);
 }

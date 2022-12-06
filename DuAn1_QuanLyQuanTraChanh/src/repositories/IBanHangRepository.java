@@ -1,6 +1,5 @@
 package repositories;
 
-import domainmodels.HoaDonChiTiet;
 import java.util.ArrayList;
 import viewmodels.HoaDonChiTietViewModel;
 

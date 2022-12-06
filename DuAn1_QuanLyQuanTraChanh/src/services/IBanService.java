@@ -20,4 +20,6 @@ public interface IBanService {
     String Update(String id, Ban b);
 
     String delete(String id);
+
+    ArrayList<Ban> getTenBan(String ten);
 }

@@ -39,6 +39,7 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
     private final ISanPhamService sanPhamService;
     private final IBanHangService banHangService;
     ArrayList<SanPham> listddsp = new ArrayList<>();
+    JButton btn;
 
     public ViewBanHang() {
         initComponents();
@@ -54,12 +55,13 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
         GridLayout gr = new GridLayout(4, 3);
         this.JP_Ban.setLayout(gr);
         for (Ban b : csv.getlist()) {
-            JButton btn = new JButton(b.getTenBan());
+            btn = new JButton(b.getTenBan());
+            btn.getText();
+            System.out.println( btn.getText());
             this.JP_Ban.add(btn);
             btn.setActionCommand("OK");
             btn.addActionListener(this);
         }
-
     }
 
     private void loadAnhSanPham() {
@@ -129,11 +131,11 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+       
         if ("OK".equals(e.getActionCommand())) {
             jTabbedPane1.setSelectedComponent(JPMenu);
-            for (Ban b : csv.getlist()) {
-                this.lbl_banquay.setText(b.getTenBan());
-            }
+            JOptionPane.showMessageDialog(this, "nhu lol" + btn.getText());
+
         }
         if ("SP".equalsIgnoreCase(e.getActionCommand())) {
             for (SanPhamViewModel sanPham : this.sanPhamService.getByID()) {
@@ -147,6 +149,15 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
     private HoaDonChiTiet getForm() {
         HoaDonChiTiet hdct = new HoaDonChiTiet();
         return hdct;
+    }
+
+    private int gettrangthai(String ma) {
+        for (HoaDonVM QLHoaDon : hoaDonService.listH()) {
+            if (QLHoaDon.getMahd().equals(ma)) {
+                return QLHoaDon.getTrangthai();
+            }
+        }
+        return 0;
     }
 
     @SuppressWarnings("unchecked")
@@ -281,15 +292,28 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
         tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Thành tiền"
+                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Thành tiền", "MucDuong", "MucDa"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbGioHangMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbGioHang);
 
         btnTaoHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -566,9 +590,12 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
     private void tb_sanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_sanphamMouseClicked
         int row = tb_sanpham.getSelectedRow();
-
+        int iHD = tbHoaDon.getSelectedRow();
+        float sum = 0;
         String soLuongStr = JOptionPane.showInputDialog("Mời nhập số lượng");
-
+        if (soLuongStr == null) {
+            return;
+        }
         String ma = tb_sanpham.getValueAt(row, 1).toString();
         String ten = tb_sanpham.getValueAt(row, 2).toString();
         String giabanStr = tb_sanpham.getValueAt(row, 4).toString();
@@ -578,38 +605,63 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
         SanPham sp = new SanPham(ma, ten, giaBan, soLuong);
 
-//        if (iHD < 0) {
-//            JOptionPane.showMessageDialog(this, "Chon hoa don");
-//            return;
-//        }
-//        if (gettrangthai(lbl_ma.getText().trim()) == 0 || gettrangthai(txt_maHD.getText().trim()) == 2) {
-//            JOptionPane.showMessageDialog(this, "Hoa don khong hoat dong");
-//            return;
-//        }
-//        String soLuongStr = JOptionPane.showInputDialog("Moi nhap so luong");
-//        if (soLuongStr
-//                == null) {
-//            return;
-//        }
-//        getSoLuong = Integer.parseInt(soLuongStr);
-//        for (QLSanPham qLSanPham : this.banHangService.getAllById()) {
-//            if (getSoLuong > qLSanPham.getSoLuongSP()) {
-//                JOptionPane.showMessageDialog(this, "Khong du hang");
+        if (iHD < 0) {
+            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn");
+            return;
+        }
+        if (gettrangthai(lbl_ma.getText().trim()) == 0 || gettrangthai(lbl_ma.getText().trim()) == 2) {
+            JOptionPane.showMessageDialog(this, "Hóa đơn không hoạt động");
+            return;
+        }
+//        for (SanPham sanPham : this.sanPhamService.read()) {
+//            if (soLuong > sanPham.getSoLuongTon()) {
+//                JOptionPane.showMessageDialog(this, "Không đủ hàng");
+//
 //                return;
 //            }
 //        }
-//        for (QLSanPham qLSanPham : listaddsp) {
-//            if (qLSanPham.getMa().equals(masp)) {
-//                int soluong = qLSanPham.getSoLuongSP() + getSoLuong;
-//                qlsp.setSoLuongSP(soluong);
-//                listaddsp.set(i, qlsp);
-//                this.loadTableGH(listaddsp);
-//                return;
-//            }
-//        }
+        for (SanPham sanPham : listddsp) {
+            if (sanPham.getMaSP().equals(ma)) {
+                int soluong = sp.getSoLuongTon() + soLuong;
+                sanPham.setSoLuongTon(soluong);
+                listddsp.set(iHD, sp);
+                this.loadTableGioHang(listddsp);
+                sum += sanPham.getSoLuongTon() * sanPham.getGiaBan();
+                lbl_tongtien.setText(String.valueOf(sum));
+            }
+            return;
+        }
         listddsp.add(sp);
         this.loadTableGioHang(listddsp);
+        for (SanPham sanPham : listddsp) {
+            sum += sanPham.getSoLuongTon() * sanPham.getGiaBan();
+
+            lbl_tongtien.setText(String.valueOf(sum));
+        }
     }//GEN-LAST:event_tb_sanphamMouseClicked
+
+    private void tbGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGioHangMouseClicked
+        int row = tb_sanpham.getSelectedRow();
+        String ma = tb_sanpham.getValueAt(row, 1).toString();
+        String soLuongStr = JOptionPane.showInputDialog("Mời nhập số lượng");
+        if (soLuongStr == null) {
+            return;
+        }
+        Integer soLuong = Integer.parseInt(soLuongStr);
+        float sum = 0;
+        for (SanPham sanPham : listddsp) {
+            if (sanPham.getMaSP().equals(ma)) {
+                int soluong = sanPham.getSoLuongTon() - soLuong;
+                sanPham.setSoLuongTon(soluong);
+                listddsp.set(row, sanPham);
+                this.loadTableGioHang(listddsp);
+                sum += sanPham.getSoLuongTon() * sanPham.getGiaBan();
+                lbl_tongtien.setText(String.valueOf(sum));
+                return;
+            }
+
+        }
+    }//GEN-LAST:event_tbGioHangMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

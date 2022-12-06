@@ -13,8 +13,10 @@ import services.IBanService;
  *
  * @author ASUS
  */
-public class BanService implements IBanService{
+public class BanService implements IBanService {
+
     public BanRepository RBan = new BanRepository();
+
     @Override
     public ArrayList<Ban> getlist() {
         return RBan.getAll();
@@ -22,7 +24,7 @@ public class BanService implements IBanService{
 
     @Override
     public String insert(Ban b) {
-        if(RBan.insert(b)){
+        if (RBan.insert(b)) {
             return "Thêm Thành Công";
         }
         return "Thêm Thất bại";
@@ -30,7 +32,7 @@ public class BanService implements IBanService{
 
     @Override
     public String Update(String id, Ban b) {
-        if(RBan.Update(id, b)){
+        if (RBan.Update(id, b)) {
             return "Sửa Thành Công";
         }
         return "Sửa Thất bại";
@@ -38,10 +40,15 @@ public class BanService implements IBanService{
 
     @Override
     public String delete(String id) {
-        if(RBan.delete(id)){
+        if (RBan.delete(id)) {
             return "xóa Thành Công";
         }
         return "xóa Thất bại";
     }
-    
+
+    @Override
+    public ArrayList<Ban> getTenBan(String ten) {
+        return this.RBan.getTenBan(ten);
+    }
+
 }

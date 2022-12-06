@@ -27,7 +27,7 @@ public class BanRepository implements IBanRepository {
         Connection conn;
         try {
             conn = jdbcUtil.getConnection();
-            String sql = "select * from Ban";
+            String sql = "select * from Ban order by maban asc";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();
@@ -93,5 +93,30 @@ public class BanRepository implements IBanRepository {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public ArrayList<Ban> getTenBan(String ten) {
+        ArrayList<Ban> listBan = new ArrayList<>();
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = "select * from Ban where tenban=?";
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setObject(1, ten);
+            pre.execute();
+            ResultSet rs = pre.getResultSet();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String maca = rs.getString("MaBan");
+                String tenca = rs.getString("TenBan");
+                int soNguoi = rs.getInt("SoNguoi");
+                int trangThai = rs.getInt("TrangThai");
+                Ban b = new Ban(id, maca, tenca, soNguoi, trangThai);
+                listBan.add(b);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BanRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listBan;
     }
 }
