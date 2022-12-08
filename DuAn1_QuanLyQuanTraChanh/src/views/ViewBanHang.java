@@ -1,5 +1,9 @@
 package views;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import domainmodels.Ban;
 import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
@@ -7,10 +11,15 @@ import domainmodels.SanPham;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.IBanHangService;
@@ -136,7 +145,7 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
             for (Ban b : csv.getlist()) {
                 btn = new JButton(b.getTenBan());
                 if (b.getTenBan().equalsIgnoreCase(btn.getText())) {
-                    JOptionPane.showMessageDialog(this, b.getTenBan());
+                    lbl_banquay.setText(b.getTenBan());
                     return;
                 }
             }
@@ -387,6 +396,11 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton5.setText("In hóa đơn");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         btnThanhToan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnThanhToan.setText("Thanh toán");
@@ -425,6 +439,11 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton7.setText("In phiếu bếp");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -665,8 +684,8 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
                 sanPham.setSoLuongTon(sanPham.getSoLuongTon() + soLuong);
                 listddsp.set(rowHD, sanPham);
                 this.loadTableGioHang(listddsp);
-                sum += sanPham.getSoLuongTon() * sanPham.getGiaBan();
-                lbl_tongtien.setText(String.valueOf(sum));
+//                sum += sanPham.getSoLuongTon() * sanPham.getGiaBan();
+//                lbl_tongtien.setText(String.valueOf(sum));
                 return;
             }
         }
@@ -700,6 +719,96 @@ public class ViewBanHang extends javax.swing.JPanel implements ActionListener {
 
         }
     }//GEN-LAST:event_tbGioHangMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String path = "";
+        JFileChooser j = new JFileChooser();
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = j.showSaveDialog(this);
+
+        if (x == JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "InHoaDOn.pdf"));
+
+            doc.open();
+
+            PdfPTable tbl = new PdfPTable(5);
+
+            tbl.addCell("STT");
+            tbl.addCell("Tensanpham");
+            tbl.addCell("SoLuong");
+            tbl.addCell("GiaBan");
+            tbl.addCell("ThanhTien");
+
+            for (int i = 0; i < tbGioHang.getRowCount(); i++) {
+                String STT = tbGioHang.getValueAt(i, 0).toString();
+                String SoLuong = tbGioHang.getValueAt(i, 2).toString();
+                String a = tbGioHang.getValueAt(i, 3).toString();
+                String ab = tbGioHang.getValueAt(i, 4).toString();
+                String abc = tbGioHang.getValueAt(i, 5).toString();
+
+                tbl.addCell(STT);
+                tbl.addCell(SoLuong);
+                tbl.addCell(a);
+                tbl.addCell(ab);
+                tbl.addCell(abc);
+
+            }
+            doc.add(tbl);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "In thành công");
+        doc.close();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        String path = "";
+        JFileChooser j = new JFileChooser();
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = j.showSaveDialog(this);
+
+        if (x == JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "InPB.pdf"));
+
+            doc.open();
+
+            PdfPTable tbl = new PdfPTable(3);
+
+            tbl.addCell("STT");
+            tbl.addCell("Tên sản phẩm");
+            tbl.addCell("So luong");
+
+            for (int i = 0; i < tbGioHang.getRowCount(); i++) {
+                String STT = tbGioHang.getValueAt(i, 0).toString();
+                String SoLuong = tbGioHang.getValueAt(i, 2).toString();
+                String a = tbGioHang.getValueAt(i, 3).toString();
+
+                tbl.addCell(STT);
+                tbl.addCell(SoLuong);
+                tbl.addCell(a);
+
+            }
+            doc.add(tbl);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "In thành công");
+        doc.close();
+    }//GEN-LAST:event_jButton7ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

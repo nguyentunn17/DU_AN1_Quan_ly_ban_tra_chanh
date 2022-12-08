@@ -80,7 +80,7 @@ public class SanPhamRepository implements ISanPhamRepository {
             ps.setObject(7, sp.getSoLuongTon());
             ps.setObject(8, sp.getMoTa());
             ps.setObject(9, sp.getTrangThai());
-            ps.setObject(9, id);
+            ps.setObject(10, id);
 
             ps.execute();
         } catch (Exception ex) {

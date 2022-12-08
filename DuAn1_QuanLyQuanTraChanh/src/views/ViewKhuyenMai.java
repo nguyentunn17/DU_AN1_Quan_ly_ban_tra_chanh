@@ -366,7 +366,15 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             new String [] {
                 "STT", "Mã khuyến mãi", "Tên khuyến mãi", "Loại giảm giá", "Mức giảm", "Tên sản phẩm", "Giá ban đầu", "Giá sau khi giảm", "Trạng thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tb_danhsachkhuyenmai);
 
         tb_khuyenmai.setModel(new javax.swing.table.DefaultTableModel(
@@ -408,9 +416,16 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane4.setViewportView(tb_sanpham);

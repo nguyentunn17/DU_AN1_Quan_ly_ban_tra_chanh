@@ -245,8 +245,8 @@ public class ViewThongKe extends javax.swing.JPanel {
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("STT");
 
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue("Id");
+//            cell = row.createCell(1, CellType.STRING);
+//            cell.setCellValue("Id");
 
             cell = row.createCell(1, CellType.STRING);
             cell.setCellValue("Tổng Tiền");
@@ -267,7 +267,7 @@ public class ViewThongKe extends javax.swing.JPanel {
                 cell.setCellValue(thongKe_sv.getList().get(i).getNgayThanhToan());
 
             }
-            File f = new File("E://thongKe.xlsx");
+            File f = new File("D://thongKe.xlsx");
             try {
                 FileOutputStream fis = new FileOutputStream(f);
                 workbook.write(fis);
