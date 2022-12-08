@@ -221,6 +221,7 @@ public class ViewChucVu extends javax.swing.JFrame {
         setVisible(false);
         ViewNhanVien vnv = new ViewNhanVien();
         vnv.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
