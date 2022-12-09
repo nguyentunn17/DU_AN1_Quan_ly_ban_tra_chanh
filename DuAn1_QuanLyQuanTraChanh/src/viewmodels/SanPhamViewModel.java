@@ -8,8 +8,8 @@ public class SanPhamViewModel {
     private String tensp;
     private String loaiSP;
     private String size;
-    private BigDecimal giaNhap;
-    private BigDecimal giaBan;
+    private Double giaNhap;
+    private Double giaBan;
     private Double thanhTien;
     private Integer soLuong;
     private Integer trangThai;
@@ -19,7 +19,7 @@ public class SanPhamViewModel {
     public SanPhamViewModel() {
     }
 
-    public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, BigDecimal giaNhap, BigDecimal giaBan, Double thanhTien, Integer soLuong, Integer trangThai, String moTa, String anh) {
+    public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, Double giaNhap, Double giaBan, Double thanhTien, Integer soLuong, Integer trangThai, String moTa, String anh) {
         this.masp = masp;
         this.tensp = tensp;
         this.loaiSP = loaiSP;
@@ -33,14 +33,14 @@ public class SanPhamViewModel {
         this.anh = anh;
     }
 
-    public SanPhamViewModel(String masp, String tensp, BigDecimal giaBan, Integer soLuong) {
+    public SanPhamViewModel(String masp, String tensp, Double giaBan, Integer soLuong) {
         this.masp = masp;
         this.tensp = tensp;
         this.giaBan = giaBan;
         this.soLuong = soLuong;
     }
 
-    public SanPhamViewModel(String masp, String tensp, BigDecimal giaBan, Double thanhTien, Integer soLuong) {
+    public SanPhamViewModel(String masp, String tensp, Double giaBan, Double thanhTien, Integer soLuong) {
         this.masp = masp;
         this.tensp = tensp;
         this.giaBan = giaBan;
@@ -48,7 +48,7 @@ public class SanPhamViewModel {
         this.soLuong = soLuong;
     }
 
-    public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, BigDecimal giaNhap, BigDecimal giaBan, Integer soLuong, Integer trangThai, String moTa, String anh) {
+    public SanPhamViewModel(String masp, String tensp, String loaiSP, String size, Double giaNhap, Double giaBan, Integer soLuong, Integer trangThai, String moTa, String anh) {
         this.masp = masp;
         this.tensp = tensp;
         this.loaiSP = loaiSP;
@@ -93,19 +93,19 @@ public class SanPhamViewModel {
         this.size = size;
     }
 
-    public BigDecimal getGiaNhap() {
+    public Double getGiaNhap() {
         return giaNhap;
     }
 
-    public void setGiaNhap(BigDecimal giaNhap) {
+    public void setGiaNhap(Double giaNhap) {
         this.giaNhap = giaNhap;
     }
 
-    public BigDecimal getGiaBan() {
+    public Double getGiaBan() {
         return giaBan;
     }
 
-    public void setGiaBan(BigDecimal giaBan) {
+    public void setGiaBan(Double giaBan) {
         this.giaBan = giaBan;
     }
 

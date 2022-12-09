@@ -121,17 +121,16 @@ public class SanPhamRepository implements ISanPhamRepository {
                 String ten = rs.getString("tensp");
                 String tenLoai = rs.getString("TenTL");
                 String tenSize = rs.getString("TenKT");
-                String giaNhap = rs.getString("gianhap");
-                String giaBan = rs.getString("giaban");
+                Double giaNhap = rs.getDouble("gianhap");
+                Double giaBan = rs.getDouble("giaban");
                 Integer soLuongTon = rs.getInt("soluongton");
                 Integer trangThai = rs.getInt("trangthai");
                 String moTa = rs.getString("moTa");
                 String duongDan = rs.getString("duongDan");
-                BigDecimal bdcgiaNhap = new BigDecimal(giaNhap);
-                BigDecimal bdcgiaBan = new BigDecimal(giaBan);
+               
 
                 SanPhamViewModel sanPhamViewModel
-                        = new SanPhamViewModel(ma, ten, tenLoai, tenSize, bdcgiaNhap, bdcgiaBan, soLuongTon, trangThai, moTa, duongDan);
+                        = new SanPhamViewModel(ma, ten, tenLoai, tenSize, giaNhap, giaBan, soLuongTon, trangThai, moTa, duongDan);
                 listsp.add(sanPhamViewModel);
             }
         } catch (Exception ex) {

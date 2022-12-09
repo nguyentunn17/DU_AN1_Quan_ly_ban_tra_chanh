@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import listener.ButtonSanPhamListener;
 import listener.ButtonTableListener;
 import services.IBanHangService;
 import services.IBanService;
@@ -39,7 +40,7 @@ import viewmodels.HoaDonChiTietViewModel;
 import viewmodels.HoaDonVM;
 import viewmodels.SanPhamViewModel;
 
-public class ViewBanHang extends javax.swing.JPanel{
+public class ViewBanHang extends javax.swing.JPanel {
 
     private final IBanService csv = new BanService();
     private DefaultTableModel dtm = new DefaultTableModel();
@@ -53,11 +54,6 @@ public class ViewBanHang extends javax.swing.JPanel{
     private Double getGiaBan = null;
     private Integer getSoLuong = null;
 
-    public void setTextBan(String name) {
-        jTabbedPane1.setSelectedComponent(JPMenu);
-        lbl_banquay.setText(name);
-    }
-
     public ViewBanHang() {
         initComponents();
         this.Ban();
@@ -65,20 +61,23 @@ public class ViewBanHang extends javax.swing.JPanel{
         this.sanPhamService = new SanPhamService();
         this.banHangService = new BanHangService();
         this.loadAnhSanPham();
-        //this.loadTableSanPham();
+
     }
-    JButton btn;
 
     private void Ban() {
         GridLayout gr = new GridLayout(4, 3);
         this.JP_Ban.setLayout(gr);
         for (Ban b : csv.getlist()) {
-            btn = new JButton(b.getTenBan());
+            JButton btn = new JButton(b.getTenBan());
             this.JP_Ban.add(btn);
             ButtonTableListener listener = new ButtonTableListener(csv, btn, this);
             btn.addActionListener(listener);
         }
+    }
 
+    public void setTextBan(String name) {
+        jTabbedPane1.setSelectedComponent(JPMenu);
+        lbl_banquay.setText(name);
     }
 
     private void loadAnhSanPham() {
@@ -90,11 +89,39 @@ public class ViewBanHang extends javax.swing.JPanel{
             Image image = imageIcon.getImage();
             imageIcon = new ImageIcon(image);
             JButton btn = new JButton(imageIcon);
-            btn.setText(" " + sp.getTensp());
+            btn.setText(sp.getTensp());
             this.JPMenu.add(btn);
-            btn.setActionCommand("SP");
-            btn.addActionListener(this);
+            ButtonSanPhamListener buttonSanPhamListener = new ButtonSanPhamListener(btn, sanPhamService, this);
+            btn.addActionListener(buttonSanPhamListener);
         }
+    }
+
+    public void getThongTinSP(String ma, String ten, Double giaban) {
+        String soLuongStr = JOptionPane.showInputDialog("Chọn số lượng sản phẩm");
+        Integer soLuong = Integer.parseInt(soLuongStr);
+//        int mess = JOptionPane.QUESTION_MESSAGE;
+//        String[] opstions = {"Mức đường", "Mức đá"};
+//        int choice = JOptionPane.showOptionDialog(this, "Mày muốn thêm gì",
+//                "Option Dialog Box", 0, mess, null, opstions, "Java");
+//
+//        switch (choice) {
+//            case 0 -> {
+//                JOptionPane.showMessageDialog(this, "soLuong");
+//                return;
+//            }
+//            case 1 -> {
+//                JOptionPane.showMessageDialog(this, "mức đường");
+//                return;
+//            }
+//            default -> {
+//                JOptionPane.showMessageDialog(this, "mức đá");
+//                return;
+//            }
+//        }
+        SanPham sp = new SanPham(ma, ten, giaban, soLuong);
+        listddsp.add(sp);
+        this.loadTableGioHang(listddsp);
+
     }
 
     private void loadTableHoaDon() {
@@ -110,22 +137,6 @@ public class ViewBanHang extends javax.swing.JPanel{
         }
     }
 
-//    private void loadTableSanPham() {
-//        dtm = (DefaultTableModel) tb_sanpham.getModel();
-//        dtm.setRowCount(0);
-//        int i = 1;
-//        for (SanPham sp : this.sanPhamService.read()) {
-//            Object[] row = {
-//                i++,
-//                sp.getMaSP(),
-//                sp.getTenSP(),
-//                sp.getSoLuongTon(),
-//                sp.getGiaBan()
-//            };
-//            dtm.addRow(row);
-//
-//        }
-//    }
     private void loadTableGioHang(ArrayList<SanPham> list) {
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
@@ -308,6 +319,10 @@ public class ViewBanHang extends javax.swing.JPanel{
             }
         });
         jScrollPane2.setViewportView(tbGioHang);
+        if (tbGioHang.getColumnModel().getColumnCount() > 0) {
+            tbGioHang.getColumnModel().getColumn(0).setMinWidth(50);
+            tbGioHang.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         btnTaoHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnTaoHoaDon.setText("Tạo hóa đơn");
