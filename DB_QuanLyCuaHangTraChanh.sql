@@ -104,7 +104,6 @@ Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	GiaDa DECIMAL(20,0) DEFAULT 0,
 	ThanhTien DECIMAL(20,0) DEFAULT 0,
 	TrangThai INT DEFAULT 0
-
 )
 GO
 --MUC DUONG
@@ -214,6 +213,26 @@ drop database QuanLyCuaHangTraChanh
 
 
 
+select * from DANHMUC
+select * from SANPHAM
+select * from HOADON
+select * from HOADONCHITIET
+select * from KICHTHUOC
+select * from NHANVIEN
+select * from MUCDUONG
+select * from MUCDA
+select * from CHUCVU
+select * from KHUYENMAI
+select * from SPKHUYENMAI
+select * from BAN
+select * from HINHANH
+select * from HINHTHUCTHANHTOAN
+select * from MUCDA
 
+delete from hoadon
+delete from hoadonchitiet
 
+select idhd,mahd,sum(thanhtien) from HOADONCHITIET inner join hoadon on HOADON.Id=HOADONCHITIET.IdHD group by IdHD,MaHD
 
+ALTER TABLE HOADONCHITIET
+DROP ngay;
