@@ -6,9 +6,13 @@ import viewmodels.HoaDonChiTietViewModel;
 
 public interface IBanHangRepository {
 
-    ArrayList<HoaDonChiTietViewModel> loadSp(String mahd);
+    ArrayList<HoaDonChiTietViewModel> loadHDCT(String id);
 
     ArrayList<HoaDonChiTiet> getAll();
 
+    ArrayList<HoaDonChiTietViewModel> getByGH();
+
     void createHD(HoaDonChiTiet hdct);
+
+    void delete(String idsp,String idhd);
 }

@@ -1,4 +1,3 @@
-
 package listener;
 
 import domainmodels.Ban;
@@ -15,9 +14,9 @@ import views.ViewBanHang;
  */
 public class ButtonTableListener implements ActionListener {
 
-    private IBanService csv;
-    private JButton btn;
-    private ViewBanHang view;
+    private final IBanService csv;
+    private final JButton btn;
+    private final ViewBanHang view;
 
     public ButtonTableListener(IBanService csv, JButton btn, ViewBanHang view) {
         this.csv = csv;

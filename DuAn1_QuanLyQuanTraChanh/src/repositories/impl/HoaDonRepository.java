@@ -1,4 +1,3 @@
-
 package repositories.impl;
 
 import domainmodels.HoaDon;
@@ -26,9 +25,10 @@ public class HoaDonRepository implements IHoaDonRepository {
         try {
             conn = jdbcUtil.getConnection();
             String sql = """
-                          SELECT MaHD,HOADON.NgayTao,HOADON.NgayTao,MaSP,TenSP,ThanhTien,hoadon.TrangThai FROM SANPHAM 
-                                                               INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
-                                                               INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id						
+                           SELECT MaHD,TenBan,HOADON.NgayTao,HOADON.NgayTao,MaSP,TenSP,ThanhTien,hoadon.TrangThai FROM SANPHAM 
+                                                                                         INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
+                                                                                         INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id	
+                          															   inner join BAN on BAN.Id=HOADON.IdBAN						
                                                                """;
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
@@ -40,9 +40,9 @@ public class HoaDonRepository implements IHoaDonRepository {
                 String masp = rs.getString("MaSP");
                 String tensp = rs.getString("TenSP");
                 Double thanhtien = rs.getDouble("ThanhTien");
-
                 int trangthai = rs.getInt("TrangThai");
-                HoaDonVM hoaDonVM=new HoaDonVM(mahd, ngaytao, ngayThanhToan, masp, tensp, thanhtien, trangthai);
+                String tenban=rs.getString("tenban");
+                HoaDonVM hoaDonVM = new HoaDonVM(mahd, ngaytao, ngayThanhToan, masp, tensp, thanhtien, trangthai, tenban);
                 listhdvm.add(hoaDonVM);
             }
         } catch (Exception ex) {
@@ -96,56 +96,22 @@ public class HoaDonRepository implements IHoaDonRepository {
         }
     }
 
-    public ArrayList<HoaDonVM> getHoaDon() {
-        ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
-        try {
-            Connection conn = jdbcUtil.getConnection();
-            String sql = """
-                         SELECT dbo.HOADON.MaHD, dbo.HOADON.NgayTao, dbo.NHANVIEN.Ten, dbo.HOADON.TrangThai
-                         FROM   dbo.BAN INNER JOIN
-                                      dbo.HOADON ON dbo.BAN.Id = dbo.HOADON.IdBAN INNER JOIN
-                                      dbo.NHANVIEN ON dbo.HOADON.IdNV = dbo.NHANVIEN.Id""";
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.execute();
-            ResultSet rs = pre.getResultSet();
-            while (rs.next()) {
-                String mahd = rs.getString("MaHD");
-                Date ngaytao = rs.getDate("NgayTao");
-                String nguoitao = rs.getString("NguoiTao");
-                double tongtien = rs.getDouble("Tongtien");
-                int trangthai = rs.getInt("TrangThai");
-                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoitao, tongtien, trangthai);
-                listhdvm.add(hdvm);
-
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return listhdvm;
-    }
-
     public ArrayList<HoaDonVM> listHoaDon() {
         ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
             String sql = """
-                         SELECT [MaHD]
-                               ,[NgayTao]
-                               ,[NgayThanhToan]
-                               ,[TongTien]
-                               ,[TrangThai]
-                           FROM [dbo].[HOADON]""";
+                         SELECT dbo.HOADON.MaHD, dbo.HOADON.NgayTao, dbo.NHANVIEN.Ten, dbo.HOADON.TrangThai
+                         FROM dbo.HOADON INNER JOIN dbo.NHANVIEN ON dbo.HOADON.IdNV = dbo.NHANVIEN.Id""";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();
             ResultSet rs = pre.getResultSet();
             while (rs.next()) {
                 String mahd = rs.getString("MaHD");
                 Date ngaytao = rs.getDate("NgayTao");
-                double tongtien = rs.getDouble("Tongtien");
+                String nguoiTao = rs.getString("ten");
                 int trangthai = rs.getInt("TrangThai");
-                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, "Administrator", tongtien, trangthai);
+                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoiTao, trangthai);
                 listhdvm.add(hdvm);
 
             }

@@ -1,5 +1,6 @@
 package application;
 
+import domainmodels.NhanVienLogin;
 import javax.swing.JOptionPane;
 import services.IDangNhapService;
 import services.impl.DangNhapService;
@@ -16,17 +17,26 @@ public class Login extends javax.swing.JFrame {
         this.dangNhapService = new DangNhapService();
     }
 
+    public Boolean isValidate() {
+        if (!utilities.Validation.isEmpty(txtusername, "UserName khong duoc de trong", "Error", JOptionPane.ERROR_MESSAGE)) {
+            return false;
+        }
+        if (!utilities.Validation.isEmpty(txtpassword, "Password khong duoc de trong", "Error", JOptionPane.ERROR_MESSAGE)) {
+            return false;
+        }
+
+        return true;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtusername = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -52,16 +62,10 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(25, 118, 211));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Created By Junior Programmer");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 500, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/bg-login.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bg-login.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 35, 500, 340));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 440));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 440));
 
         jPanel2.setBackground(new java.awt.Color(25, 118, 211));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -81,14 +85,8 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Login");
+        jLabel3.setText("Trà chanh MR. TU");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 47, 420, 41));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Hello! Let's get started");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 94, 420, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(199, 226, 255));
@@ -105,7 +103,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 147, 270, 40));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/icons8_user_20px_1.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_user_20px_1.png"))); // NOI18N
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 40, 39));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -124,7 +122,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 216, 290, 40));
 
         disable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        disable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/icons8_invisible_20px_1.png"))); // NOI18N
+        disable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_invisible_20px_1.png"))); // NOI18N
         disable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         disable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -202,17 +200,23 @@ public class Login extends javax.swing.JFrame {
             } catch (Exception e) {
 
             }
-        }  
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        NhanVienViewModel nhanVienViewModel = this.dangNhapService.login(txtusername.getText(), String.valueOf(txtpassword.getPassword()));
-        if (nhanVienViewModel == null) {
-            JOptionPane.showMessageDialog(this, "Dang nhap that bai");
-        } else {
-            JOptionPane.showMessageDialog(this, "Dang nhap thanh cong");
-            new Main().setVisible(true);
-            dispose();
+        if (isValidate()) {
+            NhanVienViewModel nhanVienViewModel = this.dangNhapService.login(txtusername.getText(), String.valueOf(txtpassword.getPassword()));
+            if (nhanVienViewModel == null) {
+                JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu");
+            } else {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                NhanVienLogin.setTenLogin(nhanVienViewModel.getTenNV());
+                NhanVienLogin.setTenCV(nhanVienViewModel.getChucVu());
+                NhanVienLogin.setAnhNV(nhanVienViewModel.getAnh());
+
+                new Main().setVisible(true);
+                dispose();
+            }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 
@@ -258,10 +262,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

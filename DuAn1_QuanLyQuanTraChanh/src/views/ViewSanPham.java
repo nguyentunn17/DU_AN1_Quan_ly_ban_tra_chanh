@@ -30,6 +30,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         this.loadTableSP(this.sanPhamService.getByID());
         this.loadCBSize();
         this.loadCBDanhMuc();
+        this.loadCBDanhMucLoc();
     }
 
     private void loadTableSP(ArrayList<SanPhamViewModel> list) {
@@ -57,15 +58,27 @@ public class ViewSanPham extends javax.swing.JPanel {
     private void loadCBSize() {
         cbb_size.removeAllItems();
         for (KichThuoc kichThuoc : this.kichThuocService.getList()) {
-            cbb_size.addItem(kichThuoc.getTenkt());
-        }
+            if (kichThuoc.getTrangthai() == 0) {
+                cbb_size.addItem(kichThuoc.getTenkt());
 
+            }
+        }
     }
 
     private void loadCBDanhMuc() {
         cbb_loaisanpham.removeAllItems();
         for (DanhMuc dm : this.danhMucService.read()) {
-            cbb_loaisanpham.addItem(dm.getTen());
+            if (dm.getTrangThai() == 0) {
+                cbb_loaisanpham.addItem(dm.getTen());
+            }
+        }
+    }
+    private void loadCBDanhMucLoc() {
+        cbb_lcodanhmuc.removeAllItems();
+        for (DanhMuc dm : this.danhMucService.read()) {
+            if (dm.getTrangThai() == 0) {
+                cbb_lcodanhmuc.addItem(dm.getTen());
+            }
         }
     }
 
@@ -156,9 +169,9 @@ public class ViewSanPham extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cbb_lcodanhmuc = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        cbb_loctrangthai = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_sanpham = new com.raven.swing.table.Table();
 
@@ -198,7 +211,7 @@ public class ViewSanPham extends javax.swing.JPanel {
         });
 
         cbb_trangThai.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbb_trangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Đã ngừng bán" }));
+        cbb_trangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Ngừng bán" }));
 
         txa_moTa.setColumns(20);
         txa_moTa.setRows(5);
@@ -286,17 +299,15 @@ public class ViewSanPham extends javax.swing.JPanel {
                         .addComponent(cbb_loaisanpham, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt_ten, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txt_ma, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_new)
                         .addGap(65, 65, 65)
                         .addComponent(btn_them)
-                        .addGap(78, 78, 78)
-                        .addComponent(btn_sua)
-                        .addGap(102, 102, 102))
+                        .addGap(65, 65, 65)
+                        .addComponent(btn_sua))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_themsize)
@@ -319,8 +330,8 @@ public class ViewSanPham extends javax.swing.JPanel {
                             .addComponent(txt_soLuongton, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_giaban, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_gianhap, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbb_trangThai, 0, 217, Short.MAX_VALUE))
-                        .addGap(115, 115, 115)))
+                            .addComponent(cbb_trangThai, 0, 217, Short.MAX_VALUE))))
+                .addGap(115, 115, 115)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_anh, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -405,6 +416,12 @@ public class ViewSanPham extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tb_sanpham);
+        if (tb_sanpham.getColumnModel().getColumnCount() > 0) {
+            tb_sanpham.getColumnModel().getColumn(0).setMinWidth(50);
+            tb_sanpham.getColumnModel().getColumn(0).setMaxWidth(50);
+            tb_sanpham.getColumnModel().getColumn(4).setMinWidth(50);
+            tb_sanpham.getColumnModel().getColumn(4).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -421,11 +438,11 @@ public class ViewSanPham extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbb_lcodanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
                 .addComponent(jLabel11)
                 .addGap(35, 35, 35)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbb_loctrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -436,9 +453,9 @@ public class ViewSanPham extends javax.swing.JPanel {
                     .addComponent(jLabel9)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbb_lcodanhmuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbb_loctrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                 .addContainerGap())
@@ -533,11 +550,11 @@ public class ViewSanPham extends javax.swing.JPanel {
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_themloaisp;
     private javax.swing.JButton btn_themsize;
+    private javax.swing.JComboBox<String> cbb_lcodanhmuc;
     private javax.swing.JComboBox<String> cbb_loaisanpham;
+    private javax.swing.JComboBox<String> cbb_loctrangthai;
     private javax.swing.JComboBox<String> cbb_size;
     private javax.swing.JComboBox<String> cbb_trangThai;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

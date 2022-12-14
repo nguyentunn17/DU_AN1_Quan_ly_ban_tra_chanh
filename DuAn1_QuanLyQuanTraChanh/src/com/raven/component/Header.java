@@ -1,18 +1,21 @@
 package com.raven.component;
 
-import java.awt.event.ActionListener;
+import domainmodels.NhanVienLogin;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 
 public class Header extends javax.swing.JPanel {
 
     public Header() {
         initComponents();
         dongHo();
+        this.loadThongtin();
+
     }
-     public void dongHo() {
+
+    private void dongHo() {
         new Thread() {
+            @Override
             public void run() {
                 while (true) {
                     Calendar ca = new GregorianCalendar();
@@ -33,9 +36,12 @@ public class Header extends javax.swing.JPanel {
             }
         }.start();
     }
-    public void addMenuEvent(ActionListener event) {
-        
+
+    private void loadThongtin() {
+        lbRole.setText(NhanVienLogin.getTenCV());
+        lbUserName.setText(NhanVienLogin.getTenLogin());
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

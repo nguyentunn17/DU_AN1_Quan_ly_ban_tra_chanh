@@ -51,7 +51,7 @@ public class DanhMucRepository implements IDanhMucRepository {
     public void create(DanhMuc dm) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "INSERT INTO DANHMUC(MA,TEN,TRANGTHAI) VALUES(?,?,?)";
+            String query = "INSERT INTO DANHMUC(MATL,TENTL,TRANGTHAI) VALUES(?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, dm.getMa());
             ps.setObject(2, dm.getTen());
@@ -69,7 +69,7 @@ public class DanhMucRepository implements IDanhMucRepository {
     public void update(DanhMuc dm, String id) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "UPDATE DANHMUC set MA=?,TEN=?,TRANGTHAI=? where id=? ";
+            String query = "UPDATE DANHMUC set MATL=?,TENTL=?,TRANGTHAI=? where id=? ";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, dm.getMa());
             ps.setObject(2, dm.getTen());
@@ -88,7 +88,7 @@ public class DanhMucRepository implements IDanhMucRepository {
     public void delete(String id) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "DELETE FROM DANHMUC WHERE ID";
+            String query = "DELETE FROM DANHMUC WHERE ID=?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, id);
 

@@ -1,7 +1,7 @@
 package repositories.impl;
 
 import domainmodels.KhuyenMai;
-import java.math.BigDecimal;
+import domainmodels.SanPhamKhuyenMai;
 import java.util.ArrayList;
 import repositories.IKhuyenMaiRepository;
 import java.sql.Connection;
@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import viewmodels.SanPhamKhuyenMaiViewModel;
 
 public class KhuyenMaiRepository implements IKhuyenMaiRepository {
 
@@ -128,7 +129,58 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
         } catch (Exception ex) {
             Logger.getLogger(KhuyenMaiRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    @Override
+    public void create(SanPhamKhuyenMai spkm) {
+        try {
+            Connection conn = utilities.jdbcUtil.getConnection();
+            String query = "INSERT INTO SPKHUYENMAI(idKm,idsp,dongia,dongiakhigiam,trangthai) values(?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setObject(1, spkm.getIdkm());
+            ps.setObject(1, spkm.getIdsp());
+            ps.setObject(1, spkm.getDonGia());
+            ps.setObject(1, spkm.getSoTienConlai());
+
+            ps.execute();
+        } catch (Exception ex) {
+            Logger.getLogger(KhuyenMaiRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public ArrayList<SanPhamKhuyenMaiViewModel> readspkm() {
+        ArrayList<SanPhamKhuyenMaiViewModel> listkm = new ArrayList<>();
+        try {
+            Connection conn = utilities.jdbcUtil.getConnection();
+            String query = """
+                           SELECT MA,TEN,LOAIGIAMGIA,MUCGIAMGIAPHANTRAM,TenSP,GiaBan,SoTienConLai,SPKHUYENMAI.TrangThai FROM KHUYENMAI 
+                           INNER JOIN SPKHUYENMAI ON KHUYENMAI.ID=SPKHUYENMAI.IDKM 
+                           INNER JOIN SANPHAM ON SANPHAM.Id=SPKHUYENMAI.IdSP
+                           """;
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+
+                String ma = rs.getString("ma");
+                String ten = rs.getString("ten");
+                String loaiGiamGia = rs.getString("loaigiamgia");
+                Double mucGiaPhanTram = rs.getDouble("MucGiamGiaPhanTram");
+                String tensp = rs.getString("tensp");
+                Double giaban = rs.getDouble("giaban");
+                Double sotienconlai = rs.getDouble("SoTienConLai");
+                int trangThai = rs.getInt("trangThai");
+                SanPhamKhuyenMaiViewModel spkmvm=new 
+        SanPhamKhuyenMaiViewModel(ma, ten, tensp, loaiGiamGia, mucGiaPhanTram, giaban, sotienconlai, trangThai);
+                listkm.add(spkmvm);
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(KhuyenMaiRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listkm;
     }
 
 }

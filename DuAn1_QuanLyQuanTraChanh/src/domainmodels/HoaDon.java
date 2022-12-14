@@ -36,6 +36,15 @@ public class HoaDon {
         this.tongTien = tongTien;
     }
 
+    public HoaDon(String idnv, String idban, String ma, Date ngaytao, int trangthai) {
+        this.idnv = idnv;
+        this.idban = idban;
+        this.ma = ma;
+        this.ngaytao = ngaytao;
+        this.trangthai = trangthai;
+    }
+    
+
     public HoaDon(String id, String ma) {
         this.id = id;
         this.ma = ma;

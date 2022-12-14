@@ -1,6 +1,7 @@
 package services.impl;
 
 import domainmodels.KhuyenMai;
+import domainmodels.SanPhamKhuyenMai;
 import java.util.ArrayList;
 import repositories.IKhuyenMaiRepository;
 import repositories.impl.KhuyenMaiRepository;
@@ -48,5 +49,15 @@ public class KhuyenMaiService implements IKhuyenMaiService {
     @Override
     public void delete(String id) {
         this.khuyenMaiRepository.delete(id);
+    }
+
+    @Override
+    public void create(SanPhamKhuyenMai spkm) {
+        this.khuyenMaiRepository.create(spkm);
+    }
+
+    @Override
+    public ArrayList<SanPhamKhuyenMai> readspkm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
