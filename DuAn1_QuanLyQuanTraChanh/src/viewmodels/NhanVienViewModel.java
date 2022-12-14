@@ -1,42 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package viewmodels;
 
-/**
- *
- * @author Hung
- */
 public class NhanVienViewModel {
 
-    private String ma;
-    private String ten;
+    private String taiKhoan;
+    private String matKhau;
     private String chucVu;
+    private String tenNV;
+    private String anh;
 
     public NhanVienViewModel() {
     }
 
-    public NhanVienViewModel(String ma, String ten, String chucVu) {
-        this.ma = ma;
-        this.ten = ten;
+    public NhanVienViewModel(String taiKhoan, String matKhau, String chucVu, String tenNV, String anh) {
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
         this.chucVu = chucVu;
+        this.tenNV = tenNV;
+        this.anh = anh;
     }
 
-    public String getMa() {
-        return ma;
+    public String getAnh() {
+        return anh;
     }
 
-    public void setMa(String ma) {
-        this.ma = ma;
+    public void setAnh(String anh) {
+        this.anh = anh;
     }
 
-    public String getTen() {
-        return ten;
+   
+
+    public String getTaiKhoan() {
+        return taiKhoan;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setTaiKhoan(String taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
     }
 
     public String getChucVu() {
@@ -45,6 +51,14 @@ public class NhanVienViewModel {
 
     public void setChucVu(String chucVu) {
         this.chucVu = chucVu;
+    }
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
 
 }

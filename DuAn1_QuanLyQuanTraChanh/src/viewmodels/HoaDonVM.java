@@ -20,26 +20,55 @@ public class HoaDonVM {
     private String tensp;
     private double thanhTien;
     private int trangthai;
+    private String tenBan;
 
     public HoaDonVM() {
     }
 
-    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, double thanhTien, int trangthai) {
+    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, int trangthai) {
+        this.mahd = mahd;
+        this.ngayTao = ngayTao;
+        this.nguoiTao = nguoiTao;
+        this.trangthai = trangthai;
+    }
+
+    
+
+    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, double thanhTien) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
         this.nguoiTao = nguoiTao;
         this.thanhTien = thanhTien;
-        this.trangthai = trangthai;
     }
 
-    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan, String masp, String tensp, double thanhTien, int trangthai) {
+    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan,  String masp, String tensp, double thanhTien, int trangthai, String tenBan) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
+       
         this.masp = masp;
         this.tensp = tensp;
         this.thanhTien = thanhTien;
         this.trangthai = trangthai;
+        this.tenBan = tenBan;
+    }
+
+    public String getTenBan() {
+        return tenBan;
+    }
+
+    public void setTenBan(String tenBan) {
+        this.tenBan = tenBan;
+    }
+
+    
+
+    public String getNguoiTao() {
+        return nguoiTao;
+    }
+
+    public void setNguoiTao(String nguoiTao) {
+        this.nguoiTao = nguoiTao;
     }
 
     public String getMahd() {

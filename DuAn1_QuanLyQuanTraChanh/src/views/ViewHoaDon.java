@@ -15,17 +15,22 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import services.IBanHangService;
 import services.impl.HoaDonService;
 import viewmodels.HoaDonVM;
 import services.IHoaDonService;
+import services.impl.BanHangService;
+import viewmodels.HoaDonChiTietViewModel;
 
 public class ViewHoaDon extends javax.swing.JPanel {
 
     private DefaultTableModel defaultTableModel;
     private final IHoaDonService hdsvvm = new HoaDonService();
-
+    private final IBanHangService banHangService;
+    private DefaultTableModel dtm;
     public ViewHoaDon() {
         initComponents();
+        this.banHangService = new BanHangService();
 //        loatTable();
     }
 //    private HoaDon getData() {
@@ -56,8 +61,10 @@ public class ViewHoaDon extends javax.swing.JPanel {
         defaultTableModel = (DefaultTableModel) this.tb_hoadon.getModel();
         defaultTableModel.setRowCount(0);
         String ten = null;
+        int stt=1;
         for (HoaDonVM hdvm : hdsvvm.getAll()) {
             Object[] rowdata = {
+                stt++,
                 hdvm.getMahd(),
                 ten = "Admin",
                 hdvm.getNgayTao(),
@@ -84,6 +91,8 @@ public class ViewHoaDon extends javax.swing.JPanel {
         txt_tk = new javax.swing.JTextField();
         btn_tk = new javax.swing.JButton();
         btnIn = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tb_hoadon1 = new com.raven.swing.table.Table();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -93,18 +102,26 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaHD", "Người tạo", "NgayTao", "Ngày thanh toán", "Mã sản phẩm", "Tên sản phẩm", "Thành tiền", "Trạng thái"
+                "STT", "MaHD", "Người tạo", "NgayTao", "Ngày thanh toán", "Mã sản phẩm", "Tên sản phẩm", "Thành tiền", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false, false, true, true, false, false
+                true, true, true, false, false, true, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tb_hoadon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_hoadonMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tb_hoadon);
+        if (tb_hoadon.getColumnModel().getColumnCount() > 0) {
+            tb_hoadon.getColumnModel().getColumn(8).setResizable(false);
+        }
 
         btn_thongke.setText("THỐNG KÊ");
         btn_thongke.addActionListener(new java.awt.event.ActionListener() {
@@ -129,11 +146,29 @@ public class ViewHoaDon extends javax.swing.JPanel {
             }
         });
 
+        tb_hoadon1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số Lượng", "Giá bán", "Thành tiền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tb_hoadon1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(177, 177, 177)
                 .addComponent(jLabel1)
                 .addGap(30, 30, 30)
@@ -145,9 +180,12 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 .addGap(47, 47, 47)
                 .addComponent(btnIn)
                 .addContainerGap(181, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -160,9 +198,10 @@ public class ViewHoaDon extends javax.swing.JPanel {
                     .addComponent(txt_tk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_tk)
                     .addComponent(btnIn))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -269,6 +308,25 @@ public class ViewHoaDon extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_tkActionPerformed
 
+    private void tb_hoadonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_hoadonMouseClicked
+        dtm=(DefaultTableModel) tb_hoadon1.getModel();
+        dtm.setRowCount(0);
+        int row = tb_hoadon.getSelectedRow();
+        String ma = tb_hoadon.getValueAt(row, 1).toString();
+        int stt = 1;
+        for (HoaDonChiTietViewModel hdct : this.banHangService.loadSp(ma)) {
+            Object[] rowdata = {
+                stt++,
+                hdct.getMasp(),
+                hdct.getTensp(),
+                hdct.getSoLuong(),
+                hdct.getGiaBan(),
+                hdct.getSoLuong() * hdct.getGiaBan()
+            };
+            dtm.addRow(rowdata);
+        }
+    }//GEN-LAST:event_tb_hoadonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIn;
@@ -276,7 +334,9 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private javax.swing.JButton btn_tk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private com.raven.swing.table.Table tb_hoadon;
+    private com.raven.swing.table.Table tb_hoadon1;
     private javax.swing.JTextField txt_tk;
     // End of variables declaration//GEN-END:variables
 }

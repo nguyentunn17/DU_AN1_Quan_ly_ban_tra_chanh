@@ -8,7 +8,6 @@ import com.raven.swing.PopupMenu;
 import com.raven.swing.icon.GoogleMaterialDesignIcons;
 import com.raven.swing.icon.IconFontSwing;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
@@ -110,15 +109,15 @@ public class Main extends javax.swing.JFrame {
         animator.setResolution(0);
         animator.setDeceleration(0.5f);
         animator.setAcceleration(0.5f);
-        header.addMenuEvent((ActionEvent ae) -> {
-            if (!animator.isRunning()) {
-                animator.start();
-            }
-            menu.setEnableMenu(false);
-            if (menu.isShowMenu()) {
-                menu.hideallMenu();
-            }
-        });
+//        header.addMenuEvent((ActionEvent ae) -> {
+//            if (!animator.isRunning()) {
+//                animator.start();
+//            }
+//            menu.setEnableMenu(false);
+//            if (menu.isShowMenu()) {
+//                menu.hideallMenu();
+//            }
+//        });
         //  Init google icon font
         IconFontSwing.register(GoogleMaterialDesignIcons.getIconFont());
         //  Start with this form

@@ -31,10 +31,10 @@ public class HoaDonService implements IHoaDonService {
         hdrp.update(ma, hd);
     }
 
-    @Override
-    public ArrayList<HoaDonVM> getHoaDon() {
-        return hdrp.getHoaDon();
-    }
+//    @Override
+//    public ArrayList<HoaDonVM> getHoaDon() {
+//        return hdrp.getHoaDon();
+//    }
 
     @Override
     public ArrayList<HoaDonVM> listH() {

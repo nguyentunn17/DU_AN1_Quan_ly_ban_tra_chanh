@@ -22,7 +22,7 @@ public interface IHoaDonService {
 
     void update(String ma, HoaDon hd);
 
-    ArrayList<HoaDonVM> getHoaDon();
+//    ArrayList<HoaDonVM> getHoaDon();
 
     ArrayList<HoaDonVM> listH();
 

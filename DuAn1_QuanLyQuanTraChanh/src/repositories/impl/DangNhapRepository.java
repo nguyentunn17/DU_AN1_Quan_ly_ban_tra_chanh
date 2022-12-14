@@ -13,10 +13,6 @@ import java.util.logging.Logger;
 import repositories.IDangNhapRepository;
 import viewmodels.NhanVienViewModel;
 
-/**
- *
- * @author Hung
- */
 public class DangNhapRepository implements IDangNhapRepository {
 
     @Override
@@ -36,7 +32,9 @@ public class DangNhapRepository implements IDangNhapRepository {
                 return null;
             }
             String tencv = rs.getString("tencv");
-            NhanVienViewModel nhanVienViewModel = new NhanVienViewModel(taiKhoan, matKhau, tencv);
+            String tenNV = rs.getString("ten");
+            String anhNV=rs.getString("anh");
+            NhanVienViewModel nhanVienViewModel = new NhanVienViewModel(taiKhoan, matKhau, tencv, tenNV, anhNV);
 
             return nhanVienViewModel;
         } catch (Exception ex) {

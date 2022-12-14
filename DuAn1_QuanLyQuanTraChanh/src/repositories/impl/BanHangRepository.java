@@ -16,39 +16,6 @@ import viewmodels.HoaDonChiTietViewModel;
 public class BanHangRepository implements IBanHangRepository {
 
     @Override
-    public ArrayList<HoaDonChiTietViewModel> loadSp(String mahd) {
-        ArrayList<HoaDonChiTietViewModel> listsp = new ArrayList<>();
-        Connection conn;
-        try {
-            conn = jdbcUtil.getConnection();
-            String sql = """
-                         SELECT MaSP,TenSP,SoLuongTon,GiaBan,ThanhTien FROM SANPHAM 
-                         INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
-                         INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id
-                         WHERE MaHD=? """;
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setObject(1, mahd);
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
-            while (rs.next()) {
-
-                String ma = rs.getString("masp");
-                String ten = rs.getString("tensp");
-                Double giaBan = rs.getDouble("giaBan");
-                Integer soLuongTon = rs.getInt("soLuongTon");
-                Double thanhTien = rs.getDouble("ThanhTien");
-
-                HoaDonChiTietViewModel hoaDonChiTietViewModel
-                        = new HoaDonChiTietViewModel(ma, ten, giaBan, soLuongTon, thanhTien);
-                listsp.add(hoaDonChiTietViewModel);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listsp;
-    }
-
-    @Override
     public void createHD(HoaDonChiTiet hdct) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
@@ -112,5 +79,83 @@ public class BanHangRepository implements IBanHangRepository {
             Logger.getLogger(KhuyenMaiRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    @Override
+    public ArrayList<HoaDonChiTietViewModel> getByGH() {
+        ArrayList<HoaDonChiTietViewModel> listsp = new ArrayList<>();
+        Connection conn;
+        try {
+            conn = jdbcUtil.getConnection();
+            String sql = """
+                        select masp,TenSP,SoLuong,DonGia,ThanhTien from SANPHAM inner join HOADONCHITIET on SANPHAM.Id=HOADONCHITIET.IdSP """;
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+
+                String ma = rs.getString("masp");
+                String ten = rs.getString("tensp");
+                Double giaBan = rs.getDouble("dongia");
+                Integer soLuongTon = rs.getInt("soluong");
+                Double thanhTien = rs.getDouble("ThanhTien");
+
+                HoaDonChiTietViewModel hoaDonChiTietViewModel
+                        = new HoaDonChiTietViewModel(ma, ten, soLuongTon, giaBan, thanhTien);
+                listsp.add(hoaDonChiTietViewModel);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listsp;
+    }
+
+    @Override
+    public ArrayList<HoaDonChiTietViewModel> loadHDCT(String id) {
+        ArrayList<HoaDonChiTietViewModel> listsp = new ArrayList<>();
+        Connection conn;
+        try {
+            conn = jdbcUtil.getConnection();
+            String sql = """
+                      SELECT TenBan,MaSP,TenSP,SoLuong,GiaBan,ThanhTien FROM SANPHAM INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP                                                                                                                                                   INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id
+                                                                                                  												 inner join BAN on BAN.Id=HOADON.IdBAN
+                                                                                                                                                   WHERE MaHD like ?""";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+
+                String ma = rs.getString("masp");
+                String ten = rs.getString("tensp");
+                Double giaBan = rs.getDouble("GiaBan");
+                Integer soLuongTon = rs.getInt("soluong");
+                Double thanhTien = rs.getDouble("ThanhTien");
+                String tenban = rs.getString("tenban");
+
+                HoaDonChiTietViewModel hoaDonChiTietViewModel
+                        = new HoaDonChiTietViewModel(ma, ten, soLuongTon, giaBan, thanhTien, tenban);
+                listsp.add(hoaDonChiTietViewModel);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listsp;
+    }
+
+    @Override
+    public void delete(String idsp, String idhd) {
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = " delete FROM HOADONCHITIET  WHERE IDSP=? and idhd=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setObject(1, idsp);
+            ps.setObject(2, idhd);
+            ps.execute();
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

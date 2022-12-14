@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import domainmodels.AnhSanPham;
 import domainmodels.SanPham;
 import java.awt.Image;
 import java.io.File;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -19,10 +14,6 @@ import services.impl.AnhService;
 import services.impl.SanPhamService;
 import viewmodels.AnhViewModel;
 
-/**
- *
- * @author Hung
- */
 public class ViewAnh extends javax.swing.JFrame {
 
     private final IAnhService anhService;
@@ -58,7 +49,6 @@ public class ViewAnh extends javax.swing.JFrame {
         String sanpham = cbb_sanpham.getSelectedItem().toString();
         String trangThai = cbb_hoatdong.getSelectedItem().toString();
         AnhSanPham anhSanPham = new AnhSanPham(ten, getidsp(sanpham), hinhAnh, ABORT);
-        anhSanPham.setDuongDan(hinhAnh);
         if (trangThai.equalsIgnoreCase("Hoạt động")) {
             anhSanPham.setTrangThai(0);
         } else {
@@ -78,6 +68,14 @@ public class ViewAnh extends javax.swing.JFrame {
         for (SanPham sanPham : this.sanPhamService.read()) {
             if (sanPham.getTenSP().equalsIgnoreCase(ten)) {
                 return sanPham.getId();
+            }
+        }
+        return null;
+    }
+    private String getidanh(String ten) {
+        for (AnhViewModel sp : this.anhService.read()) {
+            if (sp.getTenSP().equalsIgnoreCase(ten)) {
+                return sp.getId();
             }
         }
         return null;
@@ -134,6 +132,9 @@ public class ViewAnh extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tb_anhMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tb_anhMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(tb_anh);
 
@@ -144,6 +145,11 @@ public class ViewAnh extends javax.swing.JFrame {
         jLabel4.setText("Tên sản phẩm");
 
         btn_sua.setText("Sửa ảnh");
+        btn_sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_suaActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Back");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -278,9 +284,21 @@ public class ViewAnh extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         new ViewSanPham().setVisible(true);
-         dispose();
+        new ViewSanPham().setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        int row = tb_anh.getSelectedRow();
+        String ma = tb_anh.getValueAt(row, 1).toString();
+        AnhSanPham asp = this.getForm();
+        this.anhService.update(asp, getidanh(ma));
+        this.loadTable();
+    }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void tb_anhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_anhMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_anhMouseEntered
 
     /**
      * @param args the command line arguments

@@ -16,8 +16,8 @@ public class BanHangService implements IBanHangService {
     }
 
     @Override
-    public ArrayList<HoaDonChiTietViewModel> loadSp(String mahd) {
-        return this.banHangRepository.loadSp(mahd);
+    public ArrayList<HoaDonChiTietViewModel> loadSp(String id) {
+        return this.banHangRepository.loadHDCT(id);
 
     }
 
@@ -29,5 +29,15 @@ public class BanHangService implements IBanHangService {
     @Override
     public ArrayList<HoaDonChiTiet> getAll() {
         return this.banHangRepository.getAll();
+    }
+
+    @Override
+    public ArrayList<HoaDonChiTietViewModel> getByGH() {
+        return this.banHangRepository.getByGH();
+    }
+
+    @Override
+    public void delete(String isp,String idhd) {
+        this.banHangRepository.delete(isp, idhd);
     }
 }
