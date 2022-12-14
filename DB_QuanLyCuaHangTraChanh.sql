@@ -30,9 +30,10 @@ Create table HINHANH(
 	Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	IdSanPham UNIQUEIDENTIFIER,
 	TenHA NVARCHAR(50) DEFAULT NULL,
-	DuongDan Varchar(100),
+	DuongDan NVARCHAR(100),
 	TrangThai INT DEFAULT 0
 )
+ALTER TABLE HINHANH ADD  DUONGDAN VARCHAR(100)
 --DanhMuc-TheLoai
 CREATE TABLE DANHMUC(
 	Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
@@ -46,7 +47,6 @@ GO
 --BAN
 CREATE TABLE BAN(
 	Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	IdKV UNIQUEIDENTIFIER,
 	MaBan VARCHAR(30) DEFAULT NULL,
 	TenBan Nvarchar(30),
 	SoNguoi int,
@@ -60,8 +60,7 @@ CREATE TABLE KHUYENMAI(
 	Ten NVARCHAR(50) DEFAULT NULL,
 	NgayBatDau DATETIME DEFAULT NULL,
 	NgayKetThuc DATETIME DEFAULT NULL,
-	MucGiamGiaPhanTram DECIMAL(20,0),
-	MucGiamGiaTienMat DECIMAL(20,0),
+	MucGiamGia DECIMAL(20,0),
 	DieuKienGiamGia NVARCHAR(50) DEFAULT NULL,
 	LoaiGiamGia NVARCHAR(50) DEFAULT NULL,
 	TrangThai INT DEFAULT 0,
@@ -85,7 +84,6 @@ CREATE TABLE HOADON(
 	MaHD VARCHAR(50) UNIQUE,
 	NgayTao DATETIME DEFAULT NULL,
 	NgayThanhToan DATETIME DEFAULT NULL,
-	TienCoc DECIMAL(20,0) DEFAULT 0,
 	TongTien DECIMAL(20,0) DEFAULT 0,
 	PhanTramGiamGia DECIMAL(20,0) DEFAULT 0,
 	TrangThai INT DEFAULT 0
@@ -229,10 +227,37 @@ select * from HINHANH
 select * from HINHTHUCTHANHTOAN
 select * from MUCDA
 
-delete from hoadon
-delete from hoadonchitiet
+
 
 select idhd,mahd,sum(thanhtien) from HOADONCHITIET inner join hoadon on HOADON.Id=HOADONCHITIET.IdHD group by IdHD,MaHD
 
 ALTER TABLE HOADONCHITIET
 DROP ngay;
+delete from SANPHAM
+delete from HINHANH
+delete from SPKHUYENMAI
+delete from sanpham
+delete from hoadonchitiet
+delete from HOADON
+delete from NHANVIEN where id='508CAEE6-4619-4EAE-856B-52E30EAF5876'
+SELECT dbo.SANPHAM.MaSP, dbo.SANPHAM.TenSP, dbo.KICHTHUOC.TenKT, dbo.DANHMUC.TenTL, dbo.SANPHAM.GiaNhap, dbo.SANPHAM.GiaBan, dbo.SANPHAM.SoLuongTon, dbo.SANPHAM.MoTa, dbo.SANPHAM.TrangThai,dbo.HINHANH.DuongDan
+FROM dbo.SANPHAM INNER JOIN dbo.KICHTHUOC ON dbo.SANPHAM.IdKT = dbo.KICHTHUOC.Id 
+INNER JOIN dbo.DANHMUC ON dbo.SANPHAM.IdDM = dbo.DANHMUC.Id
+
+SELECT MaHD,TenBan,MaSP,TenSP,SoLuong,GiaBan,ThanhTien FROM SANPHAM 
+                                                 INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
+                                                 INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id
+												 inner join BAN on BAN.Id=HOADON.IdBAN
+                           delete from hoadonchitiet where id = '9CFC8FE0-47C3-45A8-A0A0-0F20FD4AC0D3'  
+						   WHERE MaHD like'HD77298138'
+						   delete FROM HOADONCHITIET  WHERE IDSP='8DFF5A41-9811-412A-84EC-07EE2A19A219' and idhd='F50E833E-8C46-40B4-B89F-130B329C3D33'
+SELECT MaHD,HOADON.NgayTao,HOADON.NgayTao,MaSP,TenSP,ThanhTien,hoadon.TrangThai FROM SANPHAM 
+                                                               INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
+                                                               INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id
+ SELECT MaHD,TenBan,HOADON.NgayTao,,HOADON.NgayTao,MaSP,TenSP,ThanhTien,hoadon.TrangThai FROM SANPHAM 
+                                                               INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP 
+                                                               INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id	
+															   inner join BAN on BAN.Id=HOADON.IdBAN
+SELECT MA,TEN,LOAIGIAMGIA,MUCGIAMGIAPHANTRAM,TenSP,GiaBan,SoTienConLai,TrangThai FROM KHUYENMAI 
+INNER JOIN SPKHUYENMAI ON KHUYENMAI.ID=SPKHUYENMAI.IDKM 
+INNER JOIN SANPHAM ON SANPHAM.Id=SPKHUYENMAI.IdSP
