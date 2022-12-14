@@ -171,8 +171,7 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
                 Double giaban = rs.getDouble("giaban");
                 Double sotienconlai = rs.getDouble("SoTienConLai");
                 int trangThai = rs.getInt("trangThai");
-                SanPhamKhuyenMaiViewModel spkmvm=new 
-        SanPhamKhuyenMaiViewModel(ma, ten, tensp, loaiGiamGia, mucGiaPhanTram, giaban, sotienconlai, trangThai);
+                SanPhamKhuyenMaiViewModel spkmvm = new SanPhamKhuyenMaiViewModel(ma, ten, tensp, loaiGiamGia, mucGiaPhanTram, giaban, sotienconlai, trangThai);
                 listkm.add(spkmvm);
 
             }

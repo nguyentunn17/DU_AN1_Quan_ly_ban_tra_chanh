@@ -13,9 +13,11 @@ import java.util.Date;
  * @author Inspiron
  */
 public interface IThongKeService {
-    public ArrayList<ThongKe> getList();
-    public ArrayList<ThongKe> timkiem(Date ngay);
-    public ArrayList<ThongKe> timkiem(Date ngaya,Date ngayb);
 
-    
+    public ArrayList<ThongKe> getList();
+
+    public ArrayList<ThongKe> timkiem(Date ngay);
+
+    public ArrayList<ThongKe> timkiem(Date ngaya, Date ngayb);
+
 }

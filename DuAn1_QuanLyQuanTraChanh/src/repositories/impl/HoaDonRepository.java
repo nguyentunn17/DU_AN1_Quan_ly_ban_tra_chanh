@@ -41,7 +41,7 @@ public class HoaDonRepository implements IHoaDonRepository {
                 String tensp = rs.getString("TenSP");
                 Double thanhtien = rs.getDouble("ThanhTien");
                 int trangthai = rs.getInt("TrangThai");
-                String tenban=rs.getString("tenban");
+                String tenban = rs.getString("tenban");
                 HoaDonVM hoaDonVM = new HoaDonVM(mahd, ngaytao, ngayThanhToan, masp, tensp, thanhtien, trangthai, tenban);
                 listhdvm.add(hoaDonVM);
             }
@@ -129,25 +129,8 @@ public class HoaDonRepository implements IHoaDonRepository {
         try {
             Connection conn = jdbcUtil.getConnection();
             String sql = """
-                         SELECT  [Id]
-                                 ,[IdNV]
-                                 ,[IdKH]
-                                 ,[IdBAN]
-                                 ,[MaHD]
-                                 ,[NgayTao]
-                                 ,[NgayThanhToan]
-                                 ,[NgayShip]
-                                 ,[TienShip]
-                                 ,[TienCoc]
-                                 ,[NgayNhan]
-                                 ,[TenNguoiNhan]
-                                 ,[DiaChi]
-                                 ,[TongTien]
-                                 ,[SDTNguoiNhan]
-                                 ,[SDTNguoiShip]
-                                 ,[TenNguoiShip]
-                                 ,[PhanTramGiamGia]
-                                 ,[TrangThai]
+                         SELECT  [Id]                                
+                                 ,[MaHD]                               
                              FROM [QuanLyCuaHangTraChanh].[dbo].[HOADON]""";
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.execute();

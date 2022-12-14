@@ -3,12 +3,13 @@ package services;
 import domainmodels.KhuyenMai;
 import domainmodels.SanPhamKhuyenMai;
 import java.util.ArrayList;
+import viewmodels.SanPhamKhuyenMaiViewModel;
 
 public interface IKhuyenMaiService {
 
     ArrayList<KhuyenMai> read();
 
-    ArrayList<SanPhamKhuyenMai> readspkm();
+    ArrayList<SanPhamKhuyenMaiViewModel> readspkm();
 
     void create(KhuyenMai km);
 

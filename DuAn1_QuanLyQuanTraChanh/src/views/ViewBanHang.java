@@ -96,7 +96,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             String hinh = sp.getAnh();
             ImageIcon imageIcon = new ImageIcon(getClass().getResource("/image/" + hinh));
             Image image = imageIcon.getImage();
-            Image newimg = image.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
+            Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
             imageIcon = new ImageIcon(newimg);
             btn.setIcon(imageIcon);
             btn.setText(sp.getTensp());
@@ -128,11 +128,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         }
         Double thanhtien = soLuong * giaban;
         HoaDonChiTiet hdct = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soLuong, giaban, thanhtien);
-        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.getByGH()) {
+        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.loadSp(maHD)) {
             if (hoaDonChiTietViewModel.getMasp().equals(ma)) {
+                this.banHangService.delete(getidSP(ma), getidHD(maHD));
                 int soluong = hoaDonChiTietViewModel.getSoLuong() + soLuong;
                 HoaDonChiTiet hdct1 = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soluong, giaban, thanhtien);
-                this.banHangService.delete(getidSP(ma), getidHD(maHD));
                 this.banHangService.createHD(hdct1);
                 sum();
                 this.loadTableGioHang(this.banHangService.loadSp(maHD));
@@ -140,7 +140,7 @@ public class ViewBanHang extends javax.swing.JPanel {
             }
         }
         this.banHangService.createHD(hdct);
-        this.loadTableGioHang(this.banHangService.getByGH());
+        this.loadTableGioHang(this.banHangService.loadSp(maHD));
         sum();
     }
 
@@ -158,11 +158,13 @@ public class ViewBanHang extends javax.swing.JPanel {
 
         int i = 1;
         for (HoaDonVM hd : hoaDonService.listH()) {
+            if (hd.getTrangthai() == 1) {
+                Object[] rowData = {
+                    i++, hd.getMahd(), hd.getNgayTao(), hd.getNguoiTao(), hd.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
+                };
+                dtm.addRow(rowData);
+            }
 
-            Object[] rowData = {
-                i++, hd.getMahd(), hd.getNgayTao(), hd.getNguoiTao(), hd.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
-            };
-            dtm.addRow(rowData);
         }
     }
 
@@ -197,15 +199,14 @@ public class ViewBanHang extends javax.swing.JPanel {
 //        return null;
 //    }
 
-    private int gettrangthai(String ma) {
-        for (HoaDonVM QLHoaDon : hoaDonService.listH()) {
-            if (QLHoaDon.getMahd().equals(ma)) {
-                return QLHoaDon.getTrangthai();
-            }
-        }
-        return 0;
-    }
-
+//    private int gettrangthai(String ma) {
+//        for (HoaDonVM QLHoaDon : hoaDonService.listH()) {
+//            if (QLHoaDon.getMahd().equals(ma)) {
+//                return QLHoaDon.getTrangthai();
+//            }
+//        }
+//        return 0;
+//    }
     private String getidHD(String ma) {
         for (HoaDon hoaDon : this.hoaDonService.getAll1()) {
             if (hoaDon.getMa().equalsIgnoreCase(ma)) {
@@ -458,13 +459,7 @@ public class ViewBanHang extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jLabel8))
                         .addGap(39, 39, 39)
-                        .addComponent(lbl_mahd, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)))
+                        .addComponent(lbl_mahd, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -480,15 +475,22 @@ public class ViewBanHang extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbl_tennv, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(58, 58, 58)))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_tongtien, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .addComponent(lbl_tienthua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_tienkhachtra)
-                    .addComponent(cbb_htth, 0, 1, Short.MAX_VALUE))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lbl_tongtien, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                        .addComponent(lbl_tienthua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_tienkhachtra))
+                    .addComponent(cbb_htth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(402, Short.MAX_VALUE)
                 .addComponent(btnThanhToan)
                 .addGap(201, 201, 201))
         );
@@ -564,23 +566,23 @@ public class ViewBanHang extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void themHoaDon() {
-        Random rd = new Random();
-        String tenban = lbl_banquay.getText();
-
-        String tennv = NhanVienLogin.getTenLogin();
-
-        String mahd = "HD" + rd.nextInt(99999999);
-        Date ngayTao = new Date();
-        Integer trangThai = 1;
-
-        String idNV = getIDNV(tennv);
-        String idban = getIDban(tenban);
-
-        HoaDon hd = new HoaDon(idNV, idban, mahd, ngayTao, trangThai);
-        this.hoaDonService.insert(hd);
-        loadTableHoaDon();
-    }
+//    private void themHoaDon() {
+//        Random rd = new Random();
+//        String tenban = lbl_banquay.getText();
+//
+//        String tennv = NhanVienLogin.getTenLogin();
+//
+//        String mahd = "HD" + rd.nextInt(99999999);
+//        Date ngayTao = new Date();
+//        Integer trangThai = 1;
+//
+//        String idNV = getIDNV(tennv);
+//        String idban = getIDban(tenban);
+//
+//        HoaDon hd = new HoaDon(idNV, idban, mahd, ngayTao, trangThai);
+//        this.hoaDonService.insert(hd);
+//        loadTableHoaDon();
+//    }
 
     private void btnClearGioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearGioHangActionPerformed
         dtm = (DefaultTableModel) tbGioHang.getModel();
@@ -596,11 +598,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
         this.loadTableGioHang(this.banHangService.loadSp(ma));
-        for (HoaDonVM hoaDonVM : this.hoaDonService.getAll()) {
-            lbl_banquay.setText(hoaDonVM.getTenBan());
+        for (HoaDonChiTietViewModel sanPham : this.banHangService.loadSp(ma)) {
+            lbl_banquay.setText(sanPham.getTenban());
             sum();
         }
-        
+
         lbl_ngaytaoo.setText(ngayTao);
         lbl_tennv.setText(nguoiTao);
         lbl_mahd.setText(ma);
@@ -643,11 +645,11 @@ public class ViewBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_tienkhachtraCaretUpdate
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btn_inphieubepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inphieubepActionPerformed
-      
+
     }//GEN-LAST:event_btn_inphieubepActionPerformed
 
 

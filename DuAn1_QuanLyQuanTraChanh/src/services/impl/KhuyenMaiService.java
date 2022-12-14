@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import repositories.IKhuyenMaiRepository;
 import repositories.impl.KhuyenMaiRepository;
 import services.IKhuyenMaiService;
+import viewmodels.SanPhamKhuyenMaiViewModel;
 
 public class KhuyenMaiService implements IKhuyenMaiService {
 
@@ -57,7 +58,7 @@ public class KhuyenMaiService implements IKhuyenMaiService {
     }
 
     @Override
-    public ArrayList<SanPhamKhuyenMai> readspkm() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ArrayList<SanPhamKhuyenMaiViewModel> readspkm() {
+        return this.khuyenMaiRepository.readspkm();
     }
 }
