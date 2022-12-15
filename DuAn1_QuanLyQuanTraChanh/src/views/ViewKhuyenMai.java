@@ -20,6 +20,8 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
 
     private final IKhuyenMaiService khuyenMaiService;
     private final ISanPhamService sanPhamService;
+    ArrayList<SanPhamKhuyenMai> listspkm = new ArrayList<>();
+    ArrayList<SanPhamKhuyenMai> listspkmdelete = new ArrayList<>();
 
     DefaultTableModel dtm;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,6 +29,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     private String getmasp;
     private Double getgiaban;
     private String gethinhthuc;
+    private Boolean getluachon;
 
     public ViewKhuyenMai() {
         initComponents();
@@ -97,24 +100,42 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     private SanPhamKhuyenMai getFormSPKM() {
         String makm = getmakm;
         String masp = getmasp;
-        Double giaBan = getgiaban;
+
         Double dongiaconlai = null;
         for (KhuyenMai khuyenMai : this.khuyenMaiService.read()) {
             if (khuyenMai.getLoaiGiamGia().equalsIgnoreCase("Theo %")) {
-                dongiaconlai = giaBan * khuyenMai.getMucGiamGiaPhanTram() / 100;
+                dongiaconlai = getGiaSp(masp) - (getGiaSp(masp) * khuyenMai.getMucGiamGiaPhanTram() / 100);
             } else {
-                dongiaconlai = giaBan - khuyenMai.getMucGiamGiaPhanTram();
+                dongiaconlai = getGiaSp(masp) - khuyenMai.getMucGiamGiaPhanTram();
             }
         }
-        SanPhamKhuyenMai spkm = new SanPhamKhuyenMai(makm, masp, giaBan, dongiaconlai, WIDTH);
+        SanPhamKhuyenMai spkm = new SanPhamKhuyenMai(getIdkm(makm), getIdsp(masp), getGiaSp(masp), dongiaconlai, 0);
 
         return spkm;
     }
 
-    private String getId(String ma) {
+    private String getIdkm(String ma) {
         for (KhuyenMai khuyenMai : this.khuyenMaiService.read()) {
             if (khuyenMai.getMa().equals(ma)) {
                 return khuyenMai.getId();
+            }
+        }
+        return null;
+    }
+
+    private String getIdsp(String ma) {
+        for (SanPham sp : this.sanPhamService.read()) {
+            if (sp.getMaSP().equals(ma)) {
+                return sp.getId();
+            }
+        }
+        return null;
+    }
+
+    private Double getGiaSp(String ma) {
+        for (SanPham sp : this.sanPhamService.read()) {
+            if (sp.getMaSP().equals(ma)) {
+                return sp.getGiaBan();
             }
         }
         return null;
@@ -542,6 +563,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         KhuyenMai km = this.getForm();
+
         this.khuyenMaiService.create(km);
         this.loadTableKM(this.khuyenMaiService.read());
     }//GEN-LAST:event_btn_saveActionPerformed
@@ -550,14 +572,14 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         KhuyenMai km = this.getForm();
         int row = tb_khuyenmai.getSelectedRow();
         String ma = tb_khuyenmai.getValueAt(row, 1).toString();
-        this.khuyenMaiService.update(km, getId(ma));
+        this.khuyenMaiService.update(km, getIdkm(ma));
         this.loadTableKM(this.khuyenMaiService.read());
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
         int row = tb_khuyenmai.getSelectedRow();
         String ma = tb_khuyenmai.getValueAt(row, 1).toString();
-        this.khuyenMaiService.delete(getId(ma));
+        this.khuyenMaiService.delete(getIdkm(ma));
         this.loadTableKM(this.khuyenMaiService.read());
     }//GEN-LAST:event_btn_xoaActionPerformed
 
@@ -595,14 +617,21 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void tb_sanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_sanphamMouseClicked
-        int row=tb_sanpham.getSelectedRow();
-        String ma=tb_sanpham.getValueAt(row, 1).toString();
-        String luaChonStr=tb_sanpham.getValueAt(row, 4).toString();
-        if(luaChonStr)
+        int row = tb_sanpham.getSelectedRow();
+        String ma = tb_sanpham.getValueAt(row, 1).toString();
+        getmasp = ma;
+        String luaChonStr = tb_sanpham.getValueAt(row, 3).toString();
+
+        Boolean luachon = Boolean.parseBoolean(luaChonStr);
+        getluachon = luachon;
+
+
     }//GEN-LAST:event_tb_sanphamMouseClicked
 
     private void btn_apdungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apdungActionPerformed
-        
+        SanPhamKhuyenMai spkm = this.getFormSPKM();
+        this.khuyenMaiService.create(spkm);
+        this.loadTableDSKM();
     }//GEN-LAST:event_btn_apdungActionPerformed
 
     private void tb_khuyenmaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_khuyenmaiMouseClicked
@@ -611,7 +640,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         getmakm = ma;
         String ten = tb_khuyenmai.getValueAt(row, 2).toString();
         String hinhThuc = tb_khuyenmai.getValueAt(row, 3).toString();
-        gethinhthuc=hinhThuc;
+        gethinhthuc = hinhThuc;
         String mucGiam = tb_khuyenmai.getValueAt(row, 4).toString();
         String ngayBatDau = tb_khuyenmai.getValueAt(row, 5).toString();
         String ngayKetThuc = tb_khuyenmai.getValueAt(row, 6).toString();
@@ -683,7 +712,7 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
                 sanPhamKhuyenMaiViewModel.getTensp(),
                 sanPhamKhuyenMaiViewModel.getGiaBan(),
                 sanPhamKhuyenMaiViewModel.getGiaTienConLai(),
-                sanPhamKhuyenMaiViewModel.getTrangThai(),};
+                sanPhamKhuyenMaiViewModel.getTrangThai() == 0 ? "Đang áp dụng" : "Ngừng áp dụng",};
             dtm.addRow(rowdata);
         }
     }

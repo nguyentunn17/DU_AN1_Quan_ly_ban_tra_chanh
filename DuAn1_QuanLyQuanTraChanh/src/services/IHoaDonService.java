@@ -14,15 +14,13 @@ import viewmodels.HoaDonVM;
  */
 public interface IHoaDonService {
 
-    ArrayList<HoaDonVM> getAll();
-
     ArrayList<HoaDon> getAll1();
 
     void insert(HoaDon hd);
 
     void update(String ma, HoaDon hd);
 
-//    ArrayList<HoaDonVM> getHoaDon();
+    ArrayList<HoaDonVM> getHoaDon();
 
     ArrayList<HoaDonVM> listH();
 

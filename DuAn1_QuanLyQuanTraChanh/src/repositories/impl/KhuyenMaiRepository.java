@@ -135,12 +135,13 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
     public void create(SanPhamKhuyenMai spkm) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "INSERT INTO SPKHUYENMAI(idKm,idsp,dongia,dongiakhigiam,trangthai) values(?,?,?,?,?)";
+            String query = "INSERT INTO SPKHUYENMAI(idKm,idsp,dongia,SoTienConLai,trangthai) values(?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, spkm.getIdkm());
-            ps.setObject(1, spkm.getIdsp());
-            ps.setObject(1, spkm.getDonGia());
-            ps.setObject(1, spkm.getSoTienConlai());
+            ps.setObject(2, spkm.getIdsp());
+            ps.setObject(3, spkm.getDonGia());
+            ps.setObject(4, spkm.getSoTienConlai());
+            ps.setObject(5, spkm.getTrangThai());
 
             ps.execute();
         } catch (Exception ex) {
@@ -154,9 +155,9 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
             String query = """
-                           SELECT MA,TEN,LOAIGIAMGIA,MUCGIAMGIAPHANTRAM,TenSP,GiaBan,SoTienConLai,SPKHUYENMAI.TrangThai FROM KHUYENMAI 
-                           INNER JOIN SPKHUYENMAI ON KHUYENMAI.ID=SPKHUYENMAI.IDKM 
-                           INNER JOIN SANPHAM ON SANPHAM.Id=SPKHUYENMAI.IdSP
+                           SELECT MA,TEN,LOAIGIAMGIA,MUCGIAMGIAPHANTRAM,TenSP,spkhuyenmai.DonGia,spkhuyenmai.SoTienConLai,SPKHUYENMAI.TrangThai FROM KHUYENMAI 
+                                                      INNER JOIN SPKHUYENMAI ON KHUYENMAI.ID=SPKHUYENMAI.IDKM 
+                                                      INNER JOIN SANPHAM ON SANPHAM.Id=SPKHUYENMAI.IdSP
                            """;
             PreparedStatement ps = conn.prepareStatement(query);
             ps.execute();
@@ -168,7 +169,7 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
                 String loaiGiamGia = rs.getString("loaigiamgia");
                 Double mucGiaPhanTram = rs.getDouble("MucGiamGiaPhanTram");
                 String tensp = rs.getString("tensp");
-                Double giaban = rs.getDouble("giaban");
+                Double giaban = rs.getDouble("DonGia");
                 Double sotienconlai = rs.getDouble("SoTienConLai");
                 int trangThai = rs.getInt("trangThai");
                 SanPhamKhuyenMaiViewModel spkmvm = new SanPhamKhuyenMaiViewModel(ma, ten, tensp, loaiGiamGia, mucGiaPhanTram, giaban, sotienconlai, trangThai);

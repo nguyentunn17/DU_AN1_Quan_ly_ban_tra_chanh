@@ -86,7 +86,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_hoadon = new com.raven.swing.table.Table();
-        btn_thongke = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_tk = new javax.swing.JTextField();
         btn_tk = new javax.swing.JButton();
@@ -122,13 +121,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
         if (tb_hoadon.getColumnModel().getColumnCount() > 0) {
             tb_hoadon.getColumnModel().getColumn(8).setResizable(false);
         }
-
-        btn_thongke.setText("THỐNG KÊ");
-        btn_thongke.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_thongkeActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Ngày tạo");
 
@@ -173,11 +165,9 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(30, 30, 30)
                 .addComponent(txt_tk, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(96, 96, 96)
                 .addComponent(btn_tk)
-                .addGap(43, 43, 43)
-                .addComponent(btn_thongke)
-                .addGap(47, 47, 47)
+                .addGap(113, 113, 113)
                 .addComponent(btnIn)
                 .addContainerGap(181, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -193,7 +183,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_thongke)
                     .addComponent(jLabel1)
                     .addComponent(txt_tk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_tk)
@@ -204,11 +193,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thongkeActionPerformed
-        // TODO add your handling code here:
-        loatTable();
-    }//GEN-LAST:event_btn_thongkeActionPerformed
 
     private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
         // TODO add your handling code here:
@@ -330,7 +314,6 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIn;
-    private javax.swing.JButton btn_thongke;
     private javax.swing.JButton btn_tk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;

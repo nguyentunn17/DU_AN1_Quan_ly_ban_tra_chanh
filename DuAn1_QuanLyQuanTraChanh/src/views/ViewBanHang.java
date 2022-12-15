@@ -50,6 +50,7 @@ public class ViewBanHang extends javax.swing.JPanel {
     private final IBanHangService banHangService;
     ArrayList<SanPham> listddsp = new ArrayList<>();
     private String getMaHD = null;
+    private String gettrangthai;
 
     public ViewBanHang() {
         initComponents();
@@ -101,10 +102,11 @@ public class ViewBanHang extends javax.swing.JPanel {
             btn.setIcon(imageIcon);
             btn.setText(sp.getTensp());
             this.JPMenu.add(btn);
+
             btn.setHorizontalTextPosition(JButton.CENTER);
             btn.setVerticalTextPosition(JButton.BOTTOM);
-            ButtonSanPhamListener buttonSanPhamListener = new ButtonSanPhamListener(btn, sanPhamService, this);
 
+            ButtonSanPhamListener buttonSanPhamListener = new ButtonSanPhamListener(btn, sanPhamService, this);
             btn.addActionListener(buttonSanPhamListener);
         }
     }
@@ -146,7 +148,7 @@ public class ViewBanHang extends javax.swing.JPanel {
 
     private void sum() {
         float sum = 0;
-        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.getByGH()) {
+        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.loadSp(getMaHD)) {
             sum += hoaDonChiTietViewModel.getSoLuong() * hoaDonChiTietViewModel.getGiaBan();
             lbl_tongtien.setText(String.valueOf(sum));
         }
@@ -253,6 +255,14 @@ public class ViewBanHang extends javax.swing.JPanel {
         return 0f;
     }
 
+    private int gettrangThai(String trangthai) {
+        if (trangthai.equalsIgnoreCase("Chờ hoạt động")) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -332,22 +342,25 @@ public class ViewBanHang extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbHoaDonMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tbHoaDonMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(tbHoaDon);
 
         tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Thành tiền"
+                "STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Thành tiền", "Ghi chú"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -594,14 +607,17 @@ public class ViewBanHang extends javax.swing.JPanel {
         String ma = tbHoaDon.getValueAt(row, 1).toString();
         String ngayTao = tbHoaDon.getValueAt(row, 2).toString();
         String nguoiTao = tbHoaDon.getValueAt(row, 3).toString();
+        String trangThai = tbHoaDon.getValueAt(row, 4).toString();
+        gettrangthai = trangThai;
         getMaHD = ma;
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
         this.loadTableGioHang(this.banHangService.loadSp(ma));
         for (HoaDonChiTietViewModel sanPham : this.banHangService.loadSp(ma)) {
             lbl_banquay.setText(sanPham.getTenban());
-            sum();
+
         }
+        sum();
 
         lbl_ngaytaoo.setText(ngayTao);
         lbl_tennv.setText(nguoiTao);
@@ -622,7 +638,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         Integer soLuong = Integer.parseInt(soLuongStr);
         for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.getByGH()) {
             if (hoaDonChiTietViewModel.getMasp().equals(ma)) {
-                int soluong = hoaDonChiTietViewModel.getSoLuong() + soLuong;
+                int soluong = hoaDonChiTietViewModel.getSoLuong() - soLuong;
                 HoaDonChiTiet hdct1 = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soluong, hoaDonChiTietViewModel.getGiaBan(), hoaDonChiTietViewModel.getThanhTien());
                 this.banHangService.delete(getidSP(ma), getidHD(maHD));
                 this.banHangService.createHD(hdct1);
@@ -645,12 +661,28 @@ public class ViewBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_tienkhachtraCaretUpdate
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        int row = tbHoaDon.getSelectedRow();
 
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn thanh toán");
+            return;
+        }
+
+        HoaDon hd = new HoaDon();
+        String ma = tbHoaDon.getValueAt(row, 1).toString();
+        hoaDonService.update(ma, hd);
+        dtm = (DefaultTableModel) tbHoaDon.getModel();
+        dtm.removeRow(row);
+        loadTableHoaDon();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btn_inphieubepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inphieubepActionPerformed
 
     }//GEN-LAST:event_btn_inphieubepActionPerformed
+
+    private void tbHoaDonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbHoaDonMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
