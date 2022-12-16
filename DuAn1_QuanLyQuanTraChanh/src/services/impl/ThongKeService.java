@@ -44,4 +44,10 @@ public class ThongKeService implements IThongKeService {
         return thong_Ke_rep.timsanphambanchay(ngaya, ngayb);//throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public ArrayList<ThongKe> getList2() {
+        return thong_Ke_rep.getList2();
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
