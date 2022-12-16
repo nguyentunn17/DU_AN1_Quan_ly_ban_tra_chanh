@@ -4,30 +4,54 @@
  */
 package domainmodels;
 
+import java.util.Date;
+
 /**
  *
  * @author Phuong
  */
 public class KhachHang {
+    private String id;
     private String makh;
     private String tenkh;
+    private Date ngaysinh;
     private String sdt;
-    private String ngaysinh;
     private String diachi;
     private String gioitinh;
     private String ghichu;
+    private int trangThai;
 
     public KhachHang() {
     }
 
-    public KhachHang(String makh, String tenkh, String sdt, String ngaysinh, String diachi, String gioitinh, String ghichu) {
+    public KhachHang(String makh, String tenkh, Date ngaysinh, String sdt, String diachi, String gioitinh, String ghichu) {
         this.makh = makh;
         this.tenkh = tenkh;
-        this.sdt = sdt;
         this.ngaysinh = ngaysinh;
+        this.sdt = sdt;
         this.diachi = diachi;
         this.gioitinh = gioitinh;
         this.ghichu = ghichu;
+    }
+    
+    public KhachHang(String id, String makh, String tenkh, Date ngaysinh, String sdt, String diachi, String gioitinh, String ghichu, int trangThai) {
+        this.id = id;
+        this.makh = makh;
+        this.tenkh = tenkh;
+        this.ngaysinh = ngaysinh;
+        this.sdt = sdt;
+        this.diachi = diachi;
+        this.gioitinh = gioitinh;
+        this.ghichu = ghichu;
+        this.trangThai = trangThai;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMakh() {
@@ -46,20 +70,20 @@ public class KhachHang {
         this.tenkh = tenkh;
     }
 
+    public Date getNgaysinh() {
+        return ngaysinh;
+    }
+
+    public void setNgaysinh(Date ngaysinh) {
+        this.ngaysinh = ngaysinh;
+    }
+
     public String getSdt() {
         return sdt;
     }
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
-    }
-
-    public String getNgaysinh() {
-        return ngaysinh;
-    }
-
-    public void setNgaysinh(String ngaysinh) {
-        this.ngaysinh = ngaysinh;
     }
 
     public String getDiachi() {
@@ -85,6 +109,14 @@ public class KhachHang {
     public void setGhichu(String ghichu) {
         this.ghichu = ghichu;
     }
-    
-    
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+   
 }
