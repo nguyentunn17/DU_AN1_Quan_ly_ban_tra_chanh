@@ -22,41 +22,41 @@ import utilities.jdbcUtil;
 public class ThongKeRepository {
 
     public ArrayList<ThongKe> getList() {
-        ArrayList<ThongKe> tks = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = """
-                         SELECT NgayThanhToan , sum(TongTien) as TongTien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD			
-                         group by ngaythanhtoan 
-                         """;
+            String sql = "SELECT top 7 NgayThanhtoan , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
+            ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe ke = new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
-                ke.setTongtien(rs.getDouble("TongTien"));
+                ke.setNgayThanhToan(rs.getDate("ngaythanhtoan"));
+                ke.setTongtien(rs.getDouble("tongtien"));
                 tks.add(ke);
+
             }
+
+            return tks;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } catch (Exception ex) {
             Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return tks;
+        return null;
     }
 
     public ArrayList<ThongKe> timkiemm(Date ngaya, Date ngayb) {
         ArrayList<ThongKe> thongKes = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = """
-                         SELECT  NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
-                                       where NgayThanhToan between ? And ?  GROUP BY ngaytao""";
+            String sql = "SELECT top 7 NgayThanhtoan , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD  where ngaythanhtoan between ? and ? group by NgayThanhToan order by ngaythanhtoan desc ";
             PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngaya);
             ps.setObject(2, ngayb);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe ke = new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("ngaytao"));
+                ke.setNgayThanhToan(rs.getDate("ngaythanhtoan"));
                 ke.setTongtien(rs.getDouble("tongtien"));
                 thongKes.add(ke);
 
@@ -69,31 +69,57 @@ public class ThongKeRepository {
         return thongKes;
     }
 
-    public ArrayList<ThongKe> timkiemtheongay(Date ngay) {
-        ArrayList<ThongKe> thongKes = new ArrayList<>();
+    public ArrayList<ThongKe> sanphambanchay() {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = """
-                         SELECT  NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
-                                                    where NgayTao =? GROUP BY ngaytao""";
+            String sql = "Select top 10 TenSP,sum(SoLuong)  as Tongsoluong from SANPHAM inner join HOADONCHITIET ON SANPHAM.Id = HOADONCHITIET.IdSP group by TenSP order by Tongsoluong desc";
+            ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
-            ps.setObject(1, ngay);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe ke = new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("ngaytao"));
-                ke.setTongtien(rs.getDouble("tongtien"));
-                thongKes.add(ke);
+                ke.setTiensanpham(rs.getString("TenSP"));
+                ke.setSoluongban(rs.getInt("Tongsoluong"));
+                tks.add(ke);
 
             }
-            // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+            return tks;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (Exception ex) {
             Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return thongKes;
+        return null;
+
     }
 
+    public ArrayList<ThongKe> timsanphambanchay(Date ngaya, Date ngayb) {
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = "Select Top 10 TenSP , ngaythanhtoan, SUM(Soluong)  as Tongsoluong from SANPHAM inner join HOADONCHITIET ON SANPHAM.Id = HOADONCHITIET.IdSP inner join HOADON ON HOADONCHITIET.IdHD=HOADON.Id where NgayThanhToan between ? And ? group by TenSP , NgayThanhToan order by ngaythanhtoan, Tongsoluong desc";
+            ArrayList<ThongKe> tks = new ArrayList<>();
+            PreparedStatement ps = conn.prepareCall(sql);
+            ps.setObject(1, ngaya);
+            ps.setObject(2, ngayb);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe ke = new ThongKe();
+
+                ke.setTiensanpham(rs.getString("TenSP"));
+
+                ke.setSoluongban(rs.getInt("Tongsoluong"));
+                tks.add(ke);
+
+            }
+
+            return tks;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
 }

@@ -1,4 +1,3 @@
-
 package services.impl;
 
 import domainmodels.HoaDon;
@@ -12,8 +11,6 @@ public class HoaDonService implements IHoaDonService {
 
     private final IHoaDonRepository rhdvm = new HoaDonRepository();
     private final HoaDonRepository hdrp = new HoaDonRepository();
-
-   
 
     @Override
     public void insert(HoaDon hd) {
@@ -42,6 +39,6 @@ public class HoaDonService implements IHoaDonService {
 
     @Override
     public ArrayList<HoaDonVM> listBan(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      return  this.hdrp.listBan(ma);
     }
 }
