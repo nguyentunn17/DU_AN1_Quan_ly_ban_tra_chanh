@@ -43,6 +43,11 @@ public class HoaDon {
         this.ngaytao = ngaytao;
         this.trangthai = trangthai;
     }
+
+    public HoaDon(Date ngaythanhtoan, float tongTien) {
+        this.ngaythanhtoan = ngaythanhtoan;
+        this.tongTien = tongTien;
+    }
     
 
     public HoaDon(String id, String ma) {

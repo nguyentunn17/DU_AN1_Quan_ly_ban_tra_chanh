@@ -1,6 +1,7 @@
 package repositories.impl;
 
 import domainmodels.Ban;
+import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
 import domainmodels.SanPham;
 import java.sql.Connection;
@@ -119,8 +120,8 @@ public class BanHangRepository implements IBanHangRepository {
             conn = jdbcUtil.getConnection();
             String sql = """
                       SELECT TenBan,MaSP,TenSP,SoLuong,GiaBan,ThanhTien FROM SANPHAM INNER JOIN HOADONCHITIET ON SANPHAM.ID=HOADONCHITIET.IdSP                                                                                                                                                   INNER JOIN HOADON ON HOADONCHITIET.IdHD=HOADON.Id
-                                                                                                  												 inner join BAN on BAN.Id=HOADON.IdBAN
-                                                                                                                                                   WHERE MaHD like ?""";
+                                                                                              inner join BAN on BAN.Id=HOADON.IdBAN
+                                                                                                WHERE MaHD like ?""";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
             ps.execute();
@@ -133,7 +134,6 @@ public class BanHangRepository implements IBanHangRepository {
                 Integer soLuongTon = rs.getInt("soluong");
                 Double thanhTien = rs.getDouble("ThanhTien");
                 String tenban = rs.getString("tenban");
-
                 HoaDonChiTietViewModel hoaDonChiTietViewModel
                         = new HoaDonChiTietViewModel(ma, ten, soLuongTon, giaBan, thanhTien, tenban);
                 listsp.add(hoaDonChiTietViewModel);
@@ -153,6 +153,24 @@ public class BanHangRepository implements IBanHangRepository {
             ps.setObject(1, idsp);
             ps.setObject(2, idhd);
             ps.execute();
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
+    public void updateTotal(HoaDon hd, String mahd) {
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = "update HOADON set TongTien=?,NgayThanhToan=? where MaHD=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setObject(1, hd.getTongTien());
+            ps.setObject(2, hd.getNgaythanhtoan());
+            ps.setObject(3, mahd);
+            ps.execute();
+            
+
         } catch (Exception ex) {
             Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
         }

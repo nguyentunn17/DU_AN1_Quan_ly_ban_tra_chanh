@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package domainmodels;
 
 import java.util.Date;
 
-/**
- *
- * @author Inspiron
- */
 public class ThongKe {
-    private  Date ngayThanhToan;
+
+    private Date ngayThanhToan;
     private double tongtien;
+    private String mahd;
 
     public ThongKe() {
     }
@@ -37,9 +31,4 @@ public class ThongKe {
     public void setTongtien(double tongtien) {
         this.tongtien = tongtien;
     }
-
-    
-    
-    
-    
 }

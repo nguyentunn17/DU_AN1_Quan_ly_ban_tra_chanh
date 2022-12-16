@@ -1,5 +1,6 @@
 package services;
 
+import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
 import java.util.ArrayList;
 import viewmodels.HoaDonChiTietViewModel;
@@ -15,5 +16,7 @@ public interface IBanHangService {
     ArrayList<HoaDonChiTietViewModel> getByGH();
 
     void delete(String idsp, String idhd);
+
+    void updateTotal(HoaDon hd, String mahd);
 
 }

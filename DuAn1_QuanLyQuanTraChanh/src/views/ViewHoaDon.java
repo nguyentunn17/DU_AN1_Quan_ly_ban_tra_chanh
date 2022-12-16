@@ -28,10 +28,11 @@ public class ViewHoaDon extends javax.swing.JPanel {
     private final IHoaDonService hdsvvm = new HoaDonService();
     private final IBanHangService banHangService;
     private DefaultTableModel dtm;
+
     public ViewHoaDon() {
         initComponents();
         this.banHangService = new BanHangService();
-//        loatTable();
+        loatTable();
     }
 //    private HoaDon getData() {
 //        String ma = txt_ma.getText().trim();
@@ -60,17 +61,15 @@ public class ViewHoaDon extends javax.swing.JPanel {
     public void loatTable() {
         defaultTableModel = (DefaultTableModel) this.tb_hoadon.getModel();
         defaultTableModel.setRowCount(0);
-        String ten = null;
-        int stt=1;
-        for (HoaDonVM hdvm : hdsvvm.getAll()) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        int stt = 1;
+        for (HoaDonVM hdvm : hdsvvm.getHoaDon()) {
             Object[] rowdata = {
                 stt++,
                 hdvm.getMahd(),
-                ten = "Admin",
-                hdvm.getNgayTao(),
+                hdvm.getNguoiTao(),
+                df.format(hdvm.getNgayTao()),
                 hdvm.getNgayThanhToan(),
-                hdvm.getMasp(),
-                hdvm.getTensp(),
                 hdvm.getThanhTien(),
                 hdvm.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
 
@@ -101,11 +100,11 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "MaHD", "Người tạo", "NgayTao", "Ngày thanh toán", "Mã sản phẩm", "Tên sản phẩm", "Thành tiền", "Trạng thái"
+                "STT", "MaHD", "Người tạo", "NgayTao", "Ngày thanh toán", "Tổng tiền", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, true, false, false, true, true, false, false
+                true, true, true, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -119,7 +118,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tb_hoadon);
         if (tb_hoadon.getColumnModel().getColumnCount() > 0) {
-            tb_hoadon.getColumnModel().getColumn(8).setResizable(false);
+            tb_hoadon.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jLabel1.setText("Ngày tạo");
@@ -218,45 +217,34 @@ public class ViewHoaDon extends javax.swing.JPanel {
             cell.setCellValue("Ngày thanh toán");
 
             cell = row.createCell(5, CellType.STRING);
-            cell.setCellValue("Mã sản phẩm");
+            cell.setCellValue("Tổng tiền");
 
             cell = row.createCell(6, CellType.STRING);
-            cell.setCellValue("Tên sản phẩm");
-
-            cell = row.createCell(7, CellType.STRING);
-            cell.setCellValue("Thành tiền");
-
-            cell = row.createCell(8, CellType.STRING);
             cell.setCellValue("Trạng thái");
-            for (int i = 0; i < hdsvvm.getAll().size(); i++) {
+            
+            for (int i = 0; i < hdsvvm.getHoaDon().size(); i++) {
                 row = sheet.createRow(4 + i);
 
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue(i + 1);
 
                 cell = row.createCell(1, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getMahd());
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getMahd());
 
                 cell = row.createCell(2, CellType.STRING);
-                cell.setCellValue("Admin");
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getNguoiTao());
 
-                cell = row.createCell(3, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getNgayTao());
+                cell = row.createCell(3, CellType.FORMULA);
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getNgayTao());
 
-                cell = row.createCell(4, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getNgayThanhToan());
+                cell = row.createCell(4, CellType.FORMULA);
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getNgayThanhToan());
 
                 cell = row.createCell(5, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getMasp());
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getThanhTien());
 
                 cell = row.createCell(6, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getTensp());
-
-                cell = row.createCell(7, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getThanhTien());
-
-                cell = row.createCell(8, CellType.STRING);
-                cell.setCellValue(hdsvvm.getAll().get(i).getTrangthai());
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getTrangthai()==0?"Đã thanh toán":"Chờ thanh toán");
 
             }
             File f = new File("D:\\hoadon.xlsx");
@@ -274,26 +262,26 @@ public class ViewHoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInActionPerformed
 
     private void btn_tkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tkActionPerformed
-        if (!txt_tk.getText().equalsIgnoreCase("")) {
-            try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(txt_tk.getText());
-                for (int i = 0; i < tb_hoadon.getRowCount(); i++) {
-                    Date d2 = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(tb_hoadon.getValueAt(i, 2)));
-                    if (d2.compareTo(date) != 0) {
-                        tb_hoadon.removeRowSelectionInterval(i, i);
-                        JOptionPane.showMessageDialog(this, "Không có thông tin ngày này");
-                    } else {
-                        loatTable();
-                    }
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if (!txt_tk.getText().equalsIgnoreCase("")) {
+//            try {
+//                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(txt_tk.getText());
+//                for (int i = 0; i < tb_hoadon.getRowCount(); i++) {
+//                    Date d2 = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(tb_hoadon.getValueAt(i, 2)));
+//                    if (d2.compareTo(date) != 0) {
+//                        tb_hoadon.removeRowSelectionInterval(i, i);
+//                        JOptionPane.showMessageDialog(this, "Không có thông tin ngày này");
+//                    } else {
+//                        loatTable();
+//                    }
+//                }
+//            } catch (ParseException ex) {
+//                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }//GEN-LAST:event_btn_tkActionPerformed
 
     private void tb_hoadonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_hoadonMouseClicked
-        dtm=(DefaultTableModel) tb_hoadon1.getModel();
+        dtm = (DefaultTableModel) tb_hoadon1.getModel();
         dtm.setRowCount(0);
         int row = tb_hoadon.getSelectedRow();
         String ma = tb_hoadon.getValueAt(row, 1).toString();

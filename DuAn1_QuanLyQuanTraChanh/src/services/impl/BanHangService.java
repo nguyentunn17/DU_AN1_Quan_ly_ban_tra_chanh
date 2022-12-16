@@ -1,5 +1,6 @@
 package services.impl;
 
+import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
 import java.util.ArrayList;
 import repositories.IBanHangRepository;
@@ -37,7 +38,12 @@ public class BanHangService implements IBanHangService {
     }
 
     @Override
-    public void delete(String isp,String idhd) {
+    public void delete(String isp, String idhd) {
         this.banHangRepository.delete(isp, idhd);
+    }
+
+    @Override
+    public void updateTotal(HoaDon hd, String mahd) {
+        this.banHangRepository.updateTotal(hd, mahd);
     }
 }

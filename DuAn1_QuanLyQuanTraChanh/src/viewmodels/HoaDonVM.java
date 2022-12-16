@@ -32,20 +32,27 @@ public class HoaDonVM {
         this.trangthai = trangthai;
     }
 
-    
+    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan, String nguoiTao, double thanhTien, int trangthai) {
+        this.mahd = mahd;
+        this.ngayTao = ngayTao;
+        this.ngayThanhToan = ngayThanhToan;
+        this.nguoiTao = nguoiTao;
+        this.thanhTien = thanhTien;
+        this.trangthai = trangthai;
+    }
 
-    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, double thanhTien) {
+    public HoaDonVM(String mahd, Date ngayTao, String nguoiTao, double thanhTien, String tenBan) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
         this.nguoiTao = nguoiTao;
         this.thanhTien = thanhTien;
+        this.tenBan = tenBan;
     }
 
-    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan,  String masp, String tensp, double thanhTien, int trangthai, String tenBan) {
+    public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan, String masp, String tensp, double thanhTien, int trangthai, String tenBan) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
-       
         this.masp = masp;
         this.tensp = tensp;
         this.thanhTien = thanhTien;
@@ -60,8 +67,6 @@ public class HoaDonVM {
     public void setTenBan(String tenBan) {
         this.tenBan = tenBan;
     }
-
-    
 
     public String getNguoiTao() {
         return nguoiTao;

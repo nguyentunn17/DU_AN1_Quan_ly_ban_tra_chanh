@@ -22,30 +22,25 @@ import utilities.jdbcUtil;
 public class ThongKeRepository {
 
     public ArrayList<ThongKe> getList() {
+        ArrayList<ThongKe> tks = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
             String sql = """
-                         SELECT NgayTao , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD
-                         group by NgayTao
+                         SELECT NgayThanhToan , sum(TongTien) as TongTien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD			
+                         group by ngaythanhtoan 
                          """;
-            ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ThongKe ke = new ThongKe();
-                ke.setNgayThanhToan(rs.getDate("ngaytao"));
-                ke.setTongtien(rs.getDouble("tongtien"));
+                ke.setNgayThanhToan(rs.getDate("NgayThanhToan"));
+                ke.setTongtien(rs.getDouble("TongTien"));
                 tks.add(ke);
-
             }
-
-            return tks;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         } catch (Exception ex) {
             Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return tks;
     }
 
     public ArrayList<ThongKe> timkiemm(Date ngaya, Date ngayb) {

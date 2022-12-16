@@ -7,8 +7,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.IKhuyenMaiService;
 import services.ISanPhamService;
@@ -613,7 +616,9 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_timkiemspKeyReleased
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-
+        for (int i = 0; i < tb_sanpham.getRowCount(); i++) {
+            tb_sanpham.setValueAt(true, i, 3);
+        }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void tb_sanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_sanphamMouseClicked
@@ -632,6 +637,26 @@ public class ViewKhuyenMai extends javax.swing.JPanel {
         SanPhamKhuyenMai spkm = this.getFormSPKM();
         this.khuyenMaiService.create(spkm);
         this.loadTableDSKM();
+//        try {
+//            for (int i = 0; i < tb_sanpham.getRowCount(); i++) {
+//                boolean check = Boolean.parseBoolean(tb_sanpham.getValueAt(i, 7).toString());
+//                if (check) {
+//                    UUID idHDCT = .get(i).getId();
+//                    List<ImelDaBanRespone> lstImelXoa = bhs.getImelBan(idHDCT);
+//                    for (ImelDaBanRespone imel : lstImelXoa) {
+//                        bhs.deleteImelBan(imel.getMa());
+//                    }
+//                    for (int j = 0; j < Integer.parseInt(tb_sanpham.getValueAt(i, 6).toString()); j++) {
+//                        bhs.updateGHXoa(idHDCT);
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Không xóa được giỏ hàng");
+//            return;
+//        }
+//        JOptionPane.showMessageDialog(this, "Đã xóa các sản phẩm chọn khỏi giỏ hàng");
     }//GEN-LAST:event_btn_apdungActionPerformed
 
     private void tb_khuyenmaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_khuyenmaiMouseClicked

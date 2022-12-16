@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package services.impl;
 
 import domainmodels.HoaDon;
@@ -13,8 +10,8 @@ import services.IHoaDonService;
 
 public class HoaDonService implements IHoaDonService {
 
-    private IHoaDonRepository rhdvm = new HoaDonRepository();
-    private HoaDonRepository hdrp = new HoaDonRepository();
+    private final IHoaDonRepository rhdvm = new HoaDonRepository();
+    private final HoaDonRepository hdrp = new HoaDonRepository();
 
    
 

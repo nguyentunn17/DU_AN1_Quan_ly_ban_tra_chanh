@@ -24,7 +24,7 @@ public class QuanLyThongKe {
         if (thongke != null) {
             DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
             for (ThongKe ke : thongke) {
-                categoryDataset.addValue(ke.getTongtien(), "Tong Tien", ke.getNgayThanhToan());
+                categoryDataset.addValue(ke.getTongtien(),"Tổng tiền" , ke.getNgayThanhToan());
             }
             JFreeChart chart = ChartFactory.createBarChart("DOANH THU (VND)", "Ngay Thanh Toan", "Gia Tien", categoryDataset);
             ChartPanel chartPanel = new ChartPanel(chart);
