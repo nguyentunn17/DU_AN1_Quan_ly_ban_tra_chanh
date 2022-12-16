@@ -2,6 +2,9 @@ package views;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import domainmodels.Ban;
@@ -14,6 +17,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +57,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private String getMaHD = null;
     private String gettrangthai;
     private int getrowhd;
+    private static Font catFont = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
+    private static Font tenQ = new Font(Font.TIMES_ROMAN, 16, Font.BOLD);
 
     public ViewBanHang() {
         initComponents();
@@ -264,6 +270,164 @@ public class ViewBanHang extends javax.swing.JPanel {
         } else {
             return 0;
         }
+    }
+
+    public void InHD() {
+        String path = "";
+        Date ngayTao = new Date();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        JFileChooser j = new JFileChooser();
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = j.showSaveDialog(this);
+
+        if (x == JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "InHoaDon.pdf"));
+
+            doc.open();
+            Paragraph TenQ = new Paragraph("Cua hang tra chanh MR.Tu", tenQ);
+            TenQ.setAlignment(Element.ALIGN_CENTER);
+            TenQ.setSpacingAfter(5);
+            Paragraph DC = new Paragraph("                  DC: So 4, TDP Phuc Ly 2, Minh Khai, Bac Tu Liem, HN");
+            DC.setAlignment(Element.ALIGN_LEFT);
+            Paragraph SDT = new Paragraph("                  SDT: 0964233464");
+            SDT.setAlignment(Element.ALIGN_LEFT);
+            Paragraph tenPhieu = new Paragraph("PHIEU THANH TOAN", catFont);
+            tenPhieu.setAlignment(Element.ALIGN_CENTER);
+            tenPhieu.setSpacingAfter(10);
+
+            Paragraph maTen = new Paragraph();
+            maTen.setAlignment(Element.ALIGN_LEFT);
+            maTen.add("                  MaHD: " + lbl_mahd.getText() + "                               Tên bàn: " + lbl_banquay.getText());
+            Paragraph tenNV = new Paragraph();
+            tenNV.add("                  Tên thu ngân: " + lbl_tennv.getText());
+            Paragraph ngayGio = new Paragraph();
+            ngayGio.setAlignment(Element.ALIGN_LEFT);
+            ngayGio.add("                  Gio vào: " + lbl_ngaytaoo.getText() + "                        Gio ra: " + df.format(ngayTao).toString());
+
+            ngayGio.setSpacingAfter(10);
+//             Anchor anchor = new Anchor("First Chapter", catFont);
+//        anchor.setName("First Chapter");
+//            Chapter catPart = new Chapter(new Paragraph(anchor), 2);
+            PdfPTable tbl = new PdfPTable(4);
+            tbl.addCell("Tensanpham");
+            tbl.addCell("SoLuong");
+            tbl.addCell("GiaBan");
+            tbl.addCell("ThanhTien");
+
+            for (int i = 0; i < tbGioHang.getRowCount(); i++) {
+                String sanPham = tbGioHang.getValueAt(i, 2).toString();
+                String soLuong = tbGioHang.getValueAt(i, 3).toString();
+                String giaBan = tbGioHang.getValueAt(i, 4).toString();
+                String thanhTien = tbGioHang.getValueAt(i, 5).toString();
+
+                tbl.addCell(sanPham);
+                tbl.addCell(soLuong);
+                tbl.addCell(giaBan);
+                tbl.addCell(thanhTien);
+
+            }
+            Paragraph tongTien = new Paragraph("                  Tong tien: " + lbl_tongtien.getText());
+            tongTien.setAlignment(Element.ALIGN_LEFT);
+            Paragraph khachDua = new Paragraph("                  Tien khach dua: " + txt_tienkhachtra.getText());
+            khachDua.setAlignment(Element.ALIGN_LEFT);
+            Paragraph tienthua = new Paragraph("                  Tien thua: " + lbl_tienthua.getText());
+            tienthua.setAlignment(Element.ALIGN_LEFT);
+            Paragraph GB = new Paragraph("Xin cam on quy khach/ Thank you");
+            GB.setAlignment(Element.ALIGN_CENTER);
+
+            doc.add(TenQ);
+            doc.add(DC);
+            doc.add(SDT);
+            doc.add(tenPhieu);
+            doc.add(maTen);
+            doc.add(tenNV);
+            doc.add(ngayGio);
+            doc.add(tbl);
+            doc.add(tongTien);
+            doc.add(khachDua);
+            doc.add(tienthua);
+            doc.add(GB);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        doc.close();
+    }
+
+    public void InPB() {
+        String path = "";
+        Date ngayTao = new Date();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        JFileChooser j = new JFileChooser();
+        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int x = j.showSaveDialog(this);
+
+        if (x == JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "InPhieuBep.pdf"));
+            doc.open();
+            Paragraph TenQ = new Paragraph("Cua hang tra chanh MR.Tu", tenQ);
+            TenQ.setAlignment(Element.ALIGN_CENTER);
+            TenQ.setSpacingAfter(5);
+            Paragraph tenPhieu = new Paragraph("PHIEU BEP", catFont);
+            tenPhieu.setAlignment(Element.ALIGN_CENTER);
+            tenPhieu.setSpacingAfter(10);
+
+            Paragraph maTen = new Paragraph();
+            maTen.setAlignment(Element.ALIGN_LEFT);
+            maTen.add("                  MaHD: " + lbl_mahd.getText() + "                               Tên bàn: " + lbl_banquay.getText());
+            Paragraph tenNV = new Paragraph();
+            tenNV.add("                  Tên thu ngân: " + lbl_tennv.getText());
+            Paragraph ngayGio = new Paragraph();
+            ngayGio.setAlignment(Element.ALIGN_LEFT);
+            ngayGio.add("                  Gio in: " + df.format(ngayTao).toString());
+
+            ngayGio.setSpacingAfter(10);
+//             Anchor anchor = new Anchor("First Chapter", catFont);
+//        anchor.setName("First Chapter");
+//            Chapter catPart = new Chapter(new Paragraph(anchor), 2);
+            PdfPTable tbl = new PdfPTable(3);
+            tbl.addCell("STT");
+            tbl.addCell("Tensanpham");
+            tbl.addCell("SoLuong");
+
+            for (int i = 0; i < tbGioHang.getRowCount(); i++) {
+                String STT = tbGioHang.getValueAt(i, 0).toString();
+                String sanPham = tbGioHang.getValueAt(i, 2).toString();
+                String soLuong = tbGioHang.getValueAt(i, 3).toString();
+
+                tbl.addCell(STT);
+                tbl.addCell(sanPham);
+                tbl.addCell(soLuong);
+            }
+
+            Paragraph GB = new Paragraph("Thank you");
+            GB.setAlignment(Element.ALIGN_CENTER);
+            GB.setSpacingBefore(10);
+            doc.add(TenQ);
+            doc.add(tenPhieu);
+            doc.add(maTen);
+            doc.add(tenNV);
+            doc.add(ngayGio);
+            doc.add(tbl);
+            doc.add(GB);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(ViewBanHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "In thành công");
+        doc.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -670,6 +834,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         Date ngaythanhtoan = new Date();
         String totalStr = lbl_tongtien.getText();
         Float total = Float.parseFloat(totalStr);
+        this.InHD();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn muốn thanh toán");
             return;
@@ -684,13 +849,14 @@ public class ViewBanHang extends javax.swing.JPanel {
         dtm.removeRow(row);
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
-
+        
         loadTableHoaDon();
-        JOptionPane.showMessageDialog(this, "Thanh toan thanh cong");
+        
+        JOptionPane.showMessageDialog(this, "Thanh toan va In hoa don thanh cong");
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btn_inphieubepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inphieubepActionPerformed
-
+        this.InPB();
     }//GEN-LAST:event_btn_inphieubepActionPerformed
 
     private void tbHoaDonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoaDonMouseEntered
