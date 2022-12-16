@@ -97,7 +97,7 @@ public class ThongKeRepository {
     public ArrayList<ThongKe> timsanphambanchay(Date ngaya, Date ngayb) {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "Select Top 10 TenSP , ngaythanhtoan, SUM(Soluong)  as Tongsoluong from SANPHAM inner join HOADONCHITIET ON SANPHAM.Id = HOADONCHITIET.IdSP inner join HOADON ON HOADONCHITIET.IdHD=HOADON.Id where NgayThanhToan between ? And ? group by TenSP , NgayThanhToan order by ngaythanhtoan, Tongsoluong desc";
+            String sql = "Select Top 10 TenSP , ngaythanhtoan, SUM(Soluong)  as Tongsoluong from SANPHAM inner join HOADONCHITIET ON SANPHAM.Id = HOADONCHITIET.IdSP inner join HOADON ON HOADONCHITIET.IdHD=HOADON.Id where NgayThanhToan between ? And ? group by TenSP , NgayThanhToan order by ngaythanhtoan,  Tongsoluong desc";
             ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngaya);
