@@ -32,6 +32,10 @@ public class HoaDonVM {
         this.trangthai = trangthai;
     }
 
+    public HoaDonVM(String tenBan) {
+        this.tenBan = tenBan;
+    }
+
     public HoaDonVM(String mahd, Date ngayTao, Date ngayThanhToan, String nguoiTao, double thanhTien, int trangthai) {
         this.mahd = mahd;
         this.ngayTao = ngayTao;

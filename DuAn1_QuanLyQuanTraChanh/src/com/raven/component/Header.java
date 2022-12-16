@@ -1,8 +1,10 @@
 package com.raven.component;
 
 import domainmodels.NhanVienLogin;
+import java.awt.Image;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.ImageIcon;
 
 public class Header extends javax.swing.JPanel {
 
@@ -40,6 +42,12 @@ public class Header extends javax.swing.JPanel {
     private void loadThongtin() {
         lbRole.setText(NhanVienLogin.getTenCV());
         lbUserName.setText(NhanVienLogin.getTenLogin());
+//        String hinh=NhanVienLogin.getAnhNV();
+//        ImageIcon imgIcon = new ImageIcon(getClass().getResource("//component//raven//com//image"+hinh));
+//        Image img = imgIcon.getImage();
+//        Image newing = img.getScaledInstance(pic.getWidth(), pic.getHeight(), java.awt.Image.SCALE_SMOOTH);
+//        imgIcon = new ImageIcon(newing);
+//        pic.setIcon(imgIcon);
     }
 
     @SuppressWarnings("unchecked")

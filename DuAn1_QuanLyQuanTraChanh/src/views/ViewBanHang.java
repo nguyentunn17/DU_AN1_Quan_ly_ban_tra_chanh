@@ -767,7 +767,7 @@ public class ViewBanHang extends javax.swing.JPanel {
         String ngayTao = tbHoaDon.getValueAt(rowHD, 2).toString();
         String nguoiTao = tbHoaDon.getValueAt(rowHD, 3).toString();
         String trangThai = tbHoaDon.getValueAt(rowHD, 4).toString();
-        for (HoaDonVM hoaDonVM : this.hoaDonService.listH()) {
+        for (HoaDonVM hoaDonVM : this.hoaDonService.listBan(ma)) {
             lbl_banquay.setText(hoaDonVM.getTenBan());
         }
         gettrangthai = trangThai;
@@ -778,8 +778,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         sum();
 
         this.loadTableGioHang(this.banHangService.loadSp(ma));
-
-
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
 
@@ -793,12 +791,19 @@ public class ViewBanHang extends javax.swing.JPanel {
             return;
         }
         Integer soLuong = Integer.parseInt(soLuongStr);
-        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.getByGH()) {
+        for (HoaDonChiTietViewModel hoaDonChiTietViewModel : this.banHangService.loadSp(maHD)) {
             if (hoaDonChiTietViewModel.getMasp().equals(ma)) {
-                int soluong = hoaDonChiTietViewModel.getSoLuong() - soLuong;
-                HoaDonChiTiet hdct1 = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soluong, hoaDonChiTietViewModel.getGiaBan(), hoaDonChiTietViewModel.getThanhTien());
                 this.banHangService.delete(getidSP(ma), getidHD(maHD));
-                this.banHangService.createHD(hdct1);
+                int soluong = hoaDonChiTietViewModel.getSoLuong() - soLuong;
+
+                Double thanhTien = soluong * hoaDonChiTietViewModel.getGiaBan();
+
+                if (soLuong == 0) {
+                    this.banHangService.delete(getidSP(ma), getidHD(maHD));
+                } else {
+                    HoaDonChiTiet hdct1 = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soluong, hoaDonChiTietViewModel.getGiaBan(), thanhTien);
+                    this.banHangService.createHD(hdct1);
+                }
                 sum();
                 this.loadTableGioHang(this.banHangService.loadSp(maHD));
                 return;

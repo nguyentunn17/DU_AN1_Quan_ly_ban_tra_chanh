@@ -147,7 +147,25 @@ public class HoaDonRepository implements IHoaDonRepository {
 
     @Override
     public ArrayList<HoaDonVM> listBan(String ma) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
+
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = "select TenBan from HOADON inner join BAN on HOADON.IdBAN=BAN.id where MaHD=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setObject(1, ma);
+
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String tenban = rs.getString("tenban");
+                HoaDonVM hdvm = new HoaDonVM(tenban);
+                listhdvm.add(hdvm);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listhdvm;
     }
 
 }

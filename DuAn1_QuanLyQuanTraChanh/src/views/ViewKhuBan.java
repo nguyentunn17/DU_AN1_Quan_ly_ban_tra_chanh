@@ -351,10 +351,10 @@ public class ViewKhuBan extends javax.swing.JPanel {
     private void tbBanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBanMouseClicked
         // TODO add your handling code here:
         int row = tbBan.getSelectedRow();
-        txt_maca.setText(tbBan.getValueAt(row, 0).toString());
-        txt_tenca.setText(tbBan.getValueAt(row, 1).toString());
-        txt_soLg.setText(tbBan.getValueAt(row, 2).toString());
-        if (tbBan.getValueAt(row, 3).toString().equals("Dùng được")) {
+        txt_maca.setText(tbBan.getValueAt(row, 1).toString());
+        txt_tenca.setText(tbBan.getValueAt(row, 2).toString());
+        txt_soLg.setText(tbBan.getValueAt(row, 3).toString());
+        if (tbBan.getValueAt(row, 4).toString().equals("Dùng được")) {
             rdDuoc.setSelected(true);
         } else {
             rdKo.setSelected(true);
