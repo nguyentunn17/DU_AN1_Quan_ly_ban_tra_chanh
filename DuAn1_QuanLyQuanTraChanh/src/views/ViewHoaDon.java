@@ -272,7 +272,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                     String d2 = format.format(da);
                     if (!d2.equals(date)) {
                         ((DefaultTableModel)tb_hoadon.getModel()).removeRow(i);
-                        
+                        i = -1;
                     }
                 }
                 if(tb_hoadon.getRowCount() == 0) {
