@@ -262,22 +262,22 @@ public class ViewHoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInActionPerformed
 
     private void btn_tkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tkActionPerformed
-//        if (!txt_tk.getText().equalsIgnoreCase("")) {
-//            try {
-//                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(txt_tk.getText());
-//                for (int i = 0; i < tb_hoadon.getRowCount(); i++) {
-//                    Date d2 = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(tb_hoadon.getValueAt(i, 2)));
-//                    if (d2.compareTo(date) != 0) {
-//                        tb_hoadon.removeRowSelectionInterval(i, i);
-//                        JOptionPane.showMessageDialog(this, "Không có thông tin ngày này");
-//                    } else {
-//                        loatTable();
-//                    }
-//                }
-//            } catch (ParseException ex) {
-//                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+      if (!txt_tk.getText().equalsIgnoreCase("")) {
+            try {
+                Date date = new SimpleDateFormat("dd/mm/yyyy").parse(txt_tk.getText());
+                for (int i = 0; i < tb_hoadon.getRowCount(); i++) {
+                    Date d2 = new SimpleDateFormat("dd/mm/yyyy").parse(String.valueOf(tb_hoadon.getValueAt(i, 3)));
+                    if (d2.compareTo(date) != 0) {
+                        tb_hoadon.removeRowSelectionInterval(i, i);
+                        JOptionPane.showMessageDialog(this, "Không có thông tin ngày này");
+                    } else {
+                        loatTable();
+                    }
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+      }
     }//GEN-LAST:event_btn_tkActionPerformed
 
     private void tb_hoadonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_hoadonMouseClicked
