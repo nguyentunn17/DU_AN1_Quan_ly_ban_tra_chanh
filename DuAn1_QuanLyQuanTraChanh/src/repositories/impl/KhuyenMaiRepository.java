@@ -28,12 +28,12 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
                 String ma = rs.getString("ma");
                 String ten = rs.getString("ten");
                 String loaiGiamGia = rs.getString("loaigiamgia");
-                Double mucGiaPhanTram = rs.getDouble("MucGiamGiaPhanTram");
-                Double mucGiaTienMat = rs.getDouble("MucGiamGiaTienMat");
+                Double mucGiam = rs.getDouble("Mucgiamgia");
+
                 Date ngayBatDau = rs.getDate("ngayBatDau");
                 Date ngayKetThuc = rs.getDate("ngayKetThuc");
                 int trangThai = rs.getInt("trangThai");
-                KhuyenMai khuyenMai = new KhuyenMai(id, ma, ten, loaiGiamGia, mucGiaPhanTram, mucGiaTienMat, ngayBatDau, ngayKetThuc, trangThai);
+                KhuyenMai khuyenMai = new KhuyenMai(id, ma, ten, loaiGiamGia, mucGiam, ngayBatDau, ngayKetThuc, trangThai);
                 listkm.add(khuyenMai);
 
             }
@@ -48,16 +48,15 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
     public void create(KhuyenMai km) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "INSERT INTO KHUYENMAI(ma,ten,loaigiamgia,mucgiamgiaphantram,mucgiamgiatienmat,ngaybatdau,ngayketthuc,trangthai) values(?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO KHUYENMAI(ma,ten,loaigiamgia,mucgiamgia,ngaybatdau,ngayketthuc,trangthai) values(?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, km.getMa());
             ps.setObject(2, km.getTen());
             ps.setObject(3, km.getLoaiGiamGia());
             ps.setObject(4, km.getMucGiamGiaPhanTram());
-            ps.setObject(5, km.getMucGiamGiaTienMat());
-            ps.setObject(6, km.getNgayBatDau());
-            ps.setObject(7, km.getNgayKetThuc());
-            ps.setObject(8, km.getTrangThai());
+            ps.setObject(5, km.getNgayBatDau());
+            ps.setObject(6, km.getNgayKetThuc());
+            ps.setObject(7, km.getTrangThai());
 
             ps.execute();
         } catch (Exception ex) {
@@ -70,17 +69,16 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
     public void update(KhuyenMai km, String id) {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
-            String query = "UPDATE KHUYENMAI SET ma=?,ten=?,loaigiamgia=?,mucgiamgiaphantram=?,mucgiamgiatienmat=?,ngaybatdau=?,ngayketthuc=?,trangthai=? WHERE ID=?";
+            String query = "UPDATE KHUYENMAI SET ma=?,ten=?,loaigiamgia=?,mucgiamgia=?,ngaybatdau=?,ngayketthuc=?,trangthai=? WHERE ID=?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setObject(1, km.getMa());
             ps.setObject(2, km.getTen());
             ps.setObject(3, km.getLoaiGiamGia());
             ps.setObject(4, km.getMucGiamGiaPhanTram());
-            ps.setObject(5, km.getMucGiamGiaTienMat());
-            ps.setObject(6, km.getNgayBatDau());
-            ps.setObject(7, km.getNgayKetThuc());
-            ps.setObject(8, km.getTrangThai());
-            ps.setObject(9, id);
+            ps.setObject(5, km.getNgayBatDau());
+            ps.setObject(6, km.getNgayKetThuc());
+            ps.setObject(7, km.getTrangThai());
+            ps.setObject(8, id);
 
             ps.execute();
         } catch (Exception ex) {
@@ -103,12 +101,11 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
                 String ma = rs.getString("ma");
                 String ten = rs.getString("ten");
                 String loaiGiamGia = rs.getString("loaigiamgia");
-                Double mucGiaPhanTram = rs.getDouble("MucGiamGiaPhanTram");
-                Double mucGiaTienMat = rs.getDouble("MucGiamGiaTienMat");
+                Double mucGiaPhanTram = rs.getDouble("MucGiamGia");
                 Date ngayBatDau = rs.getDate("ngayBatDau");
                 Date ngayKetThuc = rs.getDate("ngayKThuc");
                 int trangThai = rs.getInt("trangThai");
-                KhuyenMai khuyenMai = new KhuyenMai(id, ma, ten, loaiGiamGia, mucGiaPhanTram, mucGiaTienMat, ngayBatDau, ngayKetThuc, trangThai);
+                KhuyenMai khuyenMai = new KhuyenMai(id, ma, ten, loaiGiamGia, mucGiaPhanTram, ngayBatDau, ngayKetThuc, trangThai);
                 listkm.add(khuyenMai);
             }
         } catch (Exception ex) {
@@ -155,7 +152,7 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
         try {
             Connection conn = utilities.jdbcUtil.getConnection();
             String query = """
-                           SELECT MA,TEN,LOAIGIAMGIA,MUCGIAMGIAPHANTRAM,TenSP,spkhuyenmai.DonGia,spkhuyenmai.SoTienConLai,SPKHUYENMAI.TrangThai FROM KHUYENMAI 
+                           SELECT MA,TEN,LOAIGIAMGIA,mucgiamgia,TenSP,spkhuyenmai.DonGia,spkhuyenmai.SoTienConLai,SPKHUYENMAI.TrangThai FROM KHUYENMAI 
                                                       INNER JOIN SPKHUYENMAI ON KHUYENMAI.ID=SPKHUYENMAI.IDKM 
                                                       INNER JOIN SANPHAM ON SANPHAM.Id=SPKHUYENMAI.IdSP
                            """;
@@ -167,7 +164,7 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
                 String ma = rs.getString("ma");
                 String ten = rs.getString("ten");
                 String loaiGiamGia = rs.getString("loaigiamgia");
-                Double mucGiaPhanTram = rs.getDouble("MucGiamGiaPhanTram");
+                Double mucGiaPhanTram = rs.getDouble("mucgiamgia");
                 String tensp = rs.getString("tensp");
                 Double giaban = rs.getDouble("DonGia");
                 Double sotienconlai = rs.getDouble("SoTienConLai");

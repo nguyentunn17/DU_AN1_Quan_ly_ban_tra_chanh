@@ -15,5 +15,8 @@ public interface IHoaDonService {
     ArrayList<HoaDonVM> getHoaDon();
 
     ArrayList<HoaDonVM> listH();
+    
+    ArrayList<HoaDonVM> listBan(String ma);
+    
 
 }

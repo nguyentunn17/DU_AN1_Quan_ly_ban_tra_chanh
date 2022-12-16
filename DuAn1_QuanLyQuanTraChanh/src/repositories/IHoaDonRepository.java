@@ -16,6 +16,6 @@ public interface IHoaDonRepository {
 
     public ArrayList<HoaDonVM> listHoaDon();
 
-
+    ArrayList<HoaDonVM> listBan(String ma);
 
 }

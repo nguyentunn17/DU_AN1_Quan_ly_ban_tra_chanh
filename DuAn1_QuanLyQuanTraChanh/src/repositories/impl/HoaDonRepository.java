@@ -5,10 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.sql.Time;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import repositories.IHoaDonRepository;
 import utilities.jdbcUtil;
 import viewmodels.HoaDonVM;
@@ -80,10 +80,8 @@ public class HoaDonRepository implements IHoaDonRepository {
                 Date ngaytao = rs.getTimestamp("NgayTao");
                 String nguoiTao = rs.getString("ten");
                 int trangthai = rs.getInt("TrangThai");
-                String tenban = rs.getString("tenBan");
-                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoiTao, trangthai, tenban);
+                HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, nguoiTao, trangthai);
                 listhdvm.add(hdvm);
-
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -141,12 +139,15 @@ public class HoaDonRepository implements IHoaDonRepository {
                 HoaDonVM hdvm = new HoaDonVM(mahd, ngaytao, ngayThanhToan, nguoiTao, tongTien, trangthai);
                 listhdvm.add(hdvm);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(HoaDonRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listhdvm;
+    }
+
+    @Override
+    public ArrayList<HoaDonVM> listBan(String ma) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

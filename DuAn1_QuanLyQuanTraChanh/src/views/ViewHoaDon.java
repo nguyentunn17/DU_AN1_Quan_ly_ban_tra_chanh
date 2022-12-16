@@ -69,7 +69,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 hdvm.getMahd(),
                 hdvm.getNguoiTao(),
                 df.format(hdvm.getNgayTao()),
-                hdvm.getNgayThanhToan(),
+                df.format(hdvm.getNgayThanhToan()),
                 hdvm.getThanhTien(),
                 hdvm.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
 
@@ -221,7 +221,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
 
             cell = row.createCell(6, CellType.STRING);
             cell.setCellValue("Trạng thái");
-            
+
             for (int i = 0; i < hdsvvm.getHoaDon().size(); i++) {
                 row = sheet.createRow(4 + i);
 
@@ -244,7 +244,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
                 cell.setCellValue(hdsvvm.getHoaDon().get(i).getThanhTien());
 
                 cell = row.createCell(6, CellType.STRING);
-                cell.setCellValue(hdsvvm.getHoaDon().get(i).getTrangthai()==0?"Đã thanh toán":"Chờ thanh toán");
+                cell.setCellValue(hdsvvm.getHoaDon().get(i).getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán");
 
             }
             File f = new File("D:\\hoadon.xlsx");

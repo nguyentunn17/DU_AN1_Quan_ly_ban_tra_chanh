@@ -57,8 +57,8 @@ public class ViewBanHang extends javax.swing.JPanel {
     private String getMaHD = null;
     private String gettrangthai;
     private int getrowhd;
-    private static Font catFont = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
-    private static Font tenQ = new Font(Font.TIMES_ROMAN, 16, Font.BOLD);
+    private static final Font catFont = new Font(Font.TIMES_ROMAN, 18, Font.BOLD);
+    private static final Font tenQ = new Font(Font.TIMES_ROMAN, 16, Font.BOLD);
 
     public ViewBanHang() {
         initComponents();
@@ -144,7 +144,6 @@ public class ViewBanHang extends javax.swing.JPanel {
                 this.banHangService.delete(getidSP(ma), getidHD(maHD));
                 int soluong = hoaDonChiTietViewModel.getSoLuong() + soLuong;
                 Double thanhTien = soluong * giaban;
-
                 HoaDonChiTiet hdct1 = new HoaDonChiTiet(getidHD(maHD), getidSP(ma), soluong, giaban, thanhTien);
                 this.banHangService.createHD(hdct1);
                 sum();
@@ -172,7 +171,11 @@ public class ViewBanHang extends javax.swing.JPanel {
         int i = 1;
         for (HoaDonVM hd : hoaDonService.listH()) {
             Object[] rowData = {
-                i++, hd.getMahd(), df.format(hd.getNgayTao()), hd.getNguoiTao(), hd.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
+                i++,
+                hd.getMahd(),
+                df.format(hd.getNgayTao()),
+                hd.getNguoiTao(),
+                hd.getTrangthai() == 0 ? "Đã thanh toán" : "Chờ thanh toán"
             };
             dtm.addRow(rowData);
 
@@ -183,6 +186,8 @@ public class ViewBanHang extends javax.swing.JPanel {
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
         int i = 1;
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
         for (HoaDonChiTietViewModel sp : list) {
             Object[] row = {
                 i++,
@@ -749,23 +754,6 @@ public class ViewBanHang extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void themHoaDon() {
-//        Random rd = new Random();
-//        String tenban = lbl_banquay.getText();
-//
-//        String tennv = NhanVienLogin.getTenLogin();
-//
-//        String mahd = "HD" + rd.nextInt(99999999);
-//        Date ngayTao = new Date();
-//        Integer trangThai = 1;
-//
-//        String idNV = getIDNV(tennv);
-//        String idban = getIDban(tenban);
-//
-//        HoaDon hd = new HoaDon(idNV, idban, mahd, ngayTao, trangThai);
-//        this.hoaDonService.insert(hd);
-//        loadTableHoaDon();
-//    }
 
     private void btnClearGioHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearGioHangActionPerformed
         dtm = (DefaultTableModel) tbGioHang.getModel();
@@ -849,9 +837,9 @@ public class ViewBanHang extends javax.swing.JPanel {
         dtm.removeRow(row);
         dtm = (DefaultTableModel) tbGioHang.getModel();
         dtm.setRowCount(0);
-        
+
         loadTableHoaDon();
-        
+
         JOptionPane.showMessageDialog(this, "Thanh toan va In hoa don thanh cong");
     }//GEN-LAST:event_btnThanhToanActionPerformed
 

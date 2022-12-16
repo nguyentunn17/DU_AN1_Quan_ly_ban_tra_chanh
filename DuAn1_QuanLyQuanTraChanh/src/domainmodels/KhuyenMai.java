@@ -29,6 +29,17 @@ public class KhuyenMai {
     public KhuyenMai() {
     }
 
+    public KhuyenMai(String id, String ma, String ten, String loaiGiamGia, Double mucGiamGiaPhanTram, Date ngayBatDau, Date ngayKetThuc, int trangThai) {
+        this.id = id;
+        this.ma = ma;
+        this.ten = ten;
+        this.loaiGiamGia = loaiGiamGia;
+        this.mucGiamGiaPhanTram = mucGiamGiaPhanTram;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+    }
+
     public KhuyenMai(String id, String ma, String ten, String loaiGiamGia, Double mucGiamGiaPhanTram, Double mucGiamGiaTienMat, Date ngayBatDau, Date ngayKetThuc, int trangThai) {
         this.id = id;
         this.ma = ma;

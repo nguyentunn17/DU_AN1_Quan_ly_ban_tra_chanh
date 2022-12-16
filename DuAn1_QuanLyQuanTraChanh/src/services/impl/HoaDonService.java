@@ -39,4 +39,9 @@ public class HoaDonService implements IHoaDonService {
     public ArrayList<HoaDon> getAll1() {
         return this.hdrp.getAll1();
     }
+
+    @Override
+    public ArrayList<HoaDonVM> listBan(String ma) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -25,23 +25,24 @@ public class ViewKhuBan extends javax.swing.JPanel {
         rdTrangThai();
         loaddat();
     }
-    private IBanService csv = new BanService();
+    private final IBanService csv = new BanService();
     private DefaultTableModel defaultTableModel;
 
     ButtonGroup buttonGroup;
 
-    void rdTrangThai() {
+    private void rdTrangThai() {
         buttonGroup = new ButtonGroup();
         buttonGroup.add(rdDuoc);
         buttonGroup.add(rdKo);
     }
 
-    void loaddat() {
+    private void loaddat() {
         defaultTableModel = (DefaultTableModel) tbBan.getModel();
         defaultTableModel.setRowCount(0);
+        int stt = 1;
         for (Ban b : csv.getlist()) {
             defaultTableModel.addRow(new Object[]{
-                b.getMaBan(), b.getTenBan(), b.getSoNguoi(), getTrangThai(b.getTrangThai())});
+                stt++, b.getMaBan(), b.getTenBan(), b.getSoNguoi(), getTrangThai(b.getTrangThai())});
         }
 
     }
@@ -62,14 +63,12 @@ public class ViewKhuBan extends javax.swing.JPanel {
         buttonGroup.clearSelection();
     }
 
-    
-
     private Ban getdata() {
         try {
             Ban b = new Ban();
             String maban = this.txt_maca.getText().trim();
             String tenban = this.txt_tenca.getText().trim();
-            int soNguoi = Integer.parseInt(txt_soLg.getText().toString());
+            int soNguoi = Integer.parseInt(txt_soLg.getText());
             if (maban.length() == 0 || tenban.length() == 0) {
                 JOptionPane.showMessageDialog(this, "Không để trống");
                 return null;
