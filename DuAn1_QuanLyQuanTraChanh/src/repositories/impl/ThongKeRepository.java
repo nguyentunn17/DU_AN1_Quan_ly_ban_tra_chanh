@@ -24,6 +24,29 @@ public class ThongKeRepository {
     public ArrayList<ThongKe> getList() {
         try {
             Connection conn = jdbcUtil.getConnection();
+            String sql = "SELECT top 7 NgayThanhtoan , sum(TongTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
+            ArrayList<ThongKe> tks = new ArrayList<>();
+            PreparedStatement ps = conn.prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ThongKe ke = new ThongKe();
+                ke.setNgayThanhToan(rs.getDate("ngaythanhtoan"));
+                ke.setTongtien(rs.getDouble("tongtien"));
+                tks.add(ke);
+
+            }
+
+            return tks;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(ThongKeRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public ArrayList<ThongKe> getList2() {
+        try {
+            Connection conn = jdbcUtil.getConnection();
             String sql = "SELECT top 7 NgayThanhtoan , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
             ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);

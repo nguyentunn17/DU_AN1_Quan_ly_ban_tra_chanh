@@ -15,7 +15,7 @@ import java.util.Date;
 public interface IThongKeService {
 
     public ArrayList<ThongKe> getList();
-
+    public ArrayList<ThongKe> getList2();
     public ArrayList<ThongKe> timkiem(Date ngaya, Date ngayb);
 
     public ArrayList<ThongKe> ngay();

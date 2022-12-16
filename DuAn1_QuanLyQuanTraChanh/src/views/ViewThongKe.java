@@ -47,7 +47,7 @@ public class ViewThongKe extends javax.swing.JPanel {
     private void loadTable() {
         defaultTableModel = (DefaultTableModel) this.tb_doanhthu.getModel();
         defaultTableModel.setRowCount(0);
-        for (ThongKe ke : this.thongKe_sv.getList()) {
+        for (ThongKe ke : this.thongKe_sv.getList2()) {
             Object[] rowdata = {
                 ke.getNgayThanhToan(),
                 ke.getTongtien()
@@ -145,6 +145,12 @@ public class ViewThongKe extends javax.swing.JPanel {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        chiu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chiu3MouseClicked(evt);
             }
         });
 
@@ -500,6 +506,10 @@ try {
         QuanLyThongKe ke = new QuanLyThongKe();
         ke.bieudotron(chiu10);     // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void chiu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chiu3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chiu3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
