@@ -67,7 +67,7 @@ public class QuanLyThongKe {
     }
 
     public void setDateToChartl(JPanel jPanel) {
-        ArrayList<ThongKe> thongke = thongKe_sv.getList();
+        ArrayList<ThongKe> thongke = thongKe_sv.getList2();
         if (thongke != null) {
             DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
             for (ThongKe ke : thongke) {

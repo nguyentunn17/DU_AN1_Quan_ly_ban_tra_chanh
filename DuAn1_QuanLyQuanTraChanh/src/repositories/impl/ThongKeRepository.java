@@ -72,7 +72,7 @@ public class ThongKeRepository {
         ArrayList<ThongKe> thongKes = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT top 7 NgayThanhtoan , sum(tongtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD  where ngaythanhtoan between ? and ? group by NgayThanhToan order by ngaythanhtoan desc ";
+            String sql = "SELECT CONVert(Datetime,Left(((NgayThanhtoan)),11),103) as ngaythanhtoan, sum(thanhtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD  where CONVert(Datetime,Left(((NgayThanhtoan)),11),103) between ? and ? group by CONVert(Datetime,Left(((NgayThanhtoan)),11),103) order by CONVert(Datetime,Left(((NgayThanhtoan)),11),103) desc ";
             PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngaya);
             ps.setObject(2, ngayb);
