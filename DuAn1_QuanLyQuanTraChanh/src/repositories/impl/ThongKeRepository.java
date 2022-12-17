@@ -24,7 +24,7 @@ public class ThongKeRepository {
     public ArrayList<ThongKe> getList() {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT top 7 NgayThanhtoan , sum(TongTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
+            String sql = "SELECT top 7 NgayThanhtoan , sum(tongtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
             ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
@@ -47,7 +47,7 @@ public class ThongKeRepository {
     public ArrayList<ThongKe> getList2() {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT top 7 NgayThanhtoan , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by NgayThanhtoan order by ngaythanhtoan desc ";
+            String sql = "SELECT top 7 CONVert(Datetime,Left(((NgayThanhtoan)),11),103) as ngaythanhtoan, sum(thanhtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by Left((NgayThanhtoan),11) order by Left((NgayThanhtoan),11) desc ";
             ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ResultSet rs = ps.executeQuery();
@@ -72,7 +72,7 @@ public class ThongKeRepository {
         ArrayList<ThongKe> thongKes = new ArrayList<>();
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT top 7 NgayThanhtoan , sum(ThanhTien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD  where ngaythanhtoan between ? and ? group by NgayThanhToan order by ngaythanhtoan desc ";
+            String sql = "SELECT top 7 NgayThanhtoan , sum(tongtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD  where ngaythanhtoan between ? and ? group by NgayThanhToan order by ngaythanhtoan desc ";
             PreparedStatement ps = conn.prepareCall(sql);
             ps.setObject(1, ngaya);
             ps.setObject(2, ngayb);
