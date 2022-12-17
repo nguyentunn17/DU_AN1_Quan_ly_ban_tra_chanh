@@ -508,8 +508,10 @@ public class ViewKhachHang2 extends javax.swing.JPanel {
             FileOutputStream fos = new FileOutputStream(new File(pathName) + (fileName + ".PNG"));
             fos.write(baos.toByteArray());
             fos.flush();
+            JOptionPane.showMessageDialog(this, "Tạo mã QRCode thành công cho mã khách hàng: " + txtMaKH.getText());
         } catch (Exception e) {
-            System.out.println("Error");
+            JOptionPane.showMessageDialog(this, "Chưa nhập dữ liệu. Tạo mã không thành công");
+            return;
         }
     }//GEN-LAST:event_btnTaoQRActionPerformed
 
