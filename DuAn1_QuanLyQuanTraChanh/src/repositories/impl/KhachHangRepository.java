@@ -14,6 +14,7 @@ import javax.swing.text.html.HTML;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.sql.SQLException;
 
 public class KhachHangRepository {
 
@@ -107,5 +108,22 @@ public class KhachHangRepository {
         } catch (Exception ex) {
             Logger.getLogger(KhachHangRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean checkTrung(String maKH) {
+        String query = "select * from khachhang where ma =?";
+        boolean isExists = false;
+        try ( Connection con = jdbcUtil.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, maKH);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                isExists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } catch (Exception ex) {
+            Logger.getLogger(KhachHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isExists;
     }
 }

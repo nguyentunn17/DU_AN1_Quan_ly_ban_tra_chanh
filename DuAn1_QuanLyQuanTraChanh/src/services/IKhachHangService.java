@@ -20,4 +20,6 @@ public interface IKhachHangService {
     void update(String id, KhachHang kh);
 
     void delete(String id);
+
+    boolean checkTrung(String maKH);
 }

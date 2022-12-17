@@ -14,27 +14,32 @@ import services.IKhachHangService;
  * @author Quang
  */
 public class KhachHangService implements IKhachHangService {
-    
+
     private static KhachHangRepository khrp = new KhachHangRepository();
-    
+
     @Override
     public ArrayList<KhachHang> getAll() {
         return khrp.getAll();
     }
-    
+
     @Override
     public void isnert(KhachHang kh) {
         khrp.insert(kh);
     }
-    
+
     @Override
     public void delete(String id) {
         khrp.delete(id);
     }
-    
+
     @Override
     public void update(String id, KhachHang kh) {
-        khrp.update(id, kh); 
+        khrp.update(id, kh);
     }
-    
+
+    @Override
+    public boolean checkTrung(String maKH) {
+        return khrp.checkTrung(maKH);
+    }
+
 }

@@ -434,8 +434,13 @@ public class ViewKhachHang2 extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        String maKH = txtMaKH.getText().trim();
+        boolean isExists = khachHangService.checkTrung(maKH);
         KhachHang kh = getForm();
         if (kh == null) {
+            return;
+        } else if (isExists) {
+            JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
             return;
         } else {
             khachHangService.isnert(kh);

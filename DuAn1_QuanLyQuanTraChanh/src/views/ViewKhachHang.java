@@ -110,7 +110,7 @@ public class ViewKhachHang extends javax.swing.JFrame {
         } else {
             gt = "Nữ";
         }
-        KhachHang kh =new KhachHang(ma, ten, ngaySinh, sdt, diaChi, gt, ghiChu);
+        KhachHang kh = new KhachHang(ma, ten, ngaySinh, sdt, diaChi, gt, ghiChu);
         return kh;
     }
 
@@ -455,8 +455,13 @@ public class ViewKhachHang extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+        String maKH = txtMaKH.getText().trim();
+        boolean isExists = khachHangService.checkTrung(maKH);
         KhachHang kh = getForm();
         if (kh == null) {
+            return;
+        } else if (isExists) {
+            JOptionPane.showMessageDialog(this, "Trùng mã khách hàng");
             return;
         } else {
             khachHangService.isnert(kh);
