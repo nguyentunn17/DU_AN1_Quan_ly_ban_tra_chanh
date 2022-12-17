@@ -194,10 +194,9 @@ public class ViewHoaDon extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
-        // TODO add your handling code here:
         try {
-            XSSFWorkbook workbook = new XSSFWorkbook(); // lay wordbook ra
-            XSSFSheet sheet = workbook.createSheet("danhSach"); // tao sheet va dat ten
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("danhSach");
             XSSFRow row = null; //tao cot
             Cell cell = null;
             row = sheet.createRow(3);// xuoong 3 dong
@@ -262,7 +261,7 @@ public class ViewHoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInActionPerformed
 
     private void btn_tkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tkActionPerformed
-      if (!txt_tk.getText().equalsIgnoreCase("")) {
+        if (!txt_tk.getText().equalsIgnoreCase("")) {
             try {
                 String date = new SimpleDateFormat("dd/mm/yyyy").format(new SimpleDateFormat("dd/mm/yyyy").parse(txt_tk.getText()));
                 loatTable();
@@ -271,19 +270,19 @@ public class ViewHoaDon extends javax.swing.JPanel {
                     Date da = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse(String.valueOf(tb_hoadon.getValueAt(i, 3)));
                     String d2 = format.format(da);
                     if (!d2.equals(date)) {
-                        ((DefaultTableModel)tb_hoadon.getModel()).removeRow(i);
+                        ((DefaultTableModel) tb_hoadon.getModel()).removeRow(i);
                         i = -1;
                     }
                 }
-                if(tb_hoadon.getRowCount() == 0) {
+                if (tb_hoadon.getRowCount() == 0) {
                     JOptionPane.showMessageDialog(this, "Không có thông tin ngày này");
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(ViewHoaDon.class.getName()).log(Level.SEVERE, null, ex);
             }
-      } else {
-          loatTable();
-      }
+        } else {
+            loatTable();
+        }
     }//GEN-LAST:event_btn_tkActionPerformed
 
     private void tb_hoadonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_hoadonMouseClicked

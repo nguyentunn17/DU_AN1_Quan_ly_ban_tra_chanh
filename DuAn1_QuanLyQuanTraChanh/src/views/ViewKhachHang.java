@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import com.google.zxing.qrcode.encoder.QRCode;
@@ -110,7 +106,7 @@ public class ViewKhachHang extends javax.swing.JFrame {
         } else {
             gt = "Nữ";
         }
-        KhachHang kh =new KhachHang(ma, ten, ngaySinh, sdt, diaChi, gt, ghiChu);
+        KhachHang kh = new KhachHang(ma, ten, ngaySinh, sdt, diaChi, gt, ghiChu);
         return kh;
     }
 

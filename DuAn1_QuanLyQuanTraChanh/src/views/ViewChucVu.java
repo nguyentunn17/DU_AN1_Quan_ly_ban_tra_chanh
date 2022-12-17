@@ -253,7 +253,7 @@ public class ViewChucVu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Chọn dòng cần xóa");
             return;
         }
-        String ma = tbChucVu.getValueAt(row, 0).toString();
+        String ma = tbChucVu.getValueAt(row, 1).toString();
         cvs.delete(ma);
         loadTable();
         clear();

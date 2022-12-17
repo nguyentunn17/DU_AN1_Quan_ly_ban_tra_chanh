@@ -16,14 +16,12 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import views.ViewKhuyenMai;
 import views.ViewBanHang;
 import views.ViewHoaDon;
-import views.ViewKhachHang;
-import views.ViewKhachHang2;
 import views.ViewKhuBan;
 import views.ViewNhanVien;
 import views.ViewSanPham;
 import views.ViewThongKe;
 
-public class Main extends javax.swing.JFrame {
+public class JframeNhanVien extends javax.swing.JFrame {
 
     private MigLayout layout;
     private Menu menu;
@@ -31,7 +29,7 @@ public class Main extends javax.swing.JFrame {
     private MainForm main;
     private Animator animator;
 
-    public Main() {
+    public JframeNhanVien() {
         initComponents();
         init();
     }
@@ -48,27 +46,24 @@ public class Main extends javax.swing.JFrame {
                     main.showForm(new ViewBanHang());
                     break;
                 case 1:
-                    main.showForm(new ViewKhuBan());
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 2:
-                    main.showForm(new ViewNhanVien());
-                    break;
-                case 3:
-                    main.showForm(new ViewKhachHang2());
-                    break;
-                case 4:
                     main.showForm(new ViewHoaDon());
                     break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+                    break;
+                case 4:
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+                    break;
                 case 5:
-                    main.showForm(new ViewSanPham());
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 6:
-                    main.showForm(new ViewKhuyenMai());
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 7:
-                    main.showForm(new ViewThongKe());
-                    break;
-                case 8:
                     int check = JOptionPane.showConfirmDialog(this, "Bạn đã thống kê doanh thu chưa?", "Phần mềm bán hàng trà chanh", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (check == JOptionPane.YES_OPTION) {
                         System.exit(0);
@@ -80,9 +75,9 @@ public class Main extends javax.swing.JFrame {
         });
         menu.addEventShowPopup((Component com) -> {
             MenuItem item = (MenuItem) com;
-            PopupMenu popup = new PopupMenu(Main.this, item.getIndex(), item.getEventSelected(), item.getMenu().getSubMenu());
-            int x1 = Main.this.getX() + 52;
-            int y1 = Main.this.getY() + com.getY() + 86;
+            PopupMenu popup = new PopupMenu(JframeNhanVien.this, item.getIndex(), item.getEventSelected(), item.getMenu().getSubMenu());
+            int x1 = JframeNhanVien.this.getX() + 52;
+            int y1 = JframeNhanVien.this.getY() + com.getY() + 86;
             popup.setLocation(x1, y1);
             popup.setVisible(true);
         });
@@ -181,14 +176,16 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JframeNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JframeNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JframeNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JframeNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -196,7 +193,7 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Main().setVisible(true);
+                new JframeNhanVien().setVisible(true);
             }
         });
     }

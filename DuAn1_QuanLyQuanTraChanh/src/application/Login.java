@@ -213,9 +213,14 @@ public class Login extends javax.swing.JFrame {
                 NhanVienLogin.setTenLogin(nhanVienViewModel.getTenNV());
                 NhanVienLogin.setTenCV(nhanVienViewModel.getChucVu());
                 NhanVienLogin.setAnhNV(nhanVienViewModel.getAnh());
+                if (nhanVienViewModel.getChucVu().equalsIgnoreCase("Nhân viên")) {
+                    new JframeNhanVien().setVisible(true);
+                    dispose();
+                } else {
+                    new Main().setVisible(true);
+                    dispose();
+                }
 
-                new Main().setVisible(true);
-                dispose();
             }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
