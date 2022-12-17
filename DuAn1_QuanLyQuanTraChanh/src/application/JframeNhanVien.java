@@ -16,6 +16,8 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import views.ViewKhuyenMai;
 import views.ViewBanHang;
 import views.ViewHoaDon;
+import views.ViewKhachHang2;
+import views.ViewKhachHang3;
 import views.ViewKhuBan;
 import views.ViewNhanVien;
 import views.ViewSanPham;
@@ -49,13 +51,13 @@ public class JframeNhanVien extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 2:
-                    main.showForm(new ViewHoaDon());
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+                    main.showForm(new ViewKhachHang3());
                     break;
                 case 4:
-                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+                    main.showForm(new ViewHoaDon());
                     break;
                 case 5:
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
@@ -64,6 +66,10 @@ public class JframeNhanVien extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
                     break;
                 case 7:
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+
+                    break;
+                case 8:
                     int check = JOptionPane.showConfirmDialog(this, "Bạn đã thống kê doanh thu chưa?", "Phần mềm bán hàng trà chanh", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (check == JOptionPane.YES_OPTION) {
                         System.exit(0);
