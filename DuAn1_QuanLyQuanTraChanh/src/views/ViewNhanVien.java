@@ -2,6 +2,7 @@ package views;
 
 import domainmodels.ChucVu;
 import domainmodels.NhanVien;
+import java.awt.Color;
 import java.awt.Image;
 import viewmodels.NhanVienVMD;
 import java.io.File;
@@ -123,6 +124,7 @@ public class ViewNhanVien extends javax.swing.JPanel {
     }
 
     public NhanVien getForm() {
+        String checkSDT = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
         NhanVien nv = new NhanVien();
         String ma = txtMaNV.getText().trim();
         String ten = txtTenNV.getText().trim();
@@ -132,8 +134,34 @@ public class ViewNhanVien extends javax.swing.JPanel {
         String mk = txtPass.getText().trim();
         String anh = lblImage.getText().trim();
         String cv = cbbChucVu.getSelectedItem().toString();
-        if (ma.length() == 0 || ten.length() == 0 || diaChi.length() == 0 || sdt.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Dữ liệu trống. Nhập lại!");
+        boolean check = sdt.matches(checkSDT);
+        if (ma.isEmpty()) {
+            txtMaNV.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Mã nhân viên trống");
+            return null;
+        } else if (ten.isEmpty()) {
+            txtTenNV.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Tên nhân viên trống");
+            return null;
+        } else if (sdt.isEmpty()) {
+            txtSDT.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Số điện thoại trống");
+            return null;
+        } else if (check == false) {
+            txtSDT.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ. Nhập lại!");
+            return null;
+        } else if (mk.isEmpty()) {
+            txtPass.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Mật khẩu chống trống");
+            return null;
+        } else if (diaChi.isEmpty()) {
+            txtDiaChi.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Địa chỉ trống");
+            return null;
+        } else if (cv.equals("Chọn chức vụ")) {
+            cbbChucVu.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Chưa chọn chức vụ. Chọn lại!");
             return null;
         }
         if (rdNam.isSelected()) {
@@ -147,7 +175,9 @@ public class ViewNhanVien extends javax.swing.JPanel {
             nv.setTrangThai(1);
         }
         if (hinhAnhString == null) {
-            anh = "Trống";
+            lblImage.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "Ảnh nhân viên trống");
+            return null;
         } else {
             anh = hinhAnhString;
         }
@@ -168,6 +198,7 @@ public class ViewNhanVien extends javax.swing.JPanel {
         dscNgaySinh.setDate(null);
         txtDiaChi.setText("");
         txtSDT.setText("");
+        txtPass.setText("");
         lblImage.setText("");
         bt.clearSelection();
         bt1.clearSelection();
@@ -243,12 +274,28 @@ public class ViewNhanVien extends javax.swing.JPanel {
         rdNu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rdNu.setText("Nữ");
 
+        txtSDT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSDTMouseClicked(evt);
+            }
+        });
+        txtSDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSDTActionPerformed(evt);
+            }
+        });
+
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Họ và tên");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Mật khẩu");
 
+        txtMaNV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtMaNVMouseClicked(evt);
+            }
+        });
         txtMaNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaNVActionPerformed(evt);
@@ -256,6 +303,16 @@ public class ViewNhanVien extends javax.swing.JPanel {
         });
 
         txtTenNV.setPreferredSize(new java.awt.Dimension(88, 22));
+        txtTenNV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTenNVMouseClicked(evt);
+            }
+        });
+        txtTenNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTenNVActionPerformed(evt);
+            }
+        });
 
         rdDangLam.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         rdDangLam.setText("Đang làm");
@@ -296,10 +353,26 @@ public class ViewNhanVien extends javax.swing.JPanel {
 
         txtDiaChi.setColumns(20);
         txtDiaChi.setRows(5);
+        txtDiaChi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtDiaChiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDiaChi);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel12.setText("Mã nhân viên");
+
+        txtPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPassMouseClicked(evt);
+            }
+        });
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ảnh nhân viên", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -329,6 +402,12 @@ public class ViewNhanVien extends javax.swing.JPanel {
         );
 
         cbbChucVu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cbbChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn chức vụ" }));
+        cbbChucVu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbbChucVuMouseClicked(evt);
+            }
+        });
         cbbChucVu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbbChucVuActionPerformed(evt);
@@ -702,7 +781,7 @@ public class ViewNhanVien extends javax.swing.JPanel {
                 this.lblImage.setText("");
                 ImageIcon imgIcon = new ImageIcon(getClass().getResource("/image/" + hinh));
                 Image img = imgIcon.getImage();
-                Image newing = img.getScaledInstance(146, 165, java.awt.Image.SCALE_SMOOTH);
+                Image newing = img.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_SMOOTH);
                 imgIcon = new ImageIcon(newing);
                 lblImage.setIcon(imgIcon);
             }
@@ -714,9 +793,10 @@ public class ViewNhanVien extends javax.swing.JPanel {
     private void btnChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChucVuActionPerformed
         // TODO add your handling code here:
         ViewChucVu vcv = new ViewChucVu();
-        ViewNhanVien viewNhanVien=new ViewNhanVien();
+        ViewNhanVien viewNhanVien = new ViewNhanVien();
         viewNhanVien.setVisible(false);
         vcv.setVisible(true);
+        vcv.setLocationRelativeTo(null);
 
     }//GEN-LAST:event_btnChucVuActionPerformed
 
@@ -734,11 +814,58 @@ public class ViewNhanVien extends javax.swing.JPanel {
 
     private void cbbChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbChucVuActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_cbbChucVuActionPerformed
 
     private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
         // TODO add your handling code here:
+        txtMaNV.setBackground(Color.white);
     }//GEN-LAST:event_txtMaNVActionPerformed
+
+    private void txtTenNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNVActionPerformed
+        // TODO add your handling code here:
+        txtTenNV.setBackground(Color.white);
+    }//GEN-LAST:event_txtTenNVActionPerformed
+
+    private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtSDTActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtPassActionPerformed
+
+    private void txtDiaChiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDiaChiMouseClicked
+        // TODO add your handling code here:
+        txtDiaChi.setBackground(Color.white);
+    }//GEN-LAST:event_txtDiaChiMouseClicked
+
+    private void txtMaNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMaNVMouseClicked
+        // TODO add your handling code here:
+        txtMaNV.setBackground(Color.white);
+    }//GEN-LAST:event_txtMaNVMouseClicked
+
+    private void txtTenNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTenNVMouseClicked
+        // TODO add your handling code here:
+        txtTenNV.setBackground(Color.white);
+    }//GEN-LAST:event_txtTenNVMouseClicked
+
+    private void txtSDTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSDTMouseClicked
+        // TODO add your handling code here:
+        txtSDT.setBackground(Color.white);
+    }//GEN-LAST:event_txtSDTMouseClicked
+
+    private void txtPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPassMouseClicked
+        // TODO add your handling code here:
+        txtPass.setBackground(Color.white);
+    }//GEN-LAST:event_txtPassMouseClicked
+
+    private void cbbChucVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbChucVuMouseClicked
+        // TODO add your handling code here:
+        cbbChucVu.setBackground(Color.white);
+    }//GEN-LAST:event_cbbChucVuMouseClicked
 
     private void LoadCbbChucVu() {
         dcbm = (DefaultComboBoxModel) cbbChucVu.getModel();
