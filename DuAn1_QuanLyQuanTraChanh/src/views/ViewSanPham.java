@@ -6,6 +6,7 @@ import domainmodels.SanPham;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.IDanhMucService;
 import services.IKichThuocService;
@@ -73,6 +74,7 @@ public class ViewSanPham extends javax.swing.JPanel {
             }
         }
     }
+
     private void loadCBDanhMucLoc() {
         cbb_lcodanhmuc.removeAllItems();
         for (DanhMuc dm : this.danhMucService.read()) {
@@ -484,6 +486,12 @@ public class ViewSanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_soLuongtonActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        String ma = txt_ma.getText().trim();
+        boolean check = sanPhamService.checkTrung(ma);
+        if (check) {
+            JOptionPane.showMessageDialog(this, "Trùng mã sản phẩm");
+            return;
+        }
         SanPham sp = this.getForm();
         this.sanPhamService.create(sp);
         this.loadTableSP(this.sanPhamService.getByID());

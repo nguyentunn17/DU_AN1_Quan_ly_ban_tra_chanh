@@ -15,4 +15,6 @@ public interface ISanPhamRepository {
     void update(SanPham sp, String id);
 
     void delete(String id);
+
+    boolean checkTrung(String ma);
 }

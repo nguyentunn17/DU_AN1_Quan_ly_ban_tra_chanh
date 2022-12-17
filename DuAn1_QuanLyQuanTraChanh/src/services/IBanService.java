@@ -22,4 +22,7 @@ public interface IBanService {
     String delete(String id);
 
     ArrayList<Ban> getTenBan(String ten);
+
+    boolean checkTrung(String ma);
+    
 }

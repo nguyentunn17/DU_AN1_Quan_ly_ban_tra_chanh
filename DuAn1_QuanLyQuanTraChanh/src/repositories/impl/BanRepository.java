@@ -119,4 +119,21 @@ public class BanRepository implements IBanRepository {
         }
         return listBan;
     }
+
+    public boolean checkTrung(String ma) {
+        String query = "select * from ban where maban=?";
+        boolean isExists = false;
+        try ( Connection con = jdbcUtil.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, ma);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                isExists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isExists;
+    }
 }

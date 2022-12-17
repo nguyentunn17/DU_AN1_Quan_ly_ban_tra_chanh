@@ -4,7 +4,6 @@
  */
 package services;
 
-
 import domainmodels.NhanVien;
 import viewmodels.NhanVienVMD;
 import java.util.ArrayList;
@@ -22,8 +21,10 @@ public interface INhanVienService {
     void update(String id, NhanVien nv);
 
     void delete(String id);
-    
-    ArrayList<NhanVienVMD>listViewMoDel();
-    
-    ArrayList<NhanVienVMD>listSearch(String ma);
+
+    ArrayList<NhanVienVMD> listViewMoDel();
+
+    ArrayList<NhanVienVMD> listSearch(String ma);
+
+    boolean checkTrung(String maNV);
 }

@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import utilities.jdbcUtil;
-
+import java.sql.SQLException;
 /**
  *
  * @author Quang
@@ -163,5 +163,23 @@ public class NhanVienRepository {
             ex.printStackTrace();
         }
         return listSearch;
+    }
+    
+    public boolean checkTrung(String maNV) {
+        String query = "select * from nhanvien where ma=?";
+        boolean isExists = false;
+        try (Connection con = jdbcUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, maNV);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                isExists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } catch (Exception ex) {
+            Logger.getLogger(NhanVienRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isExists;
     }
 }

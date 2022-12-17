@@ -5,10 +5,12 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import repositories.ISanPhamRepository;
+import utilities.jdbcUtil;
 import viewmodels.SanPhamViewModel;
 
 public class SanPhamRepository implements ISanPhamRepository {
@@ -125,7 +127,6 @@ public class SanPhamRepository implements ISanPhamRepository {
                 Integer trangThai = rs.getInt("trangthai");
                 String moTa = rs.getString("moTa");
                 String duongDan = rs.getString("duongDan");
-               
 
                 SanPhamViewModel sanPhamViewModel
                         = new SanPhamViewModel(ma, ten, tenLoai, tenSize, giaNhap, giaBan, soLuongTon, trangThai, moTa, duongDan);
@@ -138,4 +139,21 @@ public class SanPhamRepository implements ISanPhamRepository {
         return listsp;
     }
 
+    @Override
+    public boolean checkTrung(String ma) {
+        String query = "select * from sanpham where masp=?";
+        boolean isExists = false;
+        try ( Connection con = jdbcUtil.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, ma);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                isExists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } catch (Exception ex) {
+            Logger.getLogger(SanPhamRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isExists;
+    }
 }

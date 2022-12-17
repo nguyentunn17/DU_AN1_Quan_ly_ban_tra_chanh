@@ -51,4 +51,9 @@ public class BanService implements IBanService {
         return this.RBan.getTenBan(ten);
     }
 
+    @Override
+    public boolean checkTrung(String ma) {
+        return RBan.checkTrung(ma);
+    }
+
 }

@@ -303,8 +303,13 @@ public class ViewKhuBan extends javax.swing.JPanel {
 //                return;
 //            }
 //}
+        String ma = txt_maca.getText().trim();
+        boolean check = csv.checkTrung(ma);
         Ban b = this.getdata();
         if (b == null) {
+            return;
+        } else if (check) {
+            JOptionPane.showMessageDialog(this, "Trùng mã bàn");
             return;
         }
         this.csv.insert(b);

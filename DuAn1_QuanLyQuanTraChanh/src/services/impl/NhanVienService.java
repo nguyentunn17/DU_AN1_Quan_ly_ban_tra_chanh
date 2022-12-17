@@ -4,7 +4,6 @@
  */
 package services.impl;
 
-
 import domainmodels.NhanVien;
 import viewmodels.NhanVienVMD;
 import java.util.ArrayList;
@@ -51,6 +50,11 @@ public class NhanVienService implements INhanVienService {
     @Override
     public ArrayList<NhanVienVMD> listSearch(String ma) {
         return qLNVRepo.list(ma);
+    }
+
+    @Override
+    public boolean checkTrung(String maNV) {
+        return qLNVRepo.checkTrung(maNV);
     }
 
 }

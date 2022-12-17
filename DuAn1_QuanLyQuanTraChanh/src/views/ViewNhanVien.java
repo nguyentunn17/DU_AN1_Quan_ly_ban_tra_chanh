@@ -668,10 +668,14 @@ public class ViewNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_rdDangLamActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-
+        String ma = txtMaNV.getText().trim();
+        boolean check = qLNVServices.checkTrung(ma);
         // TODO add your handling code here:
         NhanVien nv = getForm();
         if (nv == null) {
+            return;
+        } else if (check) {
+            JOptionPane.showMessageDialog(this, "Trùng mã nhân viên");
             return;
         }
         qLNVServices.insert(nv);

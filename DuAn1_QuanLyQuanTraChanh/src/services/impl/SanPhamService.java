@@ -40,4 +40,9 @@ public class SanPhamService implements ISanPhamService {
         this.sanPhamRepository.delete(id);
     }
 
+    @Override
+    public boolean checkTrung(String ma) {
+        return sanPhamRepository.checkTrung(ma);
+    }
+
 }
