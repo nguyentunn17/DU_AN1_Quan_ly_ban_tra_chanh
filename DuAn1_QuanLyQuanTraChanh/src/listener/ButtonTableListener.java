@@ -1,17 +1,12 @@
 package listener;
 
 import domainmodels.Ban;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import services.IBanService;
 import views.ViewBanHang;
 
-/**
- *
- * @author Hung
- */
 public class ButtonTableListener implements ActionListener {
 
     private final IBanService csv;
@@ -29,7 +24,7 @@ public class ButtonTableListener implements ActionListener {
         for (Ban b : csv.getlist()) {
             if (b.getTenBan().equalsIgnoreCase(btn.getText())) {
                 view.setTextBan(b.getTenBan());
-                btn.setBackground(Color.red);
+//                btn.setBackground(Color.red);
                 return;
             }
         }

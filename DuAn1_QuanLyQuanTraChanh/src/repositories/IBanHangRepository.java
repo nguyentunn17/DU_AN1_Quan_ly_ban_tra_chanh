@@ -2,6 +2,7 @@ package repositories;
 
 import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
+import domainmodels.SanPham;
 import java.util.ArrayList;
 import viewmodels.HoaDonChiTietViewModel;
 
@@ -18,4 +19,6 @@ public interface IBanHangRepository {
     void delete(String idsp, String idhd);
 
     void updateTotal(HoaDon hd, String mahd);
+
+    void update(SanPham sp, String id);
 }

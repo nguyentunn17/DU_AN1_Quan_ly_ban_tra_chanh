@@ -169,11 +169,26 @@ public class BanHangRepository implements IBanHangRepository {
             ps.setObject(2, hd.getNgaythanhtoan());
             ps.setObject(3, mahd);
             ps.execute();
-            
 
         } catch (Exception ex) {
             Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @Override
+    public void update(SanPham sp, String id) {
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = "UPDATE SANPHAM SET SoLuongTon=SoLuongTon-? WHRE Id=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setObject(1, sp.getSoLuongTon());
+            ps.setObject(2, id);
+            ps.execute();
+
+        } catch (Exception ex) {
+            Logger.getLogger(BanHangRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

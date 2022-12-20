@@ -71,7 +71,8 @@ public class Main extends javax.swing.JFrame {
                 case 8:
                     int check = JOptionPane.showConfirmDialog(this, "Bạn đã thống kê doanh thu chưa?", "Phần mềm bán hàng trà chanh", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (check == JOptionPane.YES_OPTION) {
-                        System.exit(0);
+                       new Login().setVisible(true);
+                       dispose();
                     }
 
                 default:

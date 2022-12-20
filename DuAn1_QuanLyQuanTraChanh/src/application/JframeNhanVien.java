@@ -21,6 +21,7 @@ import views.ViewKhachHang3;
 import views.ViewKhuBan;
 import views.ViewNhanVien;
 import views.ViewSanPham;
+import views.ViewSanPham1;
 import views.ViewThongKe;
 
 public class JframeNhanVien extends javax.swing.JFrame {
@@ -60,7 +61,7 @@ public class JframeNhanVien extends javax.swing.JFrame {
                     main.showForm(new ViewHoaDon());
                     break;
                 case 5:
-                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
+                    main.showForm(new ViewSanPham1());
                     break;
                 case 6:
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập");
@@ -72,7 +73,8 @@ public class JframeNhanVien extends javax.swing.JFrame {
                 case 8:
                     int check = JOptionPane.showConfirmDialog(this, "Bạn đã thống kê doanh thu chưa?", "Phần mềm bán hàng trà chanh", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (check == JOptionPane.YES_OPTION) {
-                        System.exit(0);
+                        new Login().setVisible(true);
+                        dispose();
                     }
 
                 default:

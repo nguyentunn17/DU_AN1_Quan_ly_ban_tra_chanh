@@ -15,6 +15,7 @@ import viewmodels.HoaDonVM;
 
 public class HoaDonRepository implements IHoaDonRepository {
 
+    @Override
     public void insert(HoaDon hd) {
         try {
             Connection conn = jdbcUtil.getConnection();
@@ -154,6 +155,30 @@ public class HoaDonRepository implements IHoaDonRepository {
             String sql = "select TenBan from HOADON inner join BAN on HOADON.IdBAN=BAN.id where MaHD=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setObject(1, ma);
+
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                String tenban = rs.getString("tenban");
+                HoaDonVM hdvm = new HoaDonVM(tenban);
+                listhdvm.add(hdvm);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listhdvm;
+    }
+
+    @Override
+    public ArrayList<HoaDonVM> listSoLuong() {
+        ArrayList<HoaDonVM> listhdvm = new ArrayList<>();
+
+        try {
+            Connection conn = jdbcUtil.getConnection();
+            String sql = """
+                         select mahd,sum(soluong) as'soluong' from HOADONCHITIET inner join HOADON on HOADON.Id=HOADONCHITIET.IdHD
+                         where mahd=? group by mahd""";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.execute();
             ResultSet rs = ps.getResultSet();

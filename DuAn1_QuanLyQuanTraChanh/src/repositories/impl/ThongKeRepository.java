@@ -47,7 +47,7 @@ public class ThongKeRepository {
     public ArrayList<ThongKe> getList2() {
         try {
             Connection conn = jdbcUtil.getConnection();
-            String sql = "SELECT top 7 CONVert(Datetime,Left(((NgayThanhtoan)),11),103) as ngaythanhtoan, sum(thanhtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by Left((NgayThanhtoan),11) order by Left((NgayThanhtoan),11) desc ";
+            String sql = "SELECT top 7 CONVert(Datetime,Left(((NgayThanhtoan)),11),103) as ngaythanhtoan, sum(thanhtien) as tongtien FROM HOADON inner join HOADONCHITIET on HOADON.Id=HOADONCHITIET.IdHD group by Left((NgayThanhtoan),11) order by Left((NgayThanhtoan),11) asc ";
             ArrayList<ThongKe> tks = new ArrayList<>();
             PreparedStatement ps = conn.prepareCall(sql);
             ResultSet rs = ps.executeQuery();

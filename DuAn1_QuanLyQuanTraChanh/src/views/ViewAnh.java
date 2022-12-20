@@ -39,21 +39,20 @@ public class ViewAnh extends javax.swing.JFrame {
                 anhSanPham.getTenAnh(),
                 anhSanPham.getTenSP(),
                 anhSanPham.getDuongDan(),
-                anhSanPham.getTrangThai() == 0 ? "Hoạt động" : "Ngừng hoạt động"};
+                anhSanPham.getTrangThai() == 1 ? "Hoạt động" : "Ngừng hoạt động"};
             dtm.addRow(rowdata);
         }
     }
 
     private AnhSanPham getForm() {
+        AnhSanPham anhSanPham = new AnhSanPham();
         String ten = txt_ma.getText().trim();
         String sanpham = cbb_sanpham.getSelectedItem().toString();
         String trangThai = cbb_hoatdong.getSelectedItem().toString();
-        AnhSanPham anhSanPham = new AnhSanPham(ten, getidsp(sanpham), hinhAnh, ABORT);
-        if (trangThai.equalsIgnoreCase("Hoạt động")) {
-            anhSanPham.setTrangThai(0);
-        } else {
-            anhSanPham.setTrangThai(1);
-        }
+        anhSanPham.setTenAnh(ten);
+        anhSanPham.setIdSP(getidsp(sanpham));
+        anhSanPham.setTrangThai(1);
+
         return anhSanPham;
     }
 
@@ -72,6 +71,7 @@ public class ViewAnh extends javax.swing.JFrame {
         }
         return null;
     }
+
     private String getidanh(String ten) {
         for (AnhViewModel sp : this.anhService.read()) {
             if (sp.getTenSP().equalsIgnoreCase(ten)) {
@@ -314,16 +314,24 @@ public class ViewAnh extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewAnh.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewAnh.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
